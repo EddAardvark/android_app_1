@@ -19,6 +19,7 @@ import android.graphics.Paint;
 import android.graphics.Bitmap;
 
 import com.example.tutorialapp.R;
+import com.patterns.StarParameters;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,46 +31,28 @@ public class SecondActivity extends AppCompatActivity {
     static int HEIGHT = 1024;
 
     Bitmap m_bmp = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.RGB_565);
+    StarParameters m_params = new StarParameters ();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_second);
 
-
-
         Button button = (Button) findViewById(R.id.share_button);
-
-
         button.setOnClickListener(new SecondActivity.ClickListener());
 
-        Intent intent = getIntent();
-        String sn1 = intent.getStringExtra("n1");
-        String sn2 = intent.getStringExtra("n2");
-        String sn3 = intent.getStringExtra("n3");
-        String ssf = intent.getStringExtra("shrink");
-
-        if ("".equals(sn1) || "".equals(sn2) || "".equals(sn3) || "".equals(ssf))
-            return;
-
-        int n1 = Integer.parseInt(sn1);
-        int n2 = Integer.parseInt(sn2);
-        int n3 = Integer.parseInt(sn3);
-        double sf = Double.parseDouble(ssf);
-
-        TextView text = findViewById(R.id.detail);
-        text.setText("Star: Points = " + sn1 + ", step = " + sn2);
-
         ImageView img = findViewById(R.id.image);
-
-        Draw (img, n1, n2, n3, sf);
+        Draw (img);
     }
 
-    private void Draw (ImageView img, int n1, int n2, int n3, double sf)
+    private void Draw (ImageView img)
     {
-        if (n3 < 1 || n2 == 0 || n1 < 1 || sf <= 0)
+        int n1 = m_params.m_n1;
+        int n2 = m_params.m_n2;
+        double sf = m_params.m_shrink;
+
+        if (n2 == 0 || n1 < 1 || sf <= 0)
             return;
 
         Rect rect = new Rect(0, 0, WIDTH, HEIGHT);
@@ -128,6 +111,27 @@ public class SecondActivity extends AppCompatActivity {
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
             startActivity(Intent.createChooser(shareIntent, "Choose an app"));
         }
+    }
+
+    void oldstuff ()
+    {
+
+        Intent intent = getIntent();
+        String sn1 = intent.getStringExtra("n1");
+        String sn2 = intent.getStringExtra("n2");
+        String sn3 = intent.getStringExtra("n3");
+        String ssf = intent.getStringExtra("shrink");
+
+        if ("".equals(sn1) || "".equals(sn2) || "".equals(sn3) || "".equals(ssf))
+            return;
+
+        int n1 = Integer.parseInt(sn1);
+        int n2 = Integer.parseInt(sn2);
+        int n3 = Integer.parseInt(sn3);
+        double sf = Double.parseDouble(ssf);
+
+        TextView text = findViewById(R.id.detail);
+        text.setText("Star: Points = " + sn1 + ", step = " + sn2);
     }
 
     public class ClickListener extends Activity implements View.OnClickListener {
