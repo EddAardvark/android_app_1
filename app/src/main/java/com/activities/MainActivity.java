@@ -1,4 +1,4 @@
-package com.example.tutorialapp;
+package com.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.tutorialapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

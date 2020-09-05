@@ -1,4 +1,4 @@
-package com.example.tutorialapp;
+package com.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -9,19 +9,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
-import android.os.Environment;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.view.View;
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Bitmap;
-import android.util.AttributeSet;
 
-import java.io.ByteArrayOutputStream;
+import com.example.tutorialapp.R;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
