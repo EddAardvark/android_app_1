@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_launcher_foreground"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/app_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/n1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:text="N1:"
+        app:layout_constraintEnd_toStartOf="@+id/seed_value_1"
+        app:layout_constraintTop_toTopOf="@+id/seed_value_1" />
+
+    <EditText
+        android:id="@+id/seed_value_1"
+        android:layout_width="199dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:height="12pt"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:text="5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.584"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/n2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N2:"
+        app:layout_constraintStart_toStartOf="@+id/n1"
+        app:layout_constraintTop_toTopOf="@+id/seed_value_2" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Draw"
+        app:layout_constraintEnd_toEndOf="@+id/shrink_val"
+        app:layout_constraintTop_toBottomOf="@+id/shrink_val" />
+
+    <EditText
+        android:id="@+id/seed_value_2"
+        android:layout_width="199dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:height="12pt"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:text="2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="@+id/seed_value_1"
+        app:layout_constraintTop_toBottomOf="@+id/seed_value_1"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/shrink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shrink:"
+        app:layout_constraintStart_toStartOf="@+id/n2"
+        app:layout_constraintTop_toTopOf="@+id/shrink_val" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:text="Enter the parameters into the boxes below:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/shrink_val"
+        android:layout_width="198dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="0.5"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="@+id/seed_value_2"
+        app:layout_constraintTop_toBottomOf="@+id/seed_value_2"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/alert_dark_frame"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="599dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
