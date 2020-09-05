@@ -30,8 +30,7 @@ public class SecondActivity extends AppCompatActivity {
     static int WIDTH = 1024;
     static int HEIGHT = 1024;
 
-    Bitmap m_bmp = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.RGB_565);
-    StarParameters m_params = new StarParameters ();
+    StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,47 +42,7 @@ public class SecondActivity extends AppCompatActivity {
         button.setOnClickListener(new SecondActivity.ClickListener());
 
         ImageView img = findViewById(R.id.image);
-        Draw (img);
-    }
-
-    private void Draw (ImageView img)
-    {
-        int n1 = m_params.m_n1;
-        int n2 = m_params.m_n2;
-        double sf = m_params.m_shrink;
-
-        if (n2 == 0 || n1 < 1 || sf <= 0)
-            return;
-
-        Rect rect = new Rect(0, 0, WIDTH, HEIGHT);
-        Canvas canvas = new Canvas(m_bmp);
-        Paint paint = new Paint();
-        paint.setColor(Color.YELLOW);
-        paint.setStyle(Paint.Style.FILL);
-
-        canvas.drawRect(rect, paint);
-        paint.setColor(Color.BLACK);
-
-        double xc = WIDTH * 0.5;
-        double yc = HEIGHT * 0.5;
-        double r = HEIGHT * 0.48;
-        double theta = Math.PI * 2 / n1;
-        double x0 = xc + r;
-        double y0 = yc + 0;
-        int n = 0;
-
-        for (int i = 0 ; i <= n1 ; i++)
-        {
-            n += n2;
-            double x1 = xc + r * Math.cos (n * theta);
-            double y1 = yc + r * Math.sin (n * theta);
-            canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
-            x0 = x1;
-            y0 = y1;
-        }
-
-// Attach the canvas to the ImageView
-        img.setImageDrawable(new BitmapDrawable(getResources(), m_bmp));
+        m_params.Draw (getResources(), img);
     }
 
     private void share ()
@@ -92,7 +51,7 @@ public class SecondActivity extends AppCompatActivity {
             File cachePath = new File(this.getCacheDir(), "images");
             cachePath.mkdirs(); // don't forget to make the directory
             FileOutputStream stream = new FileOutputStream(cachePath + "/image.png"); // overwrites this image every time
-            m_bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            m_params.bitmap ().compress(Bitmap.CompressFormat.PNG, 100, stream);
             stream.close();
 
         } catch (IOException e) {
