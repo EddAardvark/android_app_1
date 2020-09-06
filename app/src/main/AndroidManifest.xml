@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name="com.activities.SecondActivity"></activity>
+        <activity android:name="com.activities.StarsPatternActivity"></activity>
         <activity android:name="com.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

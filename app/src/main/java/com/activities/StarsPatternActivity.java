@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.app.Activity;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
@@ -13,9 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.view.View;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Bitmap;
 
 import com.example.tutorialapp.R;
@@ -25,7 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class SecondActivity extends AppCompatActivity {
+public class StarsPatternActivity extends AppCompatActivity {
 
     static int WIDTH = 1024;
     static int HEIGHT = 1024;
@@ -39,7 +34,7 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 
         Button button = (Button) findViewById(R.id.share_button);
-        button.setOnClickListener(new SecondActivity.ClickListener());
+        button.setOnClickListener(new StarsPatternActivity.ClickListener());
 
         ImageView img = findViewById(R.id.image);
         m_params.Draw (getResources(), img);
