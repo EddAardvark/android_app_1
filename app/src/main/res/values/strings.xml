@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">JW\'s Mathematical Patterns</string>
     <string name="second_page">Drawing Pattern</string>
+    <string name="intro_text">
+        This application acts as a gateway to a collection of my mathematical pattern drawing algorithms,
+        Please click on the icon representing the type of pattern you would like to explore further.
+    </string>
+    <string name="stars_label">Stars</string>
 </resources>

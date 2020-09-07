@@ -1,4 +1,4 @@
-package com.example.tutorialapp;
+package com.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,8 +6,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
+
+import com.example.tutorialapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,22 +17,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.button);
+        ImageButton button = (ImageButton) findViewById(R.id.button_stars);
 
         button.setOnClickListener(new ActivityMain());
     }
 
-    private void goToSecondActivity() {
+    private void showStars() {
 
-        EditText n1 = this.findViewById(R.id.seed_value_1);
-        EditText n2 = this.findViewById(R.id.seed_value_2);
-        EditText sf = this.findViewById(R.id.shrink_val);
-
-        Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra("n1", n1.getText().toString());
-        intent.putExtra("n2", n2.getText().toString());
-        intent.putExtra("shrink", sf.getText().toString());
-        intent.putExtra("n3", "3");
+        Intent intent = new Intent(this, StarsPatternActivity.class);
         startActivity(intent);
     }
 
@@ -40,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.button:
-                    goToSecondActivity();
+                case R.id.button_stars:
+                    showStars();
                     break;
             }
         }
