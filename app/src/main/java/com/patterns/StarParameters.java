@@ -8,6 +8,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.Random;
 
 public class StarParameters {
 
@@ -31,21 +34,25 @@ public class StarParameters {
         m_bmp = Bitmap.createBitmap(m_width, m_height, Bitmap.Config.RGB_565);
     }
 
+    public void Randomise ()
+    {
+        Random rand = new Random();
+
+        m_n1 = rand.nextInt(98) + 3;
+        m_n2 = rand.nextInt(49) + 1;
+    }
+
     public Bitmap bitmap ()
     {
         return m_bmp;
     }
     /**
      * Draws the pattern using the current parameters
-     * @param img
+     * @param img Where to draw the pattern
      */
     public void Draw(Resources resources, ImageView img)
     {
-        int n1 = m_n1;
-        int n2 = m_n2;
-        double sf = m_shrink;
-
-        if (n2 == 0 || n1 < 1 || sf <= 0)
+        if (m_n2 == 0 || m_n1 < 1 || m_shrink <= 0)
             return;
 
         Rect rect = new Rect(0, 0, m_width, m_height);
@@ -60,14 +67,14 @@ public class StarParameters {
         double xc = m_width * 0.5;
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
-        double theta = Math.PI * 2 / n1;
+        double theta = Math.PI * 2 / m_n1;
         double x0 = xc + r;
         double y0 = yc + 0;
         int n = 0;
 
-        for (int i = 0 ; i <= n1 ; i++)
+        for (int i = 0 ; i <= m_n1 ; i++)
         {
-            n += n2;
+            n += m_n2;
             double x1 = xc + r * Math.cos (n * theta);
             double y1 = yc + r * Math.sin (n * theta);
             canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);

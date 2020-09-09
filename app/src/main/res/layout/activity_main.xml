@@ -21,6 +21,7 @@
         android:id="@+id/button_stars"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="@+id/text_intro"
         app:layout_constraintTop_toBottomOf="@+id/text_intro"

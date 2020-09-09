@@ -1,6 +1,7 @@
 package com.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 
 import android.app.Activity;
@@ -26,18 +27,32 @@ public class StarsPatternActivity extends AppCompatActivity {
     static int HEIGHT = 1024;
 
     StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
+    ClickListener m_listener = new StarsPatternActivity.ClickListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.stars_pattern_activity);
 
-        Button button = (Button) findViewById(R.id.share_button);
-        button.setOnClickListener(new StarsPatternActivity.ClickListener());
+        ConstraintLayout l1 = (ConstraintLayout) findViewById(R.id.layout_n1);
+        ConstraintLayout l2 = (ConstraintLayout) findViewById(R.id.layout_n2);
+        ConstraintLayout ls = (ConstraintLayout) findViewById(R.id.layout_share);
+        ConstraintLayout rn = (ConstraintLayout) findViewById(R.id.layout_random);
 
+        l1.setOnClickListener(m_listener);
+        l2.setOnClickListener(m_listener);
+        ls.setOnClickListener(m_listener);
+        rn.setOnClickListener(m_listener);
+
+        Draw ();
+    }
+
+    void Draw ()
+    {
         ImageView img = findViewById(R.id.image);
         m_params.Draw (getResources(), img);
+        showSettings ();
     }
 
     private void share ()
@@ -66,10 +81,16 @@ public class StarsPatternActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(shareIntent, "Choose an app"));
         }
     }
-
+    void showSettings ()
+    {
+        TextView n1_view = (TextView)  findViewById(R.id.text_n1);
+        TextView n2_view = (TextView)  findViewById(R.id.text_n2);
+        n1_view.setText(Integer.toString(m_params.m_n1));
+        n2_view.setText(Integer.toString(m_params.m_n2));
+    }
     void oldstuff ()
     {
-
+/*
         Intent intent = getIntent();
         String sn1 = intent.getStringExtra("n1");
         String sn2 = intent.getStringExtra("n2");
@@ -85,7 +106,7 @@ public class StarsPatternActivity extends AppCompatActivity {
         double sf = Double.parseDouble(ssf);
 
         TextView text = findViewById(R.id.detail);
-        text.setText("Star: Points = " + sn1 + ", step = " + sn2);
+        text.setText("Star: Points = " + sn1 + ", step = " + sn2);*/
     }
 
     public class ClickListener extends Activity implements View.OnClickListener {
@@ -93,8 +114,20 @@ public class StarsPatternActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.share_button:
+                case R.id.layout_share:
                     share();
+                    break;
+                case R.id.layout_n1:
+                    m_params.m_n1 += 1;
+                    Draw();
+                    break;
+                case R.id.layout_n2:
+                    m_params.m_n2 += 1;
+                    Draw();
+                    break;
+                case R.id.layout_random:
+                    m_params.Randomise ();
+                    Draw();
                     break;
             }
         }
