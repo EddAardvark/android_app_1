@@ -3,6 +3,7 @@ package com.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.view.View;
 import android.graphics.Bitmap;
 
+import com.dialogs.GetInteger;
 import com.example.tutorialapp.R;
 import com.patterns.StarParameters;
 
@@ -109,6 +111,11 @@ public class StarsPatternActivity extends AppCompatActivity {
         text.setText("Star: Points = " + sn1 + ", step = " + sn2);*/
     }
 
+    void onClickN1 () {
+        DialogFragment dialog = GetInteger.construct(m_params.m_n1);
+        dialog.show (getSupportFragmentManager(), "Hello");
+        Draw();
+    }
     public class ClickListener extends Activity implements View.OnClickListener {
 
         @Override
@@ -118,8 +125,7 @@ public class StarsPatternActivity extends AppCompatActivity {
                     share();
                     break;
                 case R.id.layout_n1:
-                    m_params.m_n1 += 1;
-                    Draw();
+                    onClickN1();
                     break;
                 case R.id.layout_n2:
                     m_params.m_n2 += 1;
