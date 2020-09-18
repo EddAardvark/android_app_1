@@ -23,10 +23,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class StarsPatternActivity extends AppCompatActivity {
+public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result{
 
-    static int WIDTH = 1024;
-    static int HEIGHT = 1024;
+    final int WIDTH = 1024;
+    final int HEIGHT = 1024;
+
+    final int CB_N1 = 1;
+    final int CB_N2 = 2;
 
     StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
     ClickListener m_listener = new StarsPatternActivity.ClickListener();
@@ -90,32 +93,34 @@ public class StarsPatternActivity extends AppCompatActivity {
         n1_view.setText(Integer.toString(m_params.m_n1));
         n2_view.setText(Integer.toString(m_params.m_n2));
     }
-    void oldstuff ()
-    {
-/*
-        Intent intent = getIntent();
-        String sn1 = intent.getStringExtra("n1");
-        String sn2 = intent.getStringExtra("n2");
-        String sn3 = intent.getStringExtra("n3");
-        String ssf = intent.getStringExtra("shrink");
 
-        if ("".equals(sn1) || "".equals(sn2) || "".equals(sn3) || "".equals(ssf))
-            return;
-
-        int n1 = Integer.parseInt(sn1);
-        int n2 = Integer.parseInt(sn2);
-        int n3 = Integer.parseInt(sn3);
-        double sf = Double.parseDouble(ssf);
-
-        TextView text = findViewById(R.id.detail);
-        text.setText("Star: Points = " + sn1 + ", step = " + sn2);*/
-    }
-
+    /**
+     * Allows you to change the number of points aroundthe circle
+     */
     void onClickN1 () {
-        DialogFragment dialog = GetInteger.construct(m_params.m_n1);
+        GetInteger dialog = GetInteger.construct(this, CB_N1, m_params.m_n1, 3, 101, 1, getString(R.string.star_n1_description));
         dialog.show (getSupportFragmentManager(), "Hello");
-        Draw();
     }
+
+    /**
+     * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
+     */
+    void onClickN2 () {
+        int max_n2 = m_params.m_n1/2;
+        int n2 = (m_params.m_n2 > max_n2) ? 1 : max_n2;
+        GetInteger dialog = GetInteger.construct(this, CB_N2, n2, 1, max_n2, 1, getString(R.string.star_n2_description));
+        dialog.show (getSupportFragmentManager(), "Hello");
+    }
+    @Override
+    public void SetInteger(int id, int value) {
+        switch (id)
+        {
+            case CB_N1: m_params.m_n1 = value; break;
+            case CB_N2: m_params.m_n2 = value; break;
+        }
+        Draw ();
+    }
+
     public class ClickListener extends Activity implements View.OnClickListener {
 
         @Override
@@ -128,8 +133,7 @@ public class StarsPatternActivity extends AppCompatActivity {
                     onClickN1();
                     break;
                 case R.id.layout_n2:
-                    m_params.m_n2 += 1;
-                    Draw();
+                    onClickN2();
                     break;
                 case R.id.layout_random:
                     m_params.Randomise ();

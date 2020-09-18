@@ -8,4 +8,14 @@
     <string name="stars_label">Stars</string>
     <string name="share">Share</string>
     <string name="random">Random</string>
+    <string name="get_integer_prompt">Enter an Integer</string>
+    <string name="star_n1_description">
+        This parameter is the number of points on the star. It can be any integer value in the
+        range 3 to 101.
+    </string>
+    <string name="star_n2_description">
+        This parameter is the number of points advanced by each edge vector. One will draw a simple polygon, larger numbers will draw
+        stars. If n1 and n2 have a factor in common the resulting star will be simplified by that factor, for instance, (10,4) will draw the
+        star (5,2).
+    </string>
 </resources>
