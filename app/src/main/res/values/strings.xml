@@ -18,4 +18,8 @@
         stars. If n1 and n2 have a factor in common the resulting star will be simplified by that factor, for instance, (10,4) will draw the
         star (5,2).
     </string>
+    <string name="star_n3_description">
+        This parameter determines the number of copies of the star that will be drawn. Each copy will be rotated and shrunk, based on the values of the
+        relevant parameters.
+    </string>
 </resources>
