@@ -6,8 +6,13 @@
         Please click on the icon representing the type of pattern you would like to explore further.
     </string>
     <string name="stars_label">Stars</string>
+    <string name="n1">Points</string>
+    <string name="n2">Step</string>
+    <string name="n3">Repeat</string>
     <string name="share">Share</string>
     <string name="random">Random</string>
+    <string name="angle">Angle</string>
+    <string name="shrink">Shrink</string>
     <string name="get_integer_prompt">Enter an Integer</string>
     <string name="star_n1_description">
         This parameter is the number of points on the star. It can be any integer value in the
@@ -21,5 +26,11 @@
     <string name="star_n3_description">
         This parameter determines the number of copies of the star that will be drawn. Each copy will be rotated and shrunk, based on the values of the
         relevant parameters.
+    </string>
+    <string name="star_angle_description">
+        This parameter determines the number that each copy of the original pattern will be rotated.
+    </string>
+    <string name="star_shrink_description">
+        This parameter determines how much to shrink each copy of the original pattern. It is a percentage, 100 is full size, 25 is a quarter.
     </string>
 </resources>

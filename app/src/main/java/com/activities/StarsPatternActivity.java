@@ -30,6 +30,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
     final int CB_N1 = 1;
     final int CB_N2 = 2;
+    final int CB_N3 = 3;
+    final int CB_ANGLE = 4;
+    final int CB_SHRINK = 5;
 
     StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
     ClickListener m_listener = new StarsPatternActivity.ClickListener();
@@ -40,15 +43,13 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
         setContentView(R.layout.stars_pattern_activity);
 
-        ConstraintLayout l1 = (ConstraintLayout) findViewById(R.id.layout_n1);
-        ConstraintLayout l2 = (ConstraintLayout) findViewById(R.id.layout_n2);
-        ConstraintLayout ls = (ConstraintLayout) findViewById(R.id.layout_share);
-        ConstraintLayout rn = (ConstraintLayout) findViewById(R.id.layout_random);
-
-        l1.setOnClickListener(m_listener);
-        l2.setOnClickListener(m_listener);
-        ls.setOnClickListener(m_listener);
-        rn.setOnClickListener(m_listener);
+        findViewById(R.id.layout_n1).setOnClickListener(m_listener);
+        findViewById(R.id.layout_n2).setOnClickListener(m_listener);
+        findViewById(R.id.layout_n3).setOnClickListener(m_listener);
+        findViewById(R.id.layout_angle).setOnClickListener(m_listener);
+        findViewById(R.id.layout_share).setOnClickListener(m_listener);
+        findViewById(R.id.layout_random).setOnClickListener(m_listener);
+        findViewById(R.id.layout_shrink).setOnClickListener(m_listener);
 
         Draw ();
     }
@@ -88,10 +89,11 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     }
     void showSettings ()
     {
-        TextView n1_view = (TextView)  findViewById(R.id.text_n1);
-        TextView n2_view = (TextView)  findViewById(R.id.text_n2);
-        n1_view.setText(Integer.toString(m_params.m_n1));
-        n2_view.setText(Integer.toString(m_params.m_n2));
+        ((TextView)findViewById(R.id.text_n1)).setText(Integer.toString(m_params.m_n1));
+        ((TextView)findViewById(R.id.text_n2)).setText(Integer.toString(m_params.m_n2));
+        ((TextView)findViewById(R.id.text_n3)).setText(Integer.toString(m_params.m_n3));
+        ((TextView)findViewById(R.id.text_da)).setText(Integer.toString(m_params.m_rotate_degrees));
+        ((TextView)findViewById(R.id.text_sh)).setText(Integer.toString(m_params.m_shrink_pc));
     }
 
     /**
@@ -111,12 +113,36 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         GetInteger dialog = GetInteger.construct(this, CB_N2, n2, 1, max_n2, 1, getString(R.string.star_n2_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
+    /**
+     * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
+     */
+    void onClickN3 () {
+        GetInteger dialog = GetInteger.construct(this, CB_N3, m_params.m_n3, 1, 120, 1, getString(R.string.star_n3_description));
+        dialog.show (getSupportFragmentManager(), "Hello");
+    }
+    /**
+     * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
+     */
+    void onClickAngle () {
+        GetInteger dialog = GetInteger.construct(this, CB_ANGLE, m_params.m_rotate_degrees, 0, 359, 1, getString(R.string.star_angle_description));
+        dialog.show (getSupportFragmentManager(), "Hello");
+    }
+    /**
+     * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
+     */
+    void onClickShrink () {
+        GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_pc, 5, 100, 1, getString(R.string.star_shrink_description));
+        dialog.show (getSupportFragmentManager(), "Hello");
+    }
     @Override
     public void SetInteger(int id, int value) {
         switch (id)
         {
             case CB_N1: m_params.m_n1 = value; break;
             case CB_N2: m_params.m_n2 = value; break;
+            case CB_N3: m_params.m_n3 = value; break;
+            case CB_ANGLE: m_params.m_rotate_degrees = value; break;
+            case CB_SHRINK: m_params.m_shrink_pc = value; break;
         }
         Draw ();
     }
@@ -134,6 +160,17 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
                 case R.id.layout_n2:
                     onClickN2();
+                    break;
+                case R.id.layout_n3:
+                    onClickN3();
+                    break;
+                case R.id.layout_angle:
+                    onClickAngle ();
+                    Draw();
+                    break;
+                case R.id.layout_shrink:
+                    onClickShrink ();
+                    Draw();
                     break;
                 case R.id.layout_random:
                     m_params.Randomise ();
