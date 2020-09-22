@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.graphics.Color;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
@@ -23,6 +26,9 @@ public class GetColour extends DialogFragment {
     DialogInterface.OnClickListener m_listener = new GetColour.ClickListener();
     GetColour.Result m_result;
     int m_id;
+    NumberPicker m_RedPicker;
+    NumberPicker m_GreenPicker;
+    NumberPicker m_BluePicker;
 
     GetColour(GetColour.Result res, int id) {
         m_id = id;
@@ -54,9 +60,32 @@ public class GetColour extends DialogFragment {
         builder.setMessage(args.getString("message"));
         builder.setPositiveButton("Accept", m_listener);
         builder.setNegativeButton("Cancel", m_listener);
+
         return builder.create();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Dialog dialog = this.getDialog();
+
+        m_RedPicker = (NumberPicker) dialog.findViewById(R.id.set_red);
+        m_GreenPicker = (NumberPicker) dialog.findViewById(R.id.set_green);
+        m_BluePicker = (NumberPicker) dialog.findViewById(R.id.set_blue);
+
+        m_RedPicker.setMinValue(0);
+        m_RedPicker.setMaxValue(255);
+        m_RedPicker.setValue(0);
+
+        m_GreenPicker.setMinValue(0);
+        m_GreenPicker.setMaxValue(255);
+        m_GreenPicker.setValue(0);
+
+        m_BluePicker.setMinValue(0);
+        m_BluePicker.setMaxValue(255);
+        m_BluePicker.setValue(0);
+    }
 
     public class ClickListener implements DialogInterface.OnClickListener {
 
@@ -71,6 +100,13 @@ public class GetColour extends DialogFragment {
                 case Dialog.BUTTON_NEUTRAL:
                     break;
             }
+        }
+    }
+
+    public class ShowListener implements DialogInterface.OnShowListener {
+
+        @Override
+        public void onShow(DialogInterface dialog) {
         }
     }
 }
