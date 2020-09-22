@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.widget.NumberPicker;
 import android.graphics.Color;
 
@@ -29,12 +30,13 @@ public class GetColour extends DialogFragment {
     }
 
 
-    public static GetColour construct(GetColour.Result res, int id, int colour, String message) {
+    public static GetColour construct(GetColour.Result res, int id, int colour, String title, String message) {
 
         GetColour frag = new GetColour(res, id);
         Bundle args = new Bundle();
         args.putInt("current", colour);
         args.putString("message", message);
+        args.putString("title", title);
         frag.setArguments(args);
         return frag;
     }
@@ -46,9 +48,10 @@ public class GetColour extends DialogFragment {
 
         Bundle args = getArguments();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.get_integer_prompt));
-        builder.setMessage(args.getString("message", "no message"));
-        //builder.setView(m_picker);
+        LayoutInflater inflator = requireActivity().getLayoutInflater();
+        builder.setView(inflator.inflate(R.layout.colour_chooser, null));
+        builder.setTitle(args.getString("title"));
+        builder.setMessage(args.getString("message"));
         builder.setPositiveButton("Accept", m_listener);
         builder.setNegativeButton("Cancel", m_listener);
         return builder.create();

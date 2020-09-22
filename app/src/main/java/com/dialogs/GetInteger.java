@@ -30,7 +30,7 @@ public class GetInteger extends DialogFragment {
         m_result = res;
     }
 
-    public static GetInteger construct(Result res, int id, int n, int min, int max, int inc, String message) {
+    public static GetInteger construct(Result res, int id, int n, int min, int max, int inc, String title, String message) {
 
         GetInteger frag = new GetInteger(res, id);
         Bundle args = new Bundle();
@@ -38,6 +38,7 @@ public class GetInteger extends DialogFragment {
         args.putInt("min_val", min);
         args.putInt("max_val", max);
         args.putInt("value_inc", inc);
+        args.putString("title", title);
         args.putString("message", message);
         frag.setArguments(args);
         return frag;
@@ -53,8 +54,8 @@ public class GetInteger extends DialogFragment {
         m_picker.setMinValue(args.getInt("min_val"));
         m_picker.setMaxValue(args.getInt("max_val"));
         m_picker.setValue(args.getInt("current"));
-        builder.setTitle(getString(R.string.get_integer_prompt));
-        builder.setMessage(args.getString("message", "no message"));
+        builder.setTitle(args.getString("title"));
+        builder.setMessage(args.getString("message"));
         builder.setView(m_picker);
         builder.setPositiveButton("Accept", m_listener);
         builder.setNegativeButton("Cancel", m_listener);

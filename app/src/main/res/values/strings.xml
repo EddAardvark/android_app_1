@@ -16,7 +16,6 @@
     <string name="foreground1">Line 1</string>
     <string name="foreground2">Line 2</string>
     <string name="background">Back</string>
-    <string name="get_integer_prompt">Enter an Integer</string>
     <string name="star_n1_description">
         This parameter is the number of points on the star. It can be any integer value in the
         range 3 to 101.
@@ -36,4 +35,14 @@
     <string name="star_shrink_description">
         This parameter determines how much to shrink each copy of the original pattern. It is a percentage, 100 is full size, 25 is a quarter.
     </string>
+    <string name="star_n1_title">Number of points</string>
+    <string name="star_n2_title">Hop between points</string>
+    <string name="star_n3_title">Number of copies</string>
+    <string name="star_rotate_title">Angle increment</string>
+    <string name="star_shrink_title">Size change</string>
+    <string name="star_background_title">Background colour</string>
+    <string name="star_first_colour_title">First colour</string>
+    <string name="star_last_colour_title">Last colour</string>
+    <string name="star_first_colour_description">This is the colour of the line use to draw the first pattern and the start of the sequence when drawing multiple patterns</string>
+    <string name="star_last_colour_description">This is the last colour in the sequence when drawing multiple patterns, intermediate patterns are drawn using a blend of the 2.</string>
 </resources>

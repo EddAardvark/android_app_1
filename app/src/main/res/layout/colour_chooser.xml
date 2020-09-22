@@ -6,26 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Colour Setter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/colour_values"
-        android:layout_width="410dp"
-        android:layout_height="271dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="300dp"
+        android:layout_height="316dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvtitle">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/red_box"
@@ -37,10 +27,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Red">
-            </TextView>
+                android:text="Red" />
+
+            <NumberPicker
+                android:id="@+id/set_red"
+                android:layout_width="80dp"
+                android:layout_height="120dp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/green_box"
             android:layout_width="80dp"
@@ -51,10 +46,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Green">
-            </TextView>
+                android:text="Green" />
+
+            <NumberPicker
+                android:id="@+id/set_green"
+                android:layout_width="80dp"
+                android:layout_height="120dp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/blue_box"
             android:layout_width="80dp"
@@ -65,8 +65,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Blue">
-            </TextView>
+                android:text="Blue" />
+
+            <NumberPicker
+                android:id="@+id/set_blue"
+                android:layout_width="80dp"
+                android:layout_height="120dp" />
 
         </LinearLayout>
 

@@ -138,7 +138,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Allows you to change the number of points aroundthe circle
      */
     void onClickN1 () {
-        GetInteger dialog = GetInteger.construct(this, CB_N1, m_params.m_n1, 3, 101, 1, getString(R.string.star_n1_description));
+        GetInteger dialog = GetInteger.construct(this, CB_N1, m_params.m_n1, 3, 101, 1, getString(R.string.star_n1_title), getString(R.string.star_n1_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
 
@@ -148,49 +148,49 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     void onClickN2 () {
         int max_n2 = m_params.m_n1/2;
         int n2 = (m_params.m_n2 > max_n2) ? 1 : max_n2;
-        GetInteger dialog = GetInteger.construct(this, CB_N2, n2, 1, max_n2, 1, getString(R.string.star_n2_description));
+        GetInteger dialog = GetInteger.construct(this, CB_N2, n2, 1, max_n2, 1, getString(R.string.star_n2_title), getString(R.string.star_n2_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
     void onClickN3 () {
-        GetInteger dialog = GetInteger.construct(this, CB_N3, m_params.m_n3, 1, 120, 1, getString(R.string.star_n3_description));
+        GetInteger dialog = GetInteger.construct(this, CB_N3, m_params.m_n3, 1, 120, 1, getString(R.string.star_n3_title), getString(R.string.star_n3_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
     void onClickAngle () {
-        GetInteger dialog = GetInteger.construct(this, CB_ANGLE, m_params.m_rotate_degrees, 0, 359, 1, getString(R.string.star_angle_description));
+        GetInteger dialog = GetInteger.construct(this, CB_ANGLE, m_params.m_rotate_degrees, 0, 359, 1, getString(R.string.star_rotate_title), getString(R.string.star_angle_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
     void onClickShrink () {
-        GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_pc, 5, 100, 1, getString(R.string.star_shrink_description));
+        GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_pc, 5, 100, 1, getString(R.string.star_shrink_title), getString(R.string.star_shrink_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the background colour.
      */
     void onClickBackColour () {
-        GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.star_shrink_description));
+        GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.star_background_title), getString(R.string.star_shrink_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the main line colour.
      */
     void onClickLineColour1 () {
-        GetColour dialog = GetColour.construct(this, CB_LINECOLOUR1, m_params.m_first_line, getString(R.string.star_shrink_description));
+        GetColour dialog = GetColour.construct(this, CB_LINECOLOUR1, m_params.m_first_line, getString(R.string.star_first_colour_title), getString(R.string.star_first_colour_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the second line colour.
      */
     void onClickLineColour2 () {
-        GetColour dialog = GetColour.construct(this, CB_LINECOLOUR2, m_params.m_last_line, getString(R.string.star_shrink_description));
+        GetColour dialog = GetColour.construct(this, CB_LINECOLOUR2, m_params.m_last_line, getString(R.string.star_last_colour_title), getString(R.string.star_last_colour_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     @Override
