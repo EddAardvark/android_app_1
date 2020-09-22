@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.view.View;
 import android.graphics.Bitmap;
 
+import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.example.tutorialapp.R;
 import com.patterns.StarParameters;
@@ -24,7 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result{
+public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result {
 
     final int WIDTH = 1024;
     final int HEIGHT = 1024;
@@ -34,12 +35,18 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     final int CB_N3 = 3;
     final int CB_ANGLE = 4;
     final int CB_SHRINK = 5;
+    final int CB_BACKCOLOUR = 6;
+    final int CB_LINECOLOUR1 = 7;
+    final int CB_LINECOLOUR2 = 8;
 
     StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
     ClickListener m_listener = new StarsPatternActivity.ClickListener();
     View m_layout_background;
     View m_layout_foreground1;
     View m_layout_foreground2;
+    TextView m_layout_background_text;
+    TextView m_layout_foreground1_text;
+    TextView m_layout_foreground2_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +63,33 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         findViewById(R.id.layout_shrink).setOnClickListener(m_listener);
 
         m_layout_background = findViewById(R.id.layout_back_colour);
+        m_layout_foreground1 = findViewById(R.id.layout_fore_colour1);
+        m_layout_foreground2 = findViewById(R.id.layout_fore_colour2);
+        m_layout_background_text = (TextView)findViewById(R.id.text_backcolour);
+        m_layout_foreground1_text = (TextView)findViewById(R.id.text_forecolour1);
+        m_layout_foreground2_text = (TextView)findViewById(R.id.text_forecolour2);
 
         m_layout_background.setOnClickListener(m_listener);
-        m_layout_background.setBackgroundColor(m_params.m_background);
+        m_layout_foreground1.setOnClickListener(m_listener);
+        m_layout_foreground2.setOnClickListener(m_listener);
 
+        setColours();
         Draw ();
+    }
+
+    void setColours() {
+
+        m_layout_background.setBackgroundColor(m_params.m_background);
+        m_layout_foreground1.setBackgroundColor(m_params.m_first_line);
+        m_layout_foreground2.setBackgroundColor(m_params.m_last_line);
+
+        m_layout_background.setBackgroundColor(m_params.m_background);
+        m_layout_foreground1.setBackgroundColor(m_params.m_first_line);
+        m_layout_foreground2.setBackgroundColor(m_params.m_last_line);
+
+        m_layout_background_text.setTextColor(m_params.m_background ^ 0xFFFFFF);
+        m_layout_foreground1_text.setTextColor(m_params.m_first_line ^ 0xFFFFFF);
+        m_layout_foreground2_text.setTextColor(m_params.m_last_line ^ 0xFFFFFF);
     }
 
     void Draw ()
@@ -143,6 +172,27 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_pc, 5, 100, 1, getString(R.string.star_shrink_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
+    /**
+     * Allows you to change the background colour.
+     */
+    void onClickBackColour () {
+        GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.star_shrink_description));
+        dialog.show (getSupportFragmentManager(), "Hello");
+    }
+    /**
+     * Allows you to change the main line colour.
+     */
+    void onClickLineColour1 () {
+        GetColour dialog = GetColour.construct(this, CB_LINECOLOUR1, m_params.m_first_line, getString(R.string.star_shrink_description));
+        dialog.show (getSupportFragmentManager(), "Hello");
+    }
+    /**
+     * Allows you to change the second line colour.
+     */
+    void onClickLineColour2 () {
+        GetColour dialog = GetColour.construct(this, CB_LINECOLOUR2, m_params.m_last_line, getString(R.string.star_shrink_description));
+        dialog.show (getSupportFragmentManager(), "Hello");
+    }
     @Override
     public void SetInteger(int id, int value) {
         switch (id)
@@ -152,6 +202,16 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             case CB_N3: m_params.m_n3 = value; break;
             case CB_ANGLE: m_params.m_rotate_degrees = value; break;
             case CB_SHRINK: m_params.m_shrink_pc = value; break;
+        }
+        Draw ();
+    }
+    @Override
+    public void SetColour(int id, int value) {
+        switch (id)
+        {
+            case CB_BACKCOLOUR: m_params.m_background = value; break;
+            case CB_LINECOLOUR1: m_params.m_first_line = value; break;
+            case CB_LINECOLOUR2: m_params.m_last_line = value; break;
         }
         Draw ();
     }
@@ -183,6 +243,18 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
                 case R.id.layout_random:
                     m_params.Randomise ();
+                    Draw();
+                    break;
+                case R.id.layout_back_colour:
+                    onClickBackColour ();
+                    Draw();
+                    break;
+                case R.id.layout_fore_colour1:
+                    onClickLineColour1 ();
+                    Draw();
+                    break;
+                case R.id.layout_fore_colour2:
+                    onClickLineColour2 ();
                     Draw();
                     break;
             }
