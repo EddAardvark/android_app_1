@@ -13,6 +13,9 @@
     <string name="random">Random</string>
     <string name="angle">Angle</string>
     <string name="shrink">Shrink</string>
+    <string name="foreground1">Line 1</string>
+    <string name="foreground2">Line 2</string>
+    <string name="background">Back</string>
     <string name="get_integer_prompt">Enter an Integer</string>
     <string name="star_n1_description">
         This parameter is the number of points on the star. It can be any integer value in the

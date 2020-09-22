@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.Random;
 
@@ -20,8 +19,8 @@ public class StarParameters {
     public int m_rotate_degrees = 5;            ///< Rotation when drawing multiple images
     public int m_shrink_pc = 95;                ///< Shrinkage when drawing multiple images (percent)
     public int m_background = Color.WHITE;      ///< Background colour
-    public int m_first_line = Color.BLACK;      ///< Foreground ground colour
-    public int m_last_line = Color.BLACK;       ///< Second foreground ground colour when blending
+    public int m_first_line = Color.BLUE;       ///< Foreground ground colour
+    public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
 
     int m_width;
     int m_height;

@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
+import android.text.Layout;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -36,6 +37,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
     StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
     ClickListener m_listener = new StarsPatternActivity.ClickListener();
+    View m_layout_background;
+    View m_layout_foreground1;
+    View m_layout_foreground2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,11 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         findViewById(R.id.layout_share).setOnClickListener(m_listener);
         findViewById(R.id.layout_random).setOnClickListener(m_listener);
         findViewById(R.id.layout_shrink).setOnClickListener(m_listener);
+
+        m_layout_background = findViewById(R.id.layout_back_colour);
+
+        m_layout_background.setOnClickListener(m_listener);
+        m_layout_background.setBackgroundColor(m_params.m_background);
 
         Draw ();
     }
