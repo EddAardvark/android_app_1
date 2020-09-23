@@ -27,4 +27,28 @@ public class ColourHelpers {
 
         return GetContrastColour(red, green, blue);
     }
+    public static int GetContrastColour(RGB rgb){
+        return GetContrastColour(rgb.red, rgb.green, rgb.blue);
+    }
+
+    /**
+     * Mix two colours
+     * @param c1 the first colour
+     * @param c2 the second colour
+     * @param f the mixing factor (c = f * c1 + (1-f) * c2), 0 <= f <= 1.
+     * @return the mixed colour
+     */
+    public static int Blend(int c1, int c2, double f){
+
+        RGB r1 = new RGB (c1);
+        RGB r2 = new RGB (c2);
+        double f2 = 1 - f;
+
+        int a = (int) Math.round(r1.alpha * f + r2.alpha * f2);
+        int r = (int) Math.round(r1.red * f + r2.red * f2);
+        int g = (int) Math.round(r1.green * f + r2.green * f2);
+        int b = (int) Math.round(r1.blue * f + r2.blue * f2);
+
+        return Color.argb(a, r, g, b);
+    }
 }

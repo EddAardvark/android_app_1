@@ -9,6 +9,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
 
+import com.misc.ColourHelpers;
+
 import java.util.Random;
 
 public class StarParameters {
@@ -59,7 +61,6 @@ public class StarParameters {
         paint.setStyle(Paint.Style.FILL);
 
         canvas.drawRect(rect, paint);
-        paint.setColor(m_first_line);
 
         double xc = m_width * 0.5;
         double yc = m_height * 0.5;
@@ -75,6 +76,9 @@ public class StarParameters {
             double s = Math.sin (t2);
             double x0 = xc + r * c;
             double y0 = yc + r * s;
+            double f = (m_n3 > 1) ? 1.0 - (double) j / (m_n3 - 1) : 1.0;
+
+            paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
 
             for (int i = 0; i <= m_n1; i++) {
                 n += m_n2;
