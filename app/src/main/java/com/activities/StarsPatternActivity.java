@@ -83,10 +83,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_foreground1.setBackgroundColor(m_params.m_first_line);
         m_layout_foreground2.setBackgroundColor(m_params.m_last_line);
 
-        m_layout_background.setBackgroundColor(m_params.m_background);
-        m_layout_foreground1.setBackgroundColor(m_params.m_first_line);
-        m_layout_foreground2.setBackgroundColor(m_params.m_last_line);
-
         m_layout_background_text.setTextColor(m_params.m_background ^ 0xFFFFFF);
         m_layout_foreground1_text.setTextColor(m_params.m_first_line ^ 0xFFFFFF);
         m_layout_foreground2_text.setTextColor(m_params.m_last_line ^ 0xFFFFFF);
@@ -213,6 +209,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             case CB_LINECOLOUR1: m_params.m_first_line = value; break;
             case CB_LINECOLOUR2: m_params.m_last_line = value; break;
         }
+        setColours();
         Draw ();
     }
 

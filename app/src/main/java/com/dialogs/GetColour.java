@@ -24,11 +24,19 @@ public class GetColour extends DialogFragment {
     }
 
     DialogInterface.OnClickListener m_listener = new GetColour.ClickListener();
+    NumberPicker.OnValueChangeListener m_number_change = new NewNumbrListener();
+
     GetColour.Result m_result;
     int m_id;
+
     NumberPicker m_RedPicker;
     NumberPicker m_GreenPicker;
     NumberPicker m_BluePicker;
+    View m_layout_colour;
+    int m_red;
+    int m_green;
+    int m_blue;
+    int m_opaque;
 
     GetColour(GetColour.Result res, int id) {
         m_id = id;
@@ -48,6 +56,7 @@ public class GetColour extends DialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,12 @@ public class GetColour extends DialogFragment {
         builder.setPositiveButton("Accept", m_listener);
         builder.setNegativeButton("Cancel", m_listener);
 
+        int colour = args.getInt("current");
+        m_opaque = (colour >> 24) & 0xFF;
+        m_red = (colour >> 16) & 0xFF;
+        m_green = (colour >> 8) & 0xFF;
+        m_blue = colour & 0xFF;
+
         return builder.create();
     }
 
@@ -70,21 +85,33 @@ public class GetColour extends DialogFragment {
 
         Dialog dialog = this.getDialog();
 
+        m_layout_colour = dialog.findViewById(R.id.colour_display);
+
         m_RedPicker = (NumberPicker) dialog.findViewById(R.id.set_red);
         m_GreenPicker = (NumberPicker) dialog.findViewById(R.id.set_green);
         m_BluePicker = (NumberPicker) dialog.findViewById(R.id.set_blue);
 
         m_RedPicker.setMinValue(0);
         m_RedPicker.setMaxValue(255);
-        m_RedPicker.setValue(0);
+        m_RedPicker.setValue(m_red);
 
         m_GreenPicker.setMinValue(0);
         m_GreenPicker.setMaxValue(255);
-        m_GreenPicker.setValue(0);
+        m_GreenPicker.setValue(m_green);
 
         m_BluePicker.setMinValue(0);
         m_BluePicker.setMaxValue(255);
-        m_BluePicker.setValue(0);
+        m_BluePicker.setValue(m_blue);
+
+        m_RedPicker.setOnValueChangedListener(m_number_change);
+        m_GreenPicker.setOnValueChangedListener(m_number_change);
+        m_BluePicker.setOnValueChangedListener(m_number_change);
+
+        setColour ();
+    }
+    void setColour ()
+    {
+        m_layout_colour.setBackgroundColor(Color.argb(m_opaque, m_red, m_green, m_blue));
     }
 
     public class ClickListener implements DialogInterface.OnClickListener {
@@ -95,13 +122,34 @@ public class GetColour extends DialogFragment {
                 case Dialog.BUTTON_NEGATIVE:
                     break;
                 case Dialog.BUTTON_POSITIVE:
-                    m_result.SetColour(m_id, Color.RED);
+                    m_result.SetColour(m_id, Color.argb(m_opaque, m_red, m_green, m_blue));
                     break;
                 case Dialog.BUTTON_NEUTRAL:
                     break;
             }
         }
     }
+
+    public class NewNumbrListener implements NumberPicker.OnValueChangeListener {
+
+        @Override
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+            switch (picker.getId()) {
+                case R.id.set_red:
+                    m_red = newVal;
+                    break;
+                case R.id.set_green:
+                    m_green = newVal;
+                    break;
+                case R.id.set_blue:
+                    m_blue = newVal;
+                    break;
+            }
+            setColour();
+        }
+    }
+
 
     public class ShowListener implements DialogInterface.OnShowListener {
 
