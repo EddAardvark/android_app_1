@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.example.tutorialapp.R;
+import com.misc.ColourHelpers;
 import com.patterns.StarParameters;
 
 import java.io.File;
@@ -83,9 +84,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_foreground1.setBackgroundColor(m_params.m_first_line);
         m_layout_foreground2.setBackgroundColor(m_params.m_last_line);
 
-        m_layout_background_text.setTextColor(m_params.m_background ^ 0xFFFFFF);
-        m_layout_foreground1_text.setTextColor(m_params.m_first_line ^ 0xFFFFFF);
-        m_layout_foreground2_text.setTextColor(m_params.m_last_line ^ 0xFFFFFF);
+        m_layout_background_text.setTextColor(ColourHelpers.GetContrastColour (m_params.m_background));
+        m_layout_foreground1_text.setTextColor(ColourHelpers.GetContrastColour (m_params.m_first_line));
+        m_layout_foreground2_text.setTextColor(ColourHelpers.GetContrastColour (m_params.m_last_line));
     }
 
     void Draw ()

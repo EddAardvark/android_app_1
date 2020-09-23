@@ -55,11 +55,11 @@ public class StarParameters {
         Rect rect = new Rect(0, 0, m_width, m_height);
         Canvas canvas = new Canvas(m_bmp);
         Paint paint = new Paint();
-        paint.setColor(Color.YELLOW);
+        paint.setColor(m_background);
         paint.setStyle(Paint.Style.FILL);
 
         canvas.drawRect(rect, paint);
-        paint.setColor(Color.BLACK);
+        paint.setColor(m_first_line);
 
         double xc = m_width * 0.5;
         double yc = m_height * 0.5;

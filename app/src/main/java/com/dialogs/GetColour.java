@@ -28,6 +28,7 @@ public class GetColour extends DialogFragment {
 
     GetColour.Result m_result;
     int m_id;
+    int m_granularty = 16;  ///< granularity in the colour component picker
 
     NumberPicker m_RedPicker;
     NumberPicker m_GreenPicker;
@@ -42,7 +43,6 @@ public class GetColour extends DialogFragment {
         m_id = id;
         m_result = res;
     }
-
 
     public static GetColour construct(GetColour.Result res, int id, int colour, String title, String message) {
 
@@ -75,6 +75,10 @@ public class GetColour extends DialogFragment {
         m_red = (colour >> 16) & 0xFF;
         m_green = (colour >> 8) & 0xFF;
         m_blue = colour & 0xFF;
+        m_opaque = (colour >> 24) & 0xFF;
+        m_red = (colour >> 16) & 0xFF;
+        m_green = (colour >> 8) & 0xFF;
+        m_blue = colour & 0xFF;
 
         return builder.create();
     }
@@ -92,16 +96,16 @@ public class GetColour extends DialogFragment {
         m_BluePicker = (NumberPicker) dialog.findViewById(R.id.set_blue);
 
         m_RedPicker.setMinValue(0);
-        m_RedPicker.setMaxValue(255);
-        m_RedPicker.setValue(m_red);
+        m_RedPicker.setMaxValue(256/m_granularty);
+        m_RedPicker.setValue(((m_red == 255) ? 256 : m_red)/m_granularty);
 
         m_GreenPicker.setMinValue(0);
-        m_GreenPicker.setMaxValue(255);
-        m_GreenPicker.setValue(m_green);
+        m_GreenPicker.setMaxValue(256/m_granularty);
+        m_GreenPicker.setValue(((m_green == 255) ? 256 : m_green)/m_granularty);
 
         m_BluePicker.setMinValue(0);
-        m_BluePicker.setMaxValue(255);
-        m_BluePicker.setValue(m_blue);
+        m_BluePicker.setMaxValue(256/m_granularty);
+        m_BluePicker.setValue(((m_blue == 255) ? 256 : m_blue)/m_granularty);
 
         m_RedPicker.setOnValueChangedListener(m_number_change);
         m_GreenPicker.setOnValueChangedListener(m_number_change);
@@ -137,13 +141,13 @@ public class GetColour extends DialogFragment {
 
             switch (picker.getId()) {
                 case R.id.set_red:
-                    m_red = newVal;
+                    m_red = Math.min(newVal*m_granularty, 255);
                     break;
                 case R.id.set_green:
-                    m_green = newVal;
+                    m_green = Math.min(newVal*m_granularty, 255);;
                     break;
                 case R.id.set_blue:
-                    m_blue = newVal;
+                    m_blue = Math.min(newVal*m_granularty, 255);;
                     break;
             }
             setColour();

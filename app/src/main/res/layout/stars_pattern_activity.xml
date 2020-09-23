@@ -29,297 +29,309 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_n1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
+        android:id="@+id/layout_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image"
-        android:focusable="true">
-
-        <TextView
-            android:id="@+id/text_n1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N1"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_n2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        app:layout_constraintStart_toEndOf="@+id/layout_n1"
-        app:layout_constraintTop_toTopOf="@+id/layout_n1"
-        android:focusable="true">
-
-        <TextView
-            android:id="@+id/text_n2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N2"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_n3"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/holo_blue_dark"
-        app:layout_constraintStart_toEndOf="@+id/layout_n2"
-        app:layout_constraintTop_toTopOf="@+id/layout_n2"
-        android:clickable="true"
-        android:focusable="true">
-
-        <TextView
-            android:id="@+id/text_n3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N3"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tvn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/n1"
-        app:layout_constraintBottom_toTopOf="@+id/layout_n1"
-        app:layout_constraintEnd_toEndOf="@+id/layout_n1"
-        app:layout_constraintStart_toStartOf="@+id/layout_n1" />
-
-    <TextView
-        android:id="@+id/tvn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/n2"
-        app:layout_constraintBottom_toTopOf="@+id/layout_n2"
-        app:layout_constraintEnd_toEndOf="@+id/layout_n2"
-        app:layout_constraintStart_toStartOf="@+id/layout_n2" />
-
-    <TextView
-        android:id="@+id/tvn3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/n3"
-        app:layout_constraintBottom_toTopOf="@+id/layout_n3"
-        app:layout_constraintEnd_toEndOf="@+id/layout_n3"
-        app:layout_constraintStart_toStartOf="@+id/layout_n3" />
-
-    <TextView
-        android:id="@+id/tvda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/angle"
-        app:layout_constraintBottom_toTopOf="@+id/layout_angle"
-        app:layout_constraintEnd_toEndOf="@+id/layout_angle"
-        app:layout_constraintStart_toStartOf="@+id/layout_angle" />
-
-    <TextView
-        android:id="@+id/tvsh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shrink"
-        app:layout_constraintBottom_toTopOf="@+id/layout_shrink"
-        app:layout_constraintEnd_toEndOf="@+id/layout_shrink"
-        app:layout_constraintStart_toStartOf="@+id/layout_shrink" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_share"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="@+id/layout_n1"
-        app:layout_constraintTop_toBottomOf="@+id/layout_n1">
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_angle"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toEndOf="@+id/layout_n3"
-        app:layout_constraintTop_toTopOf="@+id/layout_n3">
-
-        <TextView
-            android:id="@+id/text_da"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="angle"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_shrink"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toEndOf="@+id/layout_angle"
-        app:layout_constraintTop_toTopOf="@+id/layout_angle">
-
-        <TextView
-            android:id="@+id/text_sh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="shrink"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_random"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toEndOf="@+id/layout_share"
-        app:layout_constraintTop_toTopOf="@+id/layout_share"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/tvrand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/random"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_back_colour"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toEndOf="@+id/layout_fore_colour2"
-        app:layout_constraintTop_toTopOf="@+id/layout_fore_colour2">
-
-        <TextView
-            android:id="@+id/text_backcolour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_fore_colour1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="@+id/layout_share"
-        app:layout_constraintTop_toBottomOf="@+id/layout_share">
-
-        <TextView
-            android:id="@+id/text_forecolour1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/foreground1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_fore_colour2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toEndOf="@+id/layout_fore_colour1"
-        app:layout_constraintTop_toTopOf="@+id/layout_fore_colour1">
+        app:layout_constraintTop_toBottomOf="@+id/image">
 
 
         <TextView
-            android:id="@+id/text_forecolour2"
+            android:id="@+id/tvn1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/foreground2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            android:text="@string/n1"
+            app:layout_constraintEnd_toEndOf="@+id/layout_n1"
+            app:layout_constraintStart_toStartOf="@+id/layout_n1"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/n2"
+            app:layout_constraintBottom_toTopOf="@+id/layout_n2"
+            app:layout_constraintEnd_toEndOf="@+id/layout_n2"
+            app:layout_constraintStart_toStartOf="@+id/layout_n2" />
 
+        <TextView
+            android:id="@+id/tvn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/n3"
+            app:layout_constraintBottom_toTopOf="@+id/layout_n3"
+            app:layout_constraintEnd_toEndOf="@+id/layout_n3"
+            app:layout_constraintStart_toStartOf="@+id/layout_n3" />
+
+        <TextView
+            android:id="@+id/tvda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/angle"
+            app:layout_constraintBottom_toTopOf="@+id/layout_angle"
+            app:layout_constraintEnd_toEndOf="@+id/layout_angle"
+            app:layout_constraintStart_toStartOf="@+id/layout_angle" />
+
+        <TextView
+            android:id="@+id/tvsh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shrink"
+            app:layout_constraintBottom_toTopOf="@+id/layout_shrink"
+            app:layout_constraintEnd_toEndOf="@+id/layout_shrink"
+            app:layout_constraintStart_toStartOf="@+id/layout_shrink" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_n1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvn1">
+
+            <TextView
+                android:id="@+id/text_n1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N1"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_n2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/layout_n1"
+            app:layout_constraintTop_toTopOf="@+id/layout_n1">
+
+            <TextView
+                android:id="@+id/text_n2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N2"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_n3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/layout_n2"
+            app:layout_constraintTop_toTopOf="@+id/layout_n2">
+
+            <TextView
+                android:id="@+id/text_n3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N3"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_share"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="@+id/layout_n1"
+            app:layout_constraintTop_toBottomOf="@+id/layout_n1">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/share"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_angle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/layout_n3"
+            app:layout_constraintTop_toTopOf="@+id/layout_n3">
+
+            <TextView
+                android:id="@+id/text_da"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="angle"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_shrink"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/layout_angle"
+            app:layout_constraintTop_toTopOf="@+id/layout_angle">
+
+            <TextView
+                android:id="@+id/text_sh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="shrink"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_random"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/layout_share"
+            app:layout_constraintTop_toTopOf="@+id/layout_share"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/tvrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/random"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_back_colour"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/layout_fore_colour2"
+            app:layout_constraintTop_toTopOf="@+id/layout_fore_colour2">
+
+            <TextView
+                android:id="@+id/text_backcolour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_fore_colour1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="@+id/layout_share"
+            app:layout_constraintTop_toBottomOf="@+id/layout_share">
+
+            <TextView
+                android:id="@+id/text_forecolour1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/foreground1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_fore_colour2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toEndOf="@+id/layout_fore_colour1"
+            app:layout_constraintTop_toTopOf="@+id/layout_fore_colour1">
+
+
+            <TextView
+                android:id="@+id/text_forecolour2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/foreground2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
