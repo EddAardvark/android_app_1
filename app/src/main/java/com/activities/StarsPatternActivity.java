@@ -1,5 +1,6 @@
 package com.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
@@ -9,8 +10,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
-import android.text.Layout;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.view.View;
@@ -57,6 +56,10 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null){
+            m_params.fromBundle (savedInstanceState);
+        }
+
         setContentView(R.layout.stars_pattern_activity);
 
         findViewById(R.id.layout_n1).setOnClickListener(m_listener);
@@ -83,6 +86,21 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         setColours();
         Draw ();
     }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        m_params.fromBundle (savedInstanceState);
+        Draw();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        m_params.toBundle (outState);
+    }
+
 
     void setColours() {
 
@@ -172,7 +190,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
     void onClickShrink () {
-        GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_pc, 5, 100, 1, getString(R.string.star_shrink_title), getString(R.string.star_shrink_description));
+        GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_pc, 0, 90, 1, getString(R.string.star_shrink_title), getString(R.string.star_shrink_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**

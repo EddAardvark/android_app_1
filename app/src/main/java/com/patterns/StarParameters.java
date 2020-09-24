@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.misc.ColourHelpers;
@@ -23,6 +24,15 @@ public class StarParameters {
     public int m_background = Color.WHITE;      ///< Background colour
     public int m_first_line = Color.BLUE;       ///< Foreground ground colour
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
+
+    String KEY_N1 = "n1";
+    String KEY_N2 = "n2";
+    String KEY_N3 = "n3";
+    String KEY_ROTATE = "rot";
+    String KEY_SHRINK = "shrnk";
+    String KEY_BACKGROUND = "bg";
+    String KEY_LINE1 = "l1";
+    String KEY_LINE2 = "l2";
 
     int m_width;
     int m_height;
@@ -95,5 +105,29 @@ public class StarParameters {
 
 // Attach the canvas to the ImageView
         img.setImageDrawable(new BitmapDrawable(resources, m_bmp));
+    }
+
+    public void fromBundle(Bundle bundle) {
+
+        m_n1 = bundle.getInt(KEY_N1, m_n1);
+        m_n2 = bundle.getInt(KEY_N2, m_n2);
+        m_n3 = bundle.getInt(KEY_N3, m_n3);
+        m_rotate_degrees = bundle.getInt(KEY_ROTATE, m_rotate_degrees);
+        m_shrink_pc = bundle.getInt(KEY_SHRINK, m_shrink_pc);
+        m_background = bundle.getInt(KEY_BACKGROUND, m_background);
+        m_first_line = bundle.getInt(KEY_LINE1, m_first_line);
+        m_last_line = bundle.getInt(KEY_LINE2, m_last_line);
+    }
+
+    public void toBundle(Bundle bundle) {
+
+        bundle.putInt(KEY_N1, m_n1);
+        bundle.putInt(KEY_N2, m_n2);
+        bundle.putInt(KEY_N3, m_n3);
+        bundle.putInt(KEY_ROTATE, m_rotate_degrees);
+        bundle.putInt(KEY_SHRINK, m_shrink_pc);
+        bundle.putInt(KEY_BACKGROUND, m_background);
+        bundle.putInt(KEY_LINE1, m_first_line);
+        bundle.putInt(KEY_LINE2, m_last_line);
     }
 }
