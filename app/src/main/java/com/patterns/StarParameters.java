@@ -19,7 +19,7 @@ public class StarParameters {
     public int m_n2 = 2;                        ///< Increment when joining points
     public int m_n3 = 1;                        ///< The number of copies to draw, with rotation
     public int m_rotate_degrees = 5;            ///< Rotation when drawing multiple images
-    public int m_shrink_pc = 95;                ///< Shrinkage when drawing multiple images (percent)
+    public int m_shrink_pc = 5;                 ///< Shrinkage when drawing multiple images (percent)
     public int m_background = Color.WHITE;      ///< Background colour
     public int m_first_line = Color.BLUE;       ///< Foreground ground colour
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
@@ -66,7 +66,7 @@ public class StarParameters {
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
-        double shrink = m_shrink_pc * 0.01;
+        double shrink = (100 - m_shrink_pc) * 0.01;
 
         for (int j = 0 ; j < m_n3 ; ++j) {
 

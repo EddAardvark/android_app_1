@@ -49,6 +49,10 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     TextView m_layout_foreground1_text;
     TextView m_layout_foreground2_text;
 
+    View m_top;
+
+    int m_temp = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +73,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_background_text = (TextView)findViewById(R.id.text_backcolour);
         m_layout_foreground1_text = (TextView)findViewById(R.id.text_forecolour1);
         m_layout_foreground2_text = (TextView)findViewById(R.id.text_forecolour2);
+
+        m_top = findViewById (R.id.stars_activity_top);
 
         m_layout_background.setOnClickListener(m_listener);
         m_layout_foreground1.setOnClickListener(m_listener);
@@ -127,8 +133,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         ((TextView)findViewById(R.id.text_n1)).setText(Integer.toString(m_params.m_n1));
         ((TextView)findViewById(R.id.text_n2)).setText(Integer.toString(m_params.m_n2));
         ((TextView)findViewById(R.id.text_n3)).setText(Integer.toString(m_params.m_n3));
-        ((TextView)findViewById(R.id.text_da)).setText(Integer.toString(m_params.m_rotate_degrees));
-        ((TextView)findViewById(R.id.text_sh)).setText(Integer.toString(m_params.m_shrink_pc));
+        ((TextView)findViewById(R.id.text_da)).setText(Integer.toString(m_params.m_rotate_degrees) + '°');
+        ((TextView)findViewById(R.id.text_sh)).setText(Integer.toString(m_params.m_shrink_pc) + '%');
     }
 
     /**
@@ -173,7 +179,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Allows you to change the background colour.
      */
     void onClickBackColour () {
-        GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.star_background_title), getString(R.string.star_shrink_description));
+        GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.star_background_title), getString(R.string.star_background_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
@@ -257,6 +263,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
             }
         }
+
 
     }
 

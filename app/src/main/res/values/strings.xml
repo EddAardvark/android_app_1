@@ -33,7 +33,8 @@
         This parameter determines the number that each copy of the original pattern will be rotated.
     </string>
     <string name="star_shrink_description">
-        This parameter determines how much to shrink each copy of the original pattern. It is a percentage, 100 is full size, 25 is a quarter.
+        This parameter determines by how much to shrink each copy of the original pattern. It is a percentage, 0 is full size, 5
+        will reduce each uccessive image by 5%.
     </string>
     <string name="star_n1_title">Number of points</string>
     <string name="star_n2_title">Hop between points</string>
@@ -45,4 +46,5 @@
     <string name="star_last_colour_title">Last colour</string>
     <string name="star_first_colour_description">This is the colour of the line use to draw the first pattern and the start of the sequence when drawing multiple patterns</string>
     <string name="star_last_colour_description">This is the last colour in the sequence when drawing multiple patterns, intermediate patterns are drawn using a blend of the 2.</string>
+    <string name="star_background_description">This is the colour used to fill in the background upon which the pattern is drawn</string>
 </resources>
