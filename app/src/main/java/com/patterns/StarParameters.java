@@ -51,7 +51,7 @@ public class StarParameters {
         Random rand = new Random();
 
         m_n1 = rand.nextInt(98) + 3;
-        m_n2 = rand.nextInt(m_n1/2);
+        m_n2 = rand.nextInt(m_n1/2 - 1) + 1;
     }
 
     public Bitmap bitmap ()
