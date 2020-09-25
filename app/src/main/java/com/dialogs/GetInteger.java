@@ -1,6 +1,5 @@
 package com.dialogs;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -9,8 +8,6 @@ import android.widget.NumberPicker;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
-import com.example.tutorialapp.R;
 
 public class GetInteger extends DialogFragment {
 

@@ -17,15 +17,17 @@ import android.graphics.Bitmap;
 
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
+import com.dialogs.ManageStarSettings;
 import com.example.tutorialapp.R;
 import com.misc.ColourHelpers;
 import com.patterns.StarParameters;
+import com.patterns.StarSettings;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result {
+public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageStarSettings.Result {
 
     final int WIDTH = 1024;
     final int HEIGHT = 1024;
@@ -38,8 +40,10 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     final int CB_BACKCOLOUR = 6;
     final int CB_LINECOLOUR1 = 7;
     final int CB_LINECOLOUR2 = 8;
+    final int CB_SETTINGS = 9;
 
     StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
+    StarSettings m_settings = new StarSettings ();
     ClickListener m_listener = new StarsPatternActivity.ClickListener();
     View m_layout_background;
     View m_layout_foreground1;
@@ -69,6 +73,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         findViewById(R.id.layout_share).setOnClickListener(m_listener);
         findViewById(R.id.layout_random).setOnClickListener(m_listener);
         findViewById(R.id.layout_shrink).setOnClickListener(m_listener);
+        findViewById(R.id.layout_settings).setOnClickListener(m_listener);
 
         m_layout_background = findViewById(R.id.layout_back_colour);
         m_layout_foreground1 = findViewById(R.id.layout_fore_colour1);
@@ -194,6 +199,13 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
+     * Change the pattern settings
+     */
+    void onClickSettings() {
+        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings, getString(R.string.star_settings_title), getString(R.string.star_settings_description));
+        dialog.show(getSupportFragmentManager(), "Hello");
+    }
+    /**
      * Allows you to change the background colour.
      */
     void onClickBackColour () {
@@ -238,6 +250,11 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         Draw ();
     }
 
+    @Override
+    public void UpdateStarSettings(int id, StarSettings value) {
+
+    }
+
     public class ClickListener extends Activity implements View.OnClickListener {
 
         @Override
@@ -267,6 +284,10 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     m_params.Randomise ();
                     Draw();
                     break;
+                case R.id.layout_settings:
+                    onClickSettings ();
+                    Draw();
+                    break;
                 case R.id.layout_back_colour:
                     onClickBackColour ();
                     Draw();
@@ -281,8 +302,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
             }
         }
-
-
     }
 
 }

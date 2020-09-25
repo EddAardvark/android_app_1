@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.misc.ColourHelpers;
+import com.misc.MyMath;
 
 import java.util.Random;
 
@@ -49,9 +50,18 @@ public class StarParameters {
     public void Randomise ()
     {
         Random rand = new Random();
+        int n2_range = m_n1/2 - 1;
 
         m_n1 = rand.nextInt(98) + 3;
-        m_n2 = rand.nextInt(m_n1/2 - 1) + 1;
+        m_n2 = (n2_range > 0) ? rand.nextInt(n2_range) + 1 : 1;
+
+        int hcf = MyMath.hcf (m_n1, m_n2);
+
+        if (hcf > 1)
+        {
+            m_n1 /= hcf;
+            m_n2 /= hcf;
+        }
     }
 
     public Bitmap bitmap ()
