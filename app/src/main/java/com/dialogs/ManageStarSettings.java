@@ -23,11 +23,9 @@ public class ManageStarSettings extends DialogFragment {
         abstract void UpdateStarSettings(int id, StarSettings value);
     }
 
-    DialogInterface.OnClickListener m_listener = new ManageStarSettings.ClickListener();
+    DialogInterface.OnClickListener m_listener = new ManageStarSettings.EventListener();
     ManageStarSettings.Result m_result;
     StarSettings m_settings = new StarSettings();
-
-    TabLayout.OnTabSelectedListener m_tab_change = new ManageStarSettings.TabChangeListener();
     int m_id;
 
     ManageStarSettings(ManageStarSettings.Result res, int id) {
@@ -86,10 +84,8 @@ This code puts the view into the tab, the tab layout doesn't manage the working 
         */
 
         TabLayout layout = dialog.findViewById(R.id.star_settings_tabs);
-        layout.addOnTabSelectedListener(m_tab_change);
+        layout.addOnTabSelectedListener((TabLayout.BaseOnTabSelectedListener) m_listener);
     }
-
-
 
     private void OnShowPattern() {
     }
@@ -99,7 +95,7 @@ This code puts the view into the tab, the tab layout doesn't manage the working 
     }
 
 
-    public class ClickListener implements DialogInterface.OnClickListener {
+    public class EventListener implements DialogInterface.OnClickListener, TabLayout.OnTabSelectedListener {
 
         @Override
         public void onClick(DialogInterface dialog, int id) {
@@ -113,9 +109,6 @@ This code puts the view into the tab, the tab layout doesn't manage the working 
                     break;
             }
         }
-    }
-
-    public class TabChangeListener implements TabLayout.OnTabSelectedListener {
 
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
