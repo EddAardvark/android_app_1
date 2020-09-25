@@ -75,10 +75,6 @@ public class GetColour extends DialogFragment {
         m_red = (colour >> 16) & 0xFF;
         m_green = (colour >> 8) & 0xFF;
         m_blue = colour & 0xFF;
-        m_opaque = (colour >> 24) & 0xFF;
-        m_red = (colour >> 16) & 0xFF;
-        m_green = (colour >> 8) & 0xFF;
-        m_blue = colour & 0xFF;
 
         return builder.create();
     }
@@ -113,6 +109,9 @@ public class GetColour extends DialogFragment {
 
         setColour ();
     }
+
+    // TODO remove listeners at end
+
     void setColour ()
     {
         m_layout_colour.setBackgroundColor(Color.argb(m_opaque, m_red, m_green, m_blue));

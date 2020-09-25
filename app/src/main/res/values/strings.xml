@@ -53,4 +53,5 @@
     <string name="pattern">Pattern</string>
     <string name="randomiser">Randomiser</string>
     <string name="animator">Animator</string>
+    <string name="bitmap_size">Bitmap size (pixels):</string>
 </resources>
