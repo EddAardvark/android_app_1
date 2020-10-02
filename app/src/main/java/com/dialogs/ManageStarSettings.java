@@ -6,14 +6,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.NumberPicker;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tutorialapp.R;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.patterns.StarSettings;
 
@@ -70,21 +69,28 @@ public class ManageStarSettings extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        Dialog dialog = this.getDialog();
 /*
-
-This code puts the view into the tab, the tab layout doesn't manage the working area
-
-        TabLayout.Tab tabpattern = layout.getTabAt(0);
-        LayoutInflater inflator = requireActivity().getLayoutInflater();
-        View v1 = inflator.inflate(R.layout.star_settings_pattern, null);
-
-        tabpattern.setCustomView (v1);
-        */
+        Dialog dialog = this.getDialog();
 
         TabLayout layout = dialog.findViewById(R.id.star_settings_tabs);
         layout.addOnTabSelectedListener((TabLayout.BaseOnTabSelectedListener) m_listener);
+
+        // Add fragment
+        FragmentManager manager2 = getChildFragmentManager();
+
+        BlankFragment fragment = new BlankFragment();
+        FragmentTransaction transaction = manager2.beginTransaction();
+        transaction.add(R.id.fragment_container, fragment);
+        //transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+        manager2.executePendingTransactions();
+*/
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     private void OnShowPattern() {

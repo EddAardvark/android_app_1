@@ -202,8 +202,12 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Change the pattern settings
      */
     void onClickSettings() {
-        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings, getString(R.string.star_settings_title), getString(R.string.star_settings_description));
-        dialog.show(getSupportFragmentManager(), "Hello");
+        //ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings, getString(R.string.star_settings_title), getString(R.string.star_settings_description));
+        //dialog.show(getSupportFragmentManager(), "Hello");
+
+
+        Intent intent = new Intent(this, StarSettingsActivity.class);
+        startActivity(intent);
     }
     /**
      * Allows you to change the background colour.
