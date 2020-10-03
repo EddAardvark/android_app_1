@@ -65,4 +65,10 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="general_star_settings">General Settings</string>
+    <string name="line_thickness">Line Width:</string>
+    <string name="line_style">Line Style:</string>
+    <string name="bitmap_size_hint">Bitmap size in pixels</string>
+    <string name="line_thickness_hint">Line thickness</string>
+    <string name="line_style_hint">Line style</string>
 </resources>

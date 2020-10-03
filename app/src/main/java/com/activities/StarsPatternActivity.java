@@ -74,6 +74,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         findViewById(R.id.layout_random).setOnClickListener(m_listener);
         findViewById(R.id.layout_shrink).setOnClickListener(m_listener);
         findViewById(R.id.layout_settings).setOnClickListener(m_listener);
+        findViewById(R.id.layout_settings_2).setOnClickListener(m_listener);
 
         m_layout_background = findViewById(R.id.layout_back_colour);
         m_layout_foreground1 = findViewById(R.id.layout_fore_colour1);
@@ -205,9 +206,15 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         //ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings, getString(R.string.star_settings_title), getString(R.string.star_settings_description));
         //dialog.show(getSupportFragmentManager(), "Hello");
 
-
         Intent intent = new Intent(this, StarSettingsActivity.class);
         startActivity(intent);
+    }
+    /**
+     * Change the pattern settings (v2)
+     */
+    void onClickSettings2() {
+        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings, getString(R.string.star_settings_title), getString(R.string.star_settings_description));
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the background colour.
@@ -290,6 +297,10 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
                 case R.id.layout_settings:
                     onClickSettings ();
+                    Draw();
+                    break;
+                case R.id.layout_settings_2:
+                    onClickSettings2 ();
                     Draw();
                     break;
                 case R.id.layout_back_colour:

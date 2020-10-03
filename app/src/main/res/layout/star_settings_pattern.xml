@@ -8,10 +8,33 @@
         android:layout_height="match_parent"
     >
 
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/general_star_settings"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv1"
+        app:layout_constraintStart_toStartOf="@+id/tv1"
+        app:layout_constraintTop_toBottomOf="@+id/tv1">
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:text="@string/bitmap_size"
             app:layout_constraintBottom_toBottomOf="@+id/bm_size_edit"
             app:layout_constraintStart_toStartOf="parent"
@@ -19,10 +42,63 @@
 
         <EditText
             android:id="@+id/bm_size_edit"
-            android:layout_width="104dp"
-            android:layout_height="41dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
-            android:text="800"
+            android:hint="@string/bitmap_size_hint"
+            android:importantForAutofill="no"
+            android:inputType="number"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/line_thickness"
+            app:layout_constraintBottom_toBottomOf="@+id/line_thickness"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/line_thickness" />
+
+        <EditText
+            android:id="@+id/line_thickness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="@string/line_thickness_hint"
+            app:layout_constraintEnd_toEndOf="@+id/bm_size_edit"
+            app:layout_constraintStart_toStartOf="@+id/bm_size_edit"
+            app:layout_constraintTop_toBottomOf="@+id/bm_size_edit"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/line_style"
+            app:layout_constraintBottom_toBottomOf="@+id/line_style"
+            app:layout_constraintEnd_toEndOf="@+id/tv2"
+            app:layout_constraintTop_toTopOf="@+id/line_style" />
+
+        <EditText
+            android:id="@+id/line_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="@string/line_style_hint"
+            app:layout_constraintEnd_toEndOf="@+id/line_thickness"
+            app:layout_constraintStart_toStartOf="@+id/line_thickness"
+            app:layout_constraintTop_toBottomOf="@+id/line_thickness"
+            android:importantForAutofill="no" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
