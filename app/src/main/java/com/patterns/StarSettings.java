@@ -10,7 +10,7 @@ public class StarSettings {
 
     final String KEY_BITMAP_SIZE = "x1";
 
-    int m_bm_size = 800;
+    public int m_bm_size = 800;
 
     /**
      * Save the current values to a bundle

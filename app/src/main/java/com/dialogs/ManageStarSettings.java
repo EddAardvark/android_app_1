@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +25,7 @@ import com.patterns.StarSettings;
 public class ManageStarSettings extends DialogFragment {
 
     public interface Result {
-        abstract void UpdateStarSettings(int id, StarSettings value);
+        abstract void UpdateStarSettings(int id, Bundle value);
     }
 
     ManageStarSettings.EventListener m_listener = new ManageStarSettings.EventListener();
@@ -40,45 +41,32 @@ public class ManageStarSettings extends DialogFragment {
 
         m_id = id;
         m_result = res;
-
-        m_pattern_fragment = StarBasicSettings.newInstance();
-        m_animation_fragment = StarAnimationSettings.newInstance();
-        m_randomiser_fragment = StarRandomiserSettings.newInstance();
     }
 
-    public static ManageStarSettings construct(ManageStarSettings.Result res, int id, StarSettings settings, String title, String message) {
+    public static ManageStarSettings construct(ManageStarSettings.Result res, int id, StarSettings settings) {
 
         ManageStarSettings frag = new ManageStarSettings(res, id);
         Bundle args = new Bundle();
         args.putBundle("current", settings.toBundle());
-        args.putString("title", title);
-        args.putString("message", message);
         frag.setArguments(args);
         return frag;
     }
-/*
-    @NonNull
+
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        Bundle b = args.getBundle("current");
+        if (args != null) {
 
-        m_settings.fromBundle(b);
+            Bundle current = args.getBundle("current");
+            m_settings.fromBundle(current);
+        }
 
-        LayoutInflater inflator = requireActivity().getLayoutInflater();
-
-        builder.setView(inflator.inflate(R.layout.star_settings_top, null));
-        builder.setTitle(args.getString("title"));
-        builder.setMessage(args.getString("message"));
-
-        builder.setPositiveButton("Accept", m_listener);
-        builder.setNegativeButton("Cancel", m_listener);
-        return builder.create();
+        m_pattern_fragment = StarBasicSettings.newInstance(m_settings);
+        m_animation_fragment = StarAnimationSettings.newInstance(m_settings);
+        m_randomiser_fragment = StarRandomiserSettings.newInstance(m_settings);
     }
-*/
 
     @Nullable
     @Override
@@ -93,9 +81,10 @@ public class ManageStarSettings extends DialogFragment {
 
         Dialog dialog = this.getDialog();
 
-        TabLayout tabs = dialog.findViewById(R.id.star_settings_tabs);
+        ((TabLayout)dialog.findViewById(R.id.star_settings_tabs)).addOnTabSelectedListener((TabLayout.BaseOnTabSelectedListener) m_listener);
+        dialog.findViewById(R.id.ok_button).setOnClickListener(m_listener);
+        dialog.findViewById(R.id.cancel_button).setOnClickListener(m_listener);
 
-        tabs.addOnTabSelectedListener((TabLayout.BaseOnTabSelectedListener) m_listener);
 
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -125,17 +114,19 @@ public class ManageStarSettings extends DialogFragment {
         transaction.commit();
     }
 
-    public class EventListener implements DialogInterface.OnClickListener, TabLayout.OnTabSelectedListener {
+    public class EventListener implements View.OnClickListener, TabLayout.OnTabSelectedListener {
 
         @Override
-        public void onClick(DialogInterface dialog, int id) {
-            switch (id) {
-                case Dialog.BUTTON_NEGATIVE:
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.cancel_button:
+                    dismiss ();
                     break;
-                case Dialog.BUTTON_POSITIVE:
-                    m_result.UpdateStarSettings(m_id, m_settings);
-                    break;
-                case Dialog.BUTTON_NEUTRAL:
+                case R.id.ok_button:
+                    if (m_animation_fragment.onAccept () && m_pattern_fragment.onAccept() && m_randomiser_fragment.onAccept ()) {
+                        m_result.UpdateStarSettings(m_id, m_settings.toBundle());
+                    }
+                    dismiss ();
                     break;
             }
         }

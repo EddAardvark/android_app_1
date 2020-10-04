@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.activities.StarsPatternActivity;
 import com.example.tutorialapp.R;
 
 /**
@@ -17,26 +18,32 @@ import com.example.tutorialapp.R;
  */
 public class StarRandomiserSettings extends Fragment {
 
+    StarSettings m_settings;
+
     public StarRandomiserSettings() {
-        // Required empty public constructor
     }
 
+
+    /**
+     * Gives us a reference to the shared settings
+     * @param settings the settings
+     */
+    void setSettings (StarSettings settings){
+        m_settings = settings;
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      * @return A new instance of fragment StarrandomiserSettings.
      */
-    public static StarRandomiserSettings newInstance() {
+    public static StarRandomiserSettings newInstance(StarSettings settings) {
         StarRandomiserSettings fragment = new StarRandomiserSettings();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        fragment.setSettings(settings);
         return fragment;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -44,5 +51,9 @@ public class StarRandomiserSettings extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.star_settings_randomiser, container, false);
+    }
+
+    public boolean onAccept() {
+        return true;
     }
 }

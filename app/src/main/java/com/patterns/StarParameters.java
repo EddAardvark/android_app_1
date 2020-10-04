@@ -41,6 +41,11 @@ public class StarParameters {
 
     public StarParameters (int w, int h)
     {
+        setSize (w, h);
+    }
+
+    public void setSize (int w, int h)
+    {
         m_width = w;
         m_height = h;
 

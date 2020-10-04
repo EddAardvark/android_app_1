@@ -17,8 +17,17 @@ import com.example.tutorialapp.R;
  */
 public class StarAnimationSettings extends Fragment {
 
+    StarSettings m_settings;
+
     public StarAnimationSettings() {
-        // Required empty public constructor
+    }
+
+    /**
+     * Gives us a reference to the shared settings
+     * @param settings the settings
+     */
+    void setSettings (StarSettings settings){
+        m_settings = settings;
     }
 
     /**
@@ -26,10 +35,9 @@ public class StarAnimationSettings extends Fragment {
      * this fragment using the provided parameters.
      * @return A new instance of fragment StarrandomiserSettings.
      */
-    public static StarAnimationSettings newInstance() {
+    public static StarAnimationSettings newInstance(StarSettings settings) {
         StarAnimationSettings fragment = new StarAnimationSettings();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        fragment.setSettings(settings);
         return fragment;
     }
     @Override
@@ -44,5 +52,9 @@ public class StarAnimationSettings extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.star_settings_animation, container, false);
+    }
+
+    public boolean onAccept() {
+        return true;
     }
 }

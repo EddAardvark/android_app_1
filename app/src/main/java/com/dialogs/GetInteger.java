@@ -9,6 +9,8 @@ import android.widget.NumberPicker;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.tutorialapp.R;
+
 public class GetInteger extends DialogFragment {
 
     public interface Result
@@ -54,8 +56,8 @@ public class GetInteger extends DialogFragment {
         builder.setTitle(args.getString("title"));
         builder.setMessage(args.getString("message"));
         builder.setView(m_picker);
-        builder.setPositiveButton("Accept", m_listener);
-        builder.setNegativeButton("Cancel", m_listener);
+        builder.setPositiveButton(getString(R.string.accept), m_listener);
+        builder.setNegativeButton(getString(R.string.cancel), m_listener);
         return builder.create();
     }
 

@@ -71,4 +71,6 @@
     <string name="bitmap_size_hint">Bitmap size in pixels</string>
     <string name="line_thickness_hint">Line thickness</string>
     <string name="line_style_hint">Line style</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
 </resources>

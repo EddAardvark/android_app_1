@@ -29,9 +29,6 @@ import java.io.IOException;
 
 public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageStarSettings.Result {
 
-    final int WIDTH = 1024;
-    final int HEIGHT = 1024;
-
     final int CB_N1 = 1;
     final int CB_N2 = 2;
     final int CB_N3 = 3;
@@ -42,8 +39,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     final int CB_LINECOLOUR2 = 8;
     final int CB_SETTINGS = 9;
 
-    StarParameters m_params = new StarParameters (WIDTH, HEIGHT);
     StarSettings m_settings = new StarSettings ();
+    StarParameters m_params = new StarParameters (m_settings.m_bm_size, m_settings.m_bm_size);
+
     ClickListener m_listener = new StarsPatternActivity.ClickListener();
     View m_layout_background;
     View m_layout_foreground1;
@@ -202,7 +200,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Change the pattern settings
      */
     void onClickSettings() {
-        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings, getString(R.string.star_settings_title), getString(R.string.star_settings_description));
+        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings);
         dialog.show(getSupportFragmentManager(), "Hello");
     }
     /**
@@ -251,10 +249,12 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     }
 
     @Override
-    public void UpdateStarSettings(int id, StarSettings value) {
+    public void UpdateStarSettings(int id, Bundle b) {
 
+        m_settings.fromBundle(b);
+        m_params.setSize(m_settings.m_bm_size, m_settings.m_bm_size);
+        Draw();
     }
-
     public class ClickListener extends Activity implements View.OnClickListener {
 
         @Override

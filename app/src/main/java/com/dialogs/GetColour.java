@@ -67,8 +67,8 @@ public class GetColour extends DialogFragment {
         builder.setView(inflator.inflate(R.layout.colour_chooser, null));
         builder.setTitle(args.getString("title"));
         builder.setMessage(args.getString("message"));
-        builder.setPositiveButton("Accept", m_listener);
-        builder.setNegativeButton("Cancel", m_listener);
+        builder.setPositiveButton(getString(R.string.accept), m_listener);
+        builder.setNegativeButton(getString(R.string.cancel), m_listener);
 
         int colour = args.getInt("current");
         m_opaque = (colour >> 24) & 0xFF;
