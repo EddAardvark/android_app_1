@@ -292,32 +292,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_settings_2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:background="@android:color/holo_blue_dark"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toEndOf="@+id/layout_settings"
-            app:layout_constraintTop_toTopOf="@+id/layout_settings"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:id="@+id/tvset2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S2"
-                android:textColor="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_back_colour"
             android:layout_width="80dp"
