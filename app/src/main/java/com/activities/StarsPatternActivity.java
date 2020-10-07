@@ -80,8 +80,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_foreground1_text = (TextView)findViewById(R.id.text_forecolour1);
         m_layout_foreground2_text = (TextView)findViewById(R.id.text_forecolour2);
 
-        m_top = findViewById (R.id.stars_activity_top);
-
         m_layout_background.setOnClickListener(m_listener);
         m_layout_foreground1.setOnClickListener(m_listener);
         m_layout_foreground2.setOnClickListener(m_listener);
@@ -119,7 +117,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     void Draw ()
     {
         ImageView img = findViewById(R.id.image);
-        m_params.Draw (getResources(), img);
+        m_params.Draw (getResources(), img, m_settings.m_colouring_mode);
         showSettings ();
     }
 
@@ -274,11 +272,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
                 case R.id.layout_angle:
                     onClickAngle ();
-                    Draw();
                     break;
                 case R.id.layout_shrink:
                     onClickShrink ();
-                    Draw();
                     break;
                 case R.id.layout_random:
                     m_params.Randomise ();
@@ -286,19 +282,15 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
                 case R.id.layout_settings:
                     onClickSettings ();
-                    Draw();
                     break;
                 case R.id.layout_back_colour:
                     onClickBackColour ();
-                    Draw();
                     break;
                 case R.id.layout_fore_colour1:
                     onClickLineColour1 ();
-                    Draw();
                     break;
                 case R.id.layout_fore_colour2:
                     onClickLineColour2 ();
-                    Draw();
                     break;
             }
         }

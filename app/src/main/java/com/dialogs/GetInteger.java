@@ -9,6 +9,7 @@ import android.widget.NumberPicker;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.activities.StarsPatternActivity;
 import com.example.tutorialapp.R;
 
 public class GetInteger extends DialogFragment {

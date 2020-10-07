@@ -14,11 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.tutorialapp.R;
+import com.google.android.material.tabs.TabLayout;
 
 public class StarBasicSettings extends Fragment {
 
     StarSettings m_settings;
     NumberPicker m_size_picker;
+    EventListener m_listener = new EventListener();
 
     static String[] size_value_strs = {"80px", "160px", "320px", "640px", "800px", "1024px", "1280px", "1600px"};
     static int[] size_values = {80, 160, 320, 640, 800, 1024, 1280, 1600};
@@ -55,6 +57,11 @@ public class StarBasicSettings extends Fragment {
 
         View v =  inflater.inflate(R.layout.star_settings_pattern, container, false);
 
+        v.findViewById(R.id.button_cm_alternate).setOnClickListener(m_listener);
+        v.findViewById(R.id.button_cm_around).setOnClickListener(m_listener);
+        v.findViewById(R.id.button_cm_both).setOnClickListener(m_listener);
+        v.findViewById(R.id.button_cm_inwards).setOnClickListener(m_listener);
+
         m_size_picker = (NumberPicker) v.findViewById(R.id.size_pricker);
 
         m_size_picker.setMinValue(0);
@@ -83,6 +90,30 @@ public class StarBasicSettings extends Fragment {
         int x = m_size_picker.getValue();
         m_settings.m_bm_size = size_values[x];
         return true;
+    }
+
+    public class EventListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+
+            // TODO: Highlight selection
+
+            switch (view.getId()) {
+                case R.id.button_cm_alternate:
+                    m_settings.m_colouring_mode = StarSettings.ColouringMode.ALTERNATE;
+                    break;
+                case R.id.button_cm_around:
+                    m_settings.m_colouring_mode = StarSettings.ColouringMode.AROUND;
+                    break;
+                case R.id.button_cm_both:
+                    m_settings.m_colouring_mode = StarSettings.ColouringMode.BOTH;
+                    break;
+                case R.id.button_cm_inwards:
+                    m_settings.m_colouring_mode = StarSettings.ColouringMode.INWARDS;
+                    break;
+            }
+        }
     }
 
 }

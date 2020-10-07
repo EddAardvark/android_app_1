@@ -73,12 +73,15 @@ public class StarParameters {
     {
         return m_bmp;
     }
+
     /**
      * Draws the pattern using the current parameters
-     * @param img Where to draw the pattern
+     * @param resources
+     * @param img
+     * @param colour_mode
      */
-    public void Draw(Resources resources, ImageView img)
-    {
+    public void Draw(Resources resources, ImageView img, StarSettings.ColouringMode colour_mode) {
+
         Rect rect = new Rect(0, 0, m_width, m_height);
         Canvas canvas = new Canvas(m_bmp);
         Paint paint = new Paint();
@@ -87,18 +90,43 @@ public class StarParameters {
 
         canvas.drawRect(rect, paint);
 
+        switch (colour_mode) {
+            case BOTH:
+                DrawBoth(paint, canvas);
+                break;
+            case INWARDS:
+                DrawInwards(paint, canvas);
+                break;
+            case AROUND:
+                DrawAround(paint, canvas);
+                break;
+            case ALTERNATE:
+                DrawAlternate(paint, canvas);
+                break;
+        }
+
+        img.setImageDrawable(new BitmapDrawable(resources, m_bmp));
+    }
+
+    /**
+     * Colour progresses from the first colour to the second as we move inwards
+     * @param paint
+     * @param canvas
+     */
+    void DrawInwards(Paint paint, Canvas canvas) {
+
         double xc = m_width * 0.5;
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
         double shrink = (100 - m_shrink_pc) * 0.01;
 
-        for (int j = 0 ; j < m_n3 ; ++j) {
+        for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
             double t2 = Math.PI * m_rotate_degrees * j / 180;
-            double c = Math.cos (t2);
-            double s = Math.sin (t2);
+            double c = Math.cos(t2);
+            double s = Math.sin(t2);
             double x0 = xc + r * c;
             double y0 = yc + r * s;
             double f = (m_n3 > 1) ? 1.0 - (double) j / (m_n3 - 1) : 1.0;
@@ -117,9 +145,127 @@ public class StarParameters {
             }
             r *= shrink;
         }
+    }
 
-// Attach the canvas to the ImageView
-        img.setImageDrawable(new BitmapDrawable(resources, m_bmp));
+    /**
+     * Colour advances as we move around the pattern
+     * @param paint
+     * @param canvas
+     */
+    void DrawAround (Paint paint, Canvas canvas) {
+
+        double xc = m_width * 0.5;
+        double yc = m_height * 0.5;
+        double r = m_height * 0.48;
+        double theta = Math.PI * 2 / m_n1;
+        double shrink = (100 - m_shrink_pc) * 0.01;
+
+        for (int j = 0; j < m_n3; ++j) {
+
+            int n = 0;
+            double t2 = Math.PI * m_rotate_degrees * j / 180;
+            double c = Math.cos(t2);
+            double s = Math.sin(t2);
+            double x0 = xc + r * c;
+            double y0 = yc + r * s;
+
+            for (int i = 0; i <= m_n1; i++) {
+
+                double f = (m_n1 > 1) ? 1.0 - (double) i / (m_n1 - 1) : 1.0;
+
+                f = (f < 0.5) ? (2 * f) : (2 - 2 * f);
+                paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
+
+                n += m_n2;
+                double x = Math.cos(n * theta);
+                double y = Math.sin(n * theta);
+                double x1 = xc + r * (c * x + s * y);
+                double y1 = yc + r * (s * x - c * y);
+                canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
+                x0 = x1;
+                y0 = y1;
+            }
+            r *= shrink;
+        }
+    }
+
+    /**
+     * Colours alternate
+     * @param paint
+     * @param canvas
+     */
+    void DrawAlternate (Paint paint, Canvas canvas) {
+        double xc = m_width * 0.5;
+        double yc = m_height * 0.5;
+        double r = m_height * 0.48;
+        double theta = Math.PI * 2 / m_n1;
+        double shrink = (100 - m_shrink_pc) * 0.01;
+
+        for (int j = 0; j < m_n3; ++j) {
+
+            int n = 0;
+            double t2 = Math.PI * m_rotate_degrees * j / 180;
+            double c = Math.cos(t2);
+            double s = Math.sin(t2);
+            double x0 = xc + r * c;
+            double y0 = yc + r * s;
+
+            for (int i = 0; i <= m_n1; i++) {
+
+                double f = ((i % 2) == 0) ? 1.0 : 0.0;
+                paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
+
+                n += m_n2;
+                double x = Math.cos(n * theta);
+                double y = Math.sin(n * theta);
+                double x1 = xc + r * (c * x + s * y);
+                double y1 = yc + r * (s * x - c * y);
+                canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
+                x0 = x1;
+                y0 = y1;
+            }
+            r *= shrink;
+        }
+    }
+
+    /**
+     * Colours Advance then retreat
+     * @param paint
+     * @param canvas
+     */
+    void DrawBoth (Paint paint, Canvas canvas) {
+        double xc = m_width * 0.5;
+        double yc = m_height * 0.5;
+        double r = m_height * 0.48;
+        double theta = Math.PI * 2 / m_n1;
+        double shrink = (100 - m_shrink_pc) * 0.01;
+
+        for (int j = 0; j < m_n3; ++j) {
+
+            int n = 0;
+            double t2 = Math.PI * m_rotate_degrees * j / 180;
+            double c = Math.cos(t2);
+            double s = Math.sin(t2);
+            double x0 = xc + r * c;
+            double y0 = yc + r * s;
+            double f = (m_n3 > 1) ? 1.0 - (double) j / (m_n3 - 1) : 1.0;
+
+            f = (f < 0.5) ? (2 * f) : (2 - 2 * f);
+
+            paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
+
+            for (int i = 0; i <= m_n1; i++) {
+                n += m_n2;
+                double x = Math.cos(n * theta);
+                double y = Math.sin(n * theta);
+                double x1 = xc + r * (c * x + s * y);
+                double y1 = yc + r * (s * x - c * y);
+                canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
+                x0 = x1;
+                y0 = y1;
+            }
+            r *= shrink;
+        }
     }
 
     public void fromBundle(Bundle bundle) {

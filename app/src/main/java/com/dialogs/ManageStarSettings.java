@@ -124,16 +124,16 @@ public class ManageStarSettings extends DialogFragment {
                     break;
                 case R.id.ok_button:
                     if (m_animation_fragment.onAccept () && m_pattern_fragment.onAccept() && m_randomiser_fragment.onAccept ()) {
+                        dismiss ();
                         m_result.UpdateStarSettings(m_id, m_settings.toBundle());
                     }
-                    dismiss ();
                     break;
             }
         }
 
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
-            String x = (String) tab.getText();
+
             int pos = tab.getPosition();
 
             switch (pos)

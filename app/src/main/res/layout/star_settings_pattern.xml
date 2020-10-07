@@ -16,80 +16,90 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="86dp">
 
-
-        <EditText
-            android:id="@+id/line_thickness"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/line_thickness_hint"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            app:layout_constraintEnd_toEndOf="@+id/size_pricker"
-            app:layout_constraintStart_toStartOf="@+id/size_pricker"
-            app:layout_constraintTop_toBottomOf="@+id/size_pricker" />
-
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/bitmap_size"
             app:layout_constraintBottom_toBottomOf="@+id/size_pricker"
             app:layout_constraintEnd_toStartOf="@+id/size_pricker"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/size_pricker" />
 
         <TextView
             android:id="@+id/tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="@string/line_style"
-            app:layout_constraintBottom_toBottomOf="@+id/line_thickness"
-            app:layout_constraintEnd_toStartOf="@+id/line_thickness"
-            app:layout_constraintTop_toTopOf="@+id/line_thickness" />
-
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="@string/line_thickness"
-            app:layout_constraintBottom_toBottomOf="@+id/line_style"
-            app:layout_constraintEnd_toStartOf="@+id/line_style"
-            app:layout_constraintTop_toTopOf="@+id/line_style" />
-
-        <EditText
-            android:id="@+id/line_style"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:ems="10"
-            android:hint="@string/line_style_hint"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/line_thickness"
-            app:layout_constraintStart_toStartOf="@+id/line_thickness"
-            app:layout_constraintTop_toBottomOf="@+id/line_thickness" />
+            android:text="@string/colouring_mode"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/size_pricker" />
 
         <NumberPicker
             android:id="@+id/size_pricker"
-            android:layout_width="148dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_medium"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@+id/tv3"
+            app:layout_constraintTop_toBottomOf="@+id/size_pricker">
+
+
+            <ImageButton
+                android:id="@+id/button_cm_inwards"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="@dimen/spacing_medium"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintTop_toBottomOf="@+id/label_stars"
+                app:srcCompat="@drawable/star_inward"
+                android:contentDescription="@string/inward_colour_description" />
+
+            <ImageButton
+                android:id="@+id/button_cm_around"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="@dimen/spacing_medium"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintTop_toBottomOf="@+id/label_stars"
+                app:srcCompat="@drawable/star_around"
+                android:contentDescription="@string/around_colour_description" />
+
+            <ImageButton
+                android:id="@+id/button_cm_both"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="@dimen/spacing_medium"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintTop_toBottomOf="@+id/label_stars"
+                app:srcCompat="@drawable/star_both"
+                android:contentDescription="@string/both_colour_description" />
+
+            <ImageButton
+                android:id="@+id/button_cm_alternate"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/alternate_colour_description"
+                android:scaleType="fitCenter"
+                app:layout_constraintTop_toBottomOf="@+id/label_stars"
+                app:srcCompat="@drawable/star_alt" />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

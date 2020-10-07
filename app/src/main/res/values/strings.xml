@@ -53,7 +53,7 @@
     <string name="pattern">Pattern</string>
     <string name="randomiser">Randomiser</string>
     <string name="animator">Animator</string>
-    <string name="bitmap_size">Bitmap size (pixels):</string>
+    <string name="bitmap_size">Bitmap size:</string>
     <string name="title_activity_star_settings">Star Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -68,9 +68,13 @@
     <string name="general_star_settings">General Settings</string>
     <string name="line_thickness">Line Width:</string>
     <string name="line_style">Line Style:</string>
-    <string name="bitmap_size_hint">Bitmap size in pixels</string>
-    <string name="line_thickness_hint">Line thickness</string>
     <string name="line_style_hint">Line style</string>
     <string name="cancel">Cancel</string>
     <string name="accept">Accept</string>
+    <string name="colouring_mode">Colouring Mode:</string>
+    <string name="inward_colour_description">Colours progress as the images shring towards the centre.</string>
+    <string name="around_colour_description">Colours advance as we move around the star</string>
+    <string name="both_colour_description">Colours advance half way and then retreat</string>
+    <string name="title_activity_an">AnActivity</string>
+    <string name="alternate_colour_description">Colours alternate around the star</string>
 </resources>
