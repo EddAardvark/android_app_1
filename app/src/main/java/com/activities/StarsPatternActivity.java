@@ -60,6 +60,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
         if (savedInstanceState != null){
             m_params.fromBundle (savedInstanceState);
+            m_settings.fromBundle (savedInstanceState);
         }
 
         setContentView(R.layout.stars_pattern_activity);
@@ -91,7 +92,16 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        m_params.fromBundle (savedInstanceState);
+
+        Bundle params = savedInstanceState.getBundle("params");
+        Bundle settings = savedInstanceState.getBundle("settings");
+
+        if (settings != null) {
+            m_settings.fromBundle (settings);
+        }
+        if (params != null) {
+            m_params.fromBundle (params);
+        }
         Draw();
     }
 
@@ -99,7 +109,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        m_params.toBundle (outState);
+        outState.putBundle("params", m_params.toBundle ());
+        outState.putBundle("settings", m_settings.toBundle ());
     }
 
 

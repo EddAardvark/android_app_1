@@ -20,8 +20,8 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_medium"
             android:text="@string/bitmap_size"
             app:layout_constraintBottom_toBottomOf="@+id/size_pricker"
             app:layout_constraintEnd_toStartOf="@+id/size_pricker"
@@ -31,6 +31,8 @@
             android:id="@+id/tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
             android:text="@string/colouring_mode"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +42,7 @@
             android:id="@+id/size_pricker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_medium"
             app:layout_constraintStart_toStartOf="@+id/linearLayout"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,8 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_medium"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
             android:orientation="horizontal"
             app:layout_constraintStart_toEndOf="@+id/tv3"
             app:layout_constraintTop_toBottomOf="@+id/size_pricker">
@@ -61,43 +63,44 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="@dimen/spacing_medium"
-                android:background="@android:color/transparent"
+                android:background="@drawable/star_inward"
                 android:scaleType="fitCenter"
                 app:layout_constraintTop_toBottomOf="@+id/label_stars"
-                app:srcCompat="@drawable/star_inward"
-                android:contentDescription="@string/inward_colour_description" />
+                android:contentDescription="@string/inward_colour_description"
+                android:layout_marginEnd="@dimen/spacing_medium" />
 
             <ImageButton
                 android:id="@+id/button_cm_around"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="@dimen/spacing_medium"
-                android:background="@android:color/transparent"
+                android:background="@drawable/star_around"
                 android:scaleType="fitCenter"
                 app:layout_constraintTop_toBottomOf="@+id/label_stars"
-                app:srcCompat="@drawable/star_around"
-                android:contentDescription="@string/around_colour_description" />
+                android:contentDescription="@string/around_colour_description"
+                android:layout_marginEnd="@dimen/spacing_medium" />
 
             <ImageButton
                 android:id="@+id/button_cm_both"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginRight="@dimen/spacing_medium"
-                android:background="@android:color/transparent"
+                android:background="@drawable/star_both"
                 android:scaleType="fitCenter"
                 app:layout_constraintTop_toBottomOf="@+id/label_stars"
-                app:srcCompat="@drawable/star_both"
-                android:contentDescription="@string/both_colour_description" />
+                android:contentDescription="@string/both_colour_description"
+                android:layout_marginEnd="@dimen/spacing_medium" />
 
             <ImageButton
                 android:id="@+id/button_cm_alternate"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:background="@android:color/transparent"
+                android:layout_marginRight="@dimen/spacing_medium"
+                android:background="@drawable/star_alt"
                 android:contentDescription="@string/alternate_colour_description"
                 android:scaleType="fitCenter"
                 app:layout_constraintTop_toBottomOf="@+id/label_stars"
-                app:srcCompat="@drawable/star_alt" />
+                android:layout_marginEnd="@dimen/spacing_medium" />
 
         </LinearLayout>
 

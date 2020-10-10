@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import com.misc.ColourHelpers;
 import com.misc.MyMath;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class StarParameters {
@@ -159,6 +161,20 @@ public class StarParameters {
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
         double shrink = (100 - m_shrink_pc) * 0.01;
+        List<Integer> colours = new ArrayList<>(m_n1);
+
+        // Initialise the colours used in the inner loop
+
+        for (int i = 0; i < m_n1; i++) {
+
+            int mid = m_n1 / 2;
+            int n = (i <= mid) ? i : (m_n1 - i);
+            double f = 1.0 - (double) n / mid;
+
+            int colour = ColourHelpers.Blend(m_first_line, m_last_line, f);
+            colours.add(colour);
+        }
+        // Draw
 
         for (int j = 0; j < m_n3; ++j) {
 
@@ -169,12 +185,9 @@ public class StarParameters {
             double x0 = xc + r * c;
             double y0 = yc + r * s;
 
-            for (int i = 0; i <= m_n1; i++) {
+            for (int i = 0; i < m_n1; i++) {
 
-                double f = (m_n1 > 1) ? 1.0 - (double) i / (m_n1 - 1) : 1.0;
-
-                f = (f < 0.5) ? (2 * f) : (2 - 2 * f);
-                paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
+                paint.setColor(colours.get(i));
 
                 n += m_n2;
                 double x = Math.cos(n * theta);
@@ -200,6 +213,19 @@ public class StarParameters {
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
         double shrink = (100 - m_shrink_pc) * 0.01;
+        List<Integer> colours = new ArrayList<>(m_n1);
+
+        // Initialise the colours used in the inner loop
+
+        for (int i = 0; i < m_n1; i++) {
+
+            double f = ((i % 2) == 0) ? 1.0 : 0.0;
+
+            int colour = ColourHelpers.Blend(m_first_line, m_last_line, f);
+            colours.add(colour);
+        }
+
+        // Draw
 
         for (int j = 0; j < m_n3; ++j) {
 
@@ -210,10 +236,9 @@ public class StarParameters {
             double x0 = xc + r * c;
             double y0 = yc + r * s;
 
-            for (int i = 0; i <= m_n1; i++) {
+            for (int i = 0; i < m_n1; i++) {
 
-                double f = ((i % 2) == 0) ? 1.0 : 0.0;
-                paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
+                paint.setColor(colours.get(i));
 
                 n += m_n2;
                 double x = Math.cos(n * theta);
@@ -280,15 +305,20 @@ public class StarParameters {
         m_last_line = bundle.getInt(KEY_LINE2, m_last_line);
     }
 
-    public void toBundle(Bundle bundle) {
+    public Bundle toBundle() {
 
-        bundle.putInt(KEY_N1, m_n1);
-        bundle.putInt(KEY_N2, m_n2);
-        bundle.putInt(KEY_N3, m_n3);
-        bundle.putInt(KEY_ROTATE, m_rotate_degrees);
-        bundle.putInt(KEY_SHRINK, m_shrink_pc);
-        bundle.putInt(KEY_BACKGROUND, m_background);
-        bundle.putInt(KEY_LINE1, m_first_line);
-        bundle.putInt(KEY_LINE2, m_last_line);
+
+        Bundle b = new Bundle();
+
+        b.putInt(KEY_N1, m_n1);
+        b.putInt(KEY_N2, m_n2);
+        b.putInt(KEY_N3, m_n3);
+        b.putInt(KEY_ROTATE, m_rotate_degrees);
+        b.putInt(KEY_SHRINK, m_shrink_pc);
+        b.putInt(KEY_BACKGROUND, m_background);
+        b.putInt(KEY_LINE1, m_first_line);
+        b.putInt(KEY_LINE2, m_last_line);
+
+        return b;
     }
 }
