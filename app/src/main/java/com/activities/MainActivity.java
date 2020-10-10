@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.tutorialapp.R;
 
@@ -17,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageButton button = (ImageButton) findViewById(R.id.button_stars);
+        ImageView stars = (ImageView) findViewById(R.id.button_stars);
 
-        button.setOnClickListener(new ActivityMain());
+        stars.setOnClickListener(new ActivityMain());
     }
 
     private void showStars() {

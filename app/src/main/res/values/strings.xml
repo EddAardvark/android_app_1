@@ -77,4 +77,6 @@
     <string name="both_colour_description">Colours advance half way and then retreat</string>
     <string name="title_activity_an">AnActivity</string>
     <string name="alternate_colour_description">Colours alternate around the star</string>
+    <string name="stars_image_text">This is where the stars are drawn</string>
+    <string name="star_applet_button">Click here to enter the star drawing screen</string>
 </resources>
