@@ -12,6 +12,8 @@ import androidx.fragment.app.DialogFragment;
 import com.activities.StarsPatternActivity;
 import com.example.tutorialapp.R;
 
+import java.util.ArrayList;
+
 public class GetInteger extends DialogFragment {
 
     public interface Result
@@ -44,6 +46,18 @@ public class GetInteger extends DialogFragment {
         return frag;
     }
 
+    public static GetInteger construct(Result res, int id, int n, ArrayList<String> strings, String title, String message) {
+
+        GetInteger frag = new GetInteger(res, id);
+        Bundle args = new Bundle();
+        args.putInt("current", n);
+        args.putSerializable("strings", strings);
+        args.putString("title", title);
+        args.putString("message", message);
+        frag.setArguments(args);
+        return frag;
+    }
+
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +65,25 @@ public class GetInteger extends DialogFragment {
         Bundle args = getArguments();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         m_picker = new NumberPicker(getActivity());
-        m_picker.setMinValue(args.getInt("min_val"));
-        m_picker.setMaxValue(args.getInt("max_val"));
+
+        ArrayList<Object> objects = (ArrayList<Object>) args.getSerializable("strings");
+
+        if (objects == null) {
+            m_picker.setMinValue(args.getInt("min_val"));
+            m_picker.setMaxValue(args.getInt("max_val"));
+        }
+        else{
+            String [] strings = new String [objects.size()];
+            for (int i = 0 ; i < strings.length ; ++i)
+            {
+                strings [i] = objects.get(i).toString();
+            }
+            m_picker.setMinValue(0);
+            m_picker.setMaxValue(strings.length - 1);
+            m_picker.setDisplayedValues(strings);
+        }
         m_picker.setValue(args.getInt("current"));
+
         builder.setTitle(args.getString("title"));
         builder.setMessage(args.getString("message"));
         builder.setView(m_picker);

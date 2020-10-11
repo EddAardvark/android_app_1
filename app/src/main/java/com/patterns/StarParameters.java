@@ -14,6 +14,7 @@ import com.misc.ColourHelpers;
 import com.misc.MyMath;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -22,8 +23,8 @@ public class StarParameters {
     public int m_n1 = 5;                        ///< Number of points in the circle
     public int m_n2 = 2;                        ///< Increment when joining points
     public int m_n3 = 1;                        ///< The number of copies to draw, with rotation
-    public int m_rotate_degrees = 5;            ///< Rotation when drawing multiple images
-    public int m_shrink_pc = 5;                 ///< Shrinkage when drawing multiple images (percent)
+    public int m_angle_idx = 5;                 ///< Rotation when drawing multiple images
+    public int m_shrink_idx = 5;                ///< Shrinkage when drawing multiple images (percent)
     public int m_background = Color.WHITE;      ///< Background colour
     public int m_first_line = Color.BLUE;       ///< Foreground ground colour
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
@@ -41,11 +42,29 @@ public class StarParameters {
     int m_height;
     Bitmap m_bmp;
 
+    public final static ArrayList<String> m_angle_str = new ArrayList<String>( Arrays.asList(
+            "0", "0.25°", "0.5°", "1°", "2°", "3°", "4°", "5°", "6°", "10°", "12°", "15°", "20°", "30°", "45°", "60°", "72°", "90°", "108°", "120°", "144°", "180°",
+            "216°", "240°", "270°", "288°", "300°", "315°", "330°", "340°", "345°", "348°", "350°", "354°", "355°", "356°", "357°", "358°", "359°", "359.5°", "359.75°"));
+
+    public final static double [] m_angles = {
+            0, 0.25, 0.5, 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 45, 60, 72, 90, 108, 120, 144, 180,
+            216, 240, 270, 288, 300, 315, 330, 340, 345, 348, 350, 354, 355, 356, 357, 358, 359, 359.5, 359.75 };
+
+    public final static ArrayList<String> m_shrink_str = new ArrayList<String>( Arrays.asList(
+            "none", "0.05%", "0.1%", "0.2%", "0.25%", "0.3%", "0.4%", "0.5%", "0.6%", "0.7%", "0.8%", "0.9%", "1%", "1.5%", "2%", "3%",
+            "4%", "5%", "6%", "7%", "8%", "9%", "10%", "15%", "20%", "25%", "30%", "40%", "50%", "60%", "70%", "75%"));
+
+    public final static double [] m_shrink_pc = {
+            0, 0.05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 60, 70, 75 };
+
     public StarParameters (int w, int h)
     {
         setSize (w, h);
     }
 
+    public String getAngleString () { return m_angle_str.get(m_angle_idx);}
+    public String getShrinkString () { return m_shrink_str.get(m_shrink_idx);}
+    
     public void setSize (int w, int h)
     {
         m_width = w;
@@ -121,12 +140,13 @@ public class StarParameters {
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
-        double shrink = (100 - m_shrink_pc) * 0.01;
+        double rotate = Math.PI * m_angles[m_angle_idx] / 180;
+        double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;
 
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = Math.PI * m_rotate_degrees * j / 180;
+            double t2 = rotate * j;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -160,7 +180,8 @@ public class StarParameters {
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
-        double shrink = (100 - m_shrink_pc) * 0.01;
+        double rotate = Math.PI * m_angles[m_angle_idx] / 180;
+        double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;
         List<Integer> colours = new ArrayList<>(m_n1);
 
         // Initialise the colours used in the inner loop
@@ -179,7 +200,7 @@ public class StarParameters {
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = Math.PI * m_rotate_degrees * j / 180;
+            double t2 = rotate * j;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -212,7 +233,8 @@ public class StarParameters {
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
-        double shrink = (100 - m_shrink_pc) * 0.01;
+        double rotate = Math.PI * m_angles[m_angle_idx] / 180;
+        double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;
         List<Integer> colours = new ArrayList<>(m_n1);
 
         // Initialise the colours used in the inner loop
@@ -230,7 +252,7 @@ public class StarParameters {
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = Math.PI * m_rotate_degrees * j / 180;
+            double t2 = rotate * j;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -263,12 +285,13 @@ public class StarParameters {
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
-        double shrink = (100 - m_shrink_pc) * 0.01;
+        double rotate = Math.PI * m_angles[m_angle_idx] / 180;
+        double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;
 
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = Math.PI * m_rotate_degrees * j / 180;
+            double t2 = rotate * j;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -298,8 +321,8 @@ public class StarParameters {
         m_n1 = bundle.getInt(KEY_N1, m_n1);
         m_n2 = bundle.getInt(KEY_N2, m_n2);
         m_n3 = bundle.getInt(KEY_N3, m_n3);
-        m_rotate_degrees = bundle.getInt(KEY_ROTATE, m_rotate_degrees);
-        m_shrink_pc = bundle.getInt(KEY_SHRINK, m_shrink_pc);
+        m_angle_idx = bundle.getInt(KEY_ROTATE, m_angle_idx);
+        m_shrink_idx = bundle.getInt(KEY_SHRINK, m_shrink_idx);
         m_background = bundle.getInt(KEY_BACKGROUND, m_background);
         m_first_line = bundle.getInt(KEY_LINE1, m_first_line);
         m_last_line = bundle.getInt(KEY_LINE2, m_last_line);
@@ -313,8 +336,8 @@ public class StarParameters {
         b.putInt(KEY_N1, m_n1);
         b.putInt(KEY_N2, m_n2);
         b.putInt(KEY_N3, m_n3);
-        b.putInt(KEY_ROTATE, m_rotate_degrees);
-        b.putInt(KEY_SHRINK, m_shrink_pc);
+        b.putInt(KEY_ROTATE, m_angle_idx);
+        b.putInt(KEY_SHRINK, m_shrink_idx);
         b.putInt(KEY_BACKGROUND, m_background);
         b.putInt(KEY_LINE1, m_first_line);
         b.putInt(KEY_LINE2, m_last_line);

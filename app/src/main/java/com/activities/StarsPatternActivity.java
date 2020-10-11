@@ -26,6 +26,9 @@ import com.patterns.StarSettings;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageStarSettings.Result {
 
@@ -113,7 +116,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         outState.putBundle("settings", m_settings.toBundle ());
     }
 
-
     void setColours() {
 
         m_layout_background.setBackgroundColor(m_params.m_background);
@@ -163,8 +165,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         ((TextView)findViewById(R.id.text_n1)).setText(Integer.toString(m_params.m_n1));
         ((TextView)findViewById(R.id.text_n2)).setText(Integer.toString(m_params.m_n2));
         ((TextView)findViewById(R.id.text_n3)).setText(Integer.toString(m_params.m_n3));
-        ((TextView)findViewById(R.id.text_da)).setText(Integer.toString(m_params.m_rotate_degrees) + '°');
-        ((TextView)findViewById(R.id.text_sh)).setText(Integer.toString(m_params.m_shrink_pc) + '%');
+        ((TextView)findViewById(R.id.text_da)).setText(m_params.getAngleString());
+        ((TextView)findViewById(R.id.text_sh)).setText(m_params.getShrinkString());
     }
 
     /**
@@ -195,14 +197,15 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
     void onClickAngle () {
-        GetInteger dialog = GetInteger.construct(this, CB_ANGLE, m_params.m_rotate_degrees, 0, 359, 1, getString(R.string.star_rotate_title), getString(R.string.star_angle_description));
+
+        GetInteger dialog = GetInteger.construct(this, CB_ANGLE, m_params.m_angle_idx, StarParameters.m_angle_str, getString(R.string.star_rotate_title), getString(R.string.star_angle_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
     void onClickShrink () {
-        GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_pc, 0, 90, 1, getString(R.string.star_shrink_title), getString(R.string.star_shrink_description));
+        GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_idx, StarParameters.m_shrink_str, getString(R.string.star_shrink_title), getString(R.string.star_shrink_description));
         dialog.show (getSupportFragmentManager(), "Hello");
     }
     /**
@@ -240,8 +243,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             case CB_N1: m_params.m_n1 = value; break;
             case CB_N2: m_params.m_n2 = value; break;
             case CB_N3: m_params.m_n3 = value; break;
-            case CB_ANGLE: m_params.m_rotate_degrees = value; break;
-            case CB_SHRINK: m_params.m_shrink_pc = value; break;
+            case CB_ANGLE: m_params.m_angle_idx = value; break;
+            case CB_SHRINK: m_params.m_shrink_idx = value; break;
         }
         Draw ();
     }
