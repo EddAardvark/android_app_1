@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 
-import com.activities.StarsPatternActivity;
 import com.example.tutorialapp.R;
 
 /**
@@ -41,16 +41,37 @@ public class StarRandomiserSettings extends Fragment {
         fragment.setSettings(settings);
         return fragment;
     }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.star_settings_randomiser, container, false);
+        View v =  inflater.inflate(R.layout.star_settings_randomiser, container, false);
+
+        ((Switch)v.findViewById(R.id.num_points)).setChecked(m_settings.m_randomise_num_points);
+        ((Switch)v.findViewById(R.id.point_step)).setChecked(m_settings.m_randomise_point_step);
+        ((Switch)v.findViewById(R.id.angles)).setChecked(m_settings.m_randomise_angles);
+        ((Switch)v.findViewById(R.id.shrinkage)).setChecked(m_settings.m_randomise_shrinkage);
+        ((Switch)v.findViewById(R.id.forground_colours)).setChecked(m_settings.m_randomise_forground_colours);
+        ((Switch)v.findViewById(R.id.backround_colours)).setChecked(m_settings.m_randomise_backround_colours);
+        ((Switch)v.findViewById(R.id.colour_mode)).setChecked(m_settings.m_randomise_colour_mode);
+
+        return v;
+    }
+
+    public void UpdateSettings (){
+
+        View v = getView();
+
+        if (v != null) {
+            m_settings.m_randomise_num_points = ((Switch) v.findViewById(R.id.num_points)).isChecked();
+            m_settings.m_randomise_point_step = ((Switch) v.findViewById(R.id.point_step)).isChecked();
+            m_settings.m_randomise_angles = ((Switch) v.findViewById(R.id.angles)).isChecked();
+            m_settings.m_randomise_shrinkage = ((Switch) v.findViewById(R.id.shrinkage)).isChecked();
+            m_settings.m_randomise_forground_colours = ((Switch) v.findViewById(R.id.forground_colours)).isChecked();
+            m_settings.m_randomise_backround_colours = ((Switch) v.findViewById(R.id.backround_colours)).isChecked();
+            m_settings.m_randomise_colour_mode = ((Switch) v.findViewById(R.id.colour_mode)).isChecked();
+        }
     }
 
     public boolean onAccept() {

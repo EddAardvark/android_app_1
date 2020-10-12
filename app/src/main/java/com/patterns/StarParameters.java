@@ -43,11 +43,11 @@ public class StarParameters {
     Bitmap m_bmp;
 
     public final static ArrayList<String> m_angle_str = new ArrayList<String>( Arrays.asList(
-            "0", "0.25°", "0.5°", "1°", "2°", "3°", "4°", "5°", "6°", "10°", "12°", "15°", "20°", "30°", "45°", "60°", "72°", "90°", "108°", "120°", "144°", "180°",
+            "0", "0.05°", "0.1°", "0.2°", "0.3°", "0.4°", "0.5°", "1°", "2°", "3°", "4°", "5°", "6°", "10°", "12°", "15°", "20°", "30°", "45°", "60°", "72°", "90°", "108°", "120°", "144°", "180°",
             "216°", "240°", "270°", "288°", "300°", "315°", "330°", "340°", "345°", "348°", "350°", "354°", "355°", "356°", "357°", "358°", "359°", "359.5°", "359.75°"));
 
     public final static double [] m_angles = {
-            0, 0.25, 0.5, 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 45, 60, 72, 90, 108, 120, 144, 180,
+            0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 45, 60, 72, 90, 108, 120, 144, 180,
             216, 240, 270, 288, 300, 315, 330, 340, 345, 348, 350, 354, 355, 356, 357, 358, 359, 359.5, 359.75 };
 
     public final static ArrayList<String> m_shrink_str = new ArrayList<String>( Arrays.asList(
@@ -64,7 +64,12 @@ public class StarParameters {
 
     public String getAngleString () { return m_angle_str.get(m_angle_idx);}
     public String getShrinkString () { return m_shrink_str.get(m_shrink_idx);}
-    
+
+    /**
+     * Sets the size of the bitmap drawn. This doesn't affect the size no the screen but does change the detail when the image is shared.
+     * @param w Width in pixels
+     * @param h Height in pixels
+     */
     public void setSize (int w, int h)
     {
         m_width = w;

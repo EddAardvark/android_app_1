@@ -125,6 +125,8 @@ public class ManageStarSettings extends DialogFragment {
                 case R.id.ok_button:
                     if (m_animation_fragment.onAccept () && m_pattern_fragment.onAccept() && m_randomiser_fragment.onAccept ()) {
                         dismiss ();
+
+                        m_randomiser_fragment.UpdateSettings();
                         m_result.UpdateStarSettings(m_id, m_settings.toBundle());
                     }
                     break;

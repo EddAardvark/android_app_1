@@ -50,7 +50,6 @@ public class StarBasicSettings extends Fragment {
      */
     public static StarBasicSettings newInstance(StarSettings settings) {
 
-
         StarBasicSettings fragment = new StarBasicSettings();
         fragment.setSettings(settings);
         return fragment;
