@@ -7,6 +7,7 @@ import com.dialogs.ManageStarSettings;
 import com.example.tutorialapp.R;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class StarSettings {
 
@@ -25,6 +26,9 @@ public class StarSettings {
     {
         INWARDS, AROUND, BOTH, ALTERNATE
     }
+    ColouringMode cmodes [] = {ColouringMode.INWARDS, ColouringMode.AROUND, ColouringMode.BOTH, ColouringMode.ALTERNATE};
+
+
 
     // Pattern
 
@@ -82,4 +86,17 @@ public class StarSettings {
          m_randomise_backround_colours = b.getBoolean(KEY_RANDOMISE_BACKROUND_COLOURS, m_randomise_backround_colours);
          m_randomise_colour_mode = b.getBoolean(KEY_RANDOMISE_COLOUR_MODE, m_randomise_colour_mode);
     }
+
+    /**
+     * Choose a random colouring mode
+     */
+    public void randomise_colour_mode() {
+        if (m_randomise_colour_mode){
+            Random rand = new Random();
+            int idx = rand.nextInt(cmodes.length);
+
+            m_colouring_mode = cmodes[idx];
+        }
+    }
+
 }

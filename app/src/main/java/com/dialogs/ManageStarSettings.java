@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ public class ManageStarSettings extends DialogFragment {
     StarBasicSettings m_pattern_fragment;
     StarAnimationSettings m_animation_fragment;
     StarRandomiserSettings m_randomiser_fragment;
+    TextView m_caption;
 
     int m_id;
 
@@ -85,6 +87,10 @@ public class ManageStarSettings extends DialogFragment {
         dialog.findViewById(R.id.ok_button).setOnClickListener(m_listener);
         dialog.findViewById(R.id.cancel_button).setOnClickListener(m_listener);
 
+        m_caption = (TextView) dialog.findViewById(R.id.star_settings_caption);
+        String caption = getString(R.string.star_params_caption);
+        m_caption.setText(caption);
+
 
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -94,6 +100,9 @@ public class ManageStarSettings extends DialogFragment {
 
     private void OnShowPattern() {
 
+        String caption = getString(R.string.star_params_caption);
+        m_caption.setText(caption);
+
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment_container, m_pattern_fragment);
@@ -101,12 +110,18 @@ public class ManageStarSettings extends DialogFragment {
     }
     private void OnShowAnimation() {
 
+        String caption = getString(R.string.star_animation_caption);
+        m_caption.setText(caption);
+
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment_container, m_animation_fragment);
         transaction.commit();
     }
     private void OnShowRandomisation() {
+
+        String caption = getString(R.string.star_randomiser_caption);
+        m_caption.setText(caption);
 
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

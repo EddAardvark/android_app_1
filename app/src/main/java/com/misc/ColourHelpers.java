@@ -2,6 +2,8 @@ package com.misc;
 
 import android.graphics.Color;
 
+import java.util.Random;
+
 public class ColourHelpers {
     /**
      * Returns a colour that should contrast with the niput colour. Intended for creating labels for coloured backgrounds.
@@ -15,7 +17,7 @@ public class ColourHelpers {
         return (Math.max (Math.max (red, green), blue)) > 128 ? Color.BLACK : Color.WHITE;
     }
     /**
-     * Returns a colour that should contrast with the niput colour. Intended for creating labels for coloured backgrounds.
+     * Returns a colour that should contrast with the input colour. Intended for creating labels for coloured backgrounds.
      * @param colour
      * @return The contrasting colour, currently black or white.
      */
@@ -27,10 +29,14 @@ public class ColourHelpers {
 
         return GetContrastColour(red, green, blue);
     }
+    /**
+     * Returns a colour that should contrast with the input colour. Intended for creating labels for coloured backgrounds.
+     * @param rgb
+     * @return The contrasting colour, currently black or white.
+     */
     public static int GetContrastColour(RGB rgb){
         return GetContrastColour(rgb.red, rgb.green, rgb.blue);
     }
-
     /**
      * Mix two colours
      * @param c1 the first colour
@@ -48,6 +54,21 @@ public class ColourHelpers {
         int r = (int) Math.round(r1.red * f + r2.red * f2);
         int g = (int) Math.round(r1.green * f + r2.green * f2);
         int b = (int) Math.round(r1.blue * f + r2.blue * f2);
+
+        return Color.argb(a, r, g, b);
+    }
+    /**
+     * Return a random solid colour (alpha = 255)
+     * @return the colour as an integer.
+     */
+    public static int random_solid_colour() {
+
+        Random rand = new Random();
+
+        int a = 255;
+        int r = rand.nextInt(256);
+        int g = rand.nextInt(256);
+        int b = rand.nextInt(256);
 
         return Color.argb(a, r, g, b);
     }

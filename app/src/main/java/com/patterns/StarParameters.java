@@ -78,21 +78,51 @@ public class StarParameters {
         m_bmp = Bitmap.createBitmap(m_width, m_height, Bitmap.Config.RGB_565);
     }
 
-    public void Randomise ()
+    public void Randomise(StarSettings settings)
     {
         Random rand = new Random();
-        int n2_range = m_n1/2 - 1;
 
-        m_n1 = rand.nextInt(98) + 3;
-        m_n2 = (n2_range > 0) ? rand.nextInt(n2_range) + 1 : 1;
-
-        int hcf = MyMath.hcf (m_n1, m_n2);
-
-        if (hcf > 1)
-        {
-            m_n1 /= hcf;
-            m_n2 /= hcf;
+        if (settings.m_randomise_num_points) {
+            m_n1 = rand.nextInt(98) + 3;
         }
+
+        if (settings.m_randomise_point_step)
+        {
+            m_n2 = rand.nextInt(m_n1-1) + 1;
+        }
+
+        if (settings.m_randomise_num_points || settings.m_randomise_point_step) {
+
+            int hcf = MyMath.hcf(m_n1, m_n2);
+
+            if (hcf > 1) {
+                m_n1 /= hcf;
+                m_n2 /= hcf;
+            }
+        }
+
+        if (settings.m_randomise_angles)
+        {
+            m_angle_idx = rand.nextInt(m_angles.length);
+        }
+
+        if (settings.m_randomise_shrinkage)
+        {
+            m_shrink_idx = rand.nextInt(m_shrink_pc.length);
+        }
+
+        if (settings.m_randomise_backround_colours)
+        {
+            m_background = ColourHelpers.random_solid_colour ();
+        }
+
+        if (settings.m_randomise_forground_colours)
+        {
+            m_first_line = ColourHelpers.random_solid_colour ();
+            m_last_line = ColourHelpers.random_solid_colour ();
+        }
+
+        settings.randomise_colour_mode();
     }
 
     public Bitmap bitmap ()

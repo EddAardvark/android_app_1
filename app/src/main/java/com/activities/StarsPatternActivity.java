@@ -105,6 +105,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         if (params != null) {
             m_params.fromBundle (params);
         }
+        setColours();
+        showSettings ();
         Draw();
     }
 
@@ -291,7 +293,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     onClickShrink ();
                     break;
                 case R.id.layout_random:
-                    m_params.Randomise ();
+                    m_params.Randomise (m_settings);
                     Draw();
                     break;
                 case R.id.layout_settings:
