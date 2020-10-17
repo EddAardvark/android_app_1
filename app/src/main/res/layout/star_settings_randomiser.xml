@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_medium"
+    android:background="@drawable/selection_border"
+    android:padding="@dimen/spacing_medium">
 
     <Switch
         android:id="@+id/num_points"
@@ -24,13 +27,22 @@
         app:layout_constraintTop_toBottomOf="@+id/num_points" />
 
     <Switch
+        android:id="@+id/repeats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:text="Repeats"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/point_step" />
+
+    <Switch
         android:id="@+id/angles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_medium"
         android:text="Rotation angle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/point_step" />
+        app:layout_constraintTop_toBottomOf="@+id/repeats" />
 
     <Switch
         android:id="@+id/shrinkage"

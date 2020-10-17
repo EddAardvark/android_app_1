@@ -72,4 +72,18 @@ public class ColourHelpers {
 
         return Color.argb(a, r, g, b);
     }
+
+    /**
+     * Make a colour transparent
+     * @param colour The colour
+     * @param transparency The transparency (1 = fully, 0 = opaque)
+     * @return The new colour
+     */
+    public static int MakeTransparent (int colour, double transparency)
+    {
+        RGB rgb = new RGB (colour);
+        rgb.alpha = (int) Math.round(255.0 * (1.0-transparency));
+
+        return rgb.toColour();
+    }
 }

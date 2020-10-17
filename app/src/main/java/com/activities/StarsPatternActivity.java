@@ -2,14 +2,13 @@ package com.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Handler;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.view.View;
@@ -20,15 +19,15 @@ import com.dialogs.GetInteger;
 import com.dialogs.ManageStarSettings;
 import com.example.tutorialapp.R;
 import com.misc.ColourHelpers;
+import com.patterns.AnimateSet;
+import com.patterns.PatternSet;
+import com.patterns.RandomSet;
 import com.patterns.StarParameters;
 import com.patterns.StarSettings;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageStarSettings.Result {
 
@@ -43,9 +42,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     final int CB_SETTINGS = 9;
 
     StarSettings m_settings = new StarSettings ();
-    StarParameters m_params = new StarParameters (m_settings.m_bm_size, m_settings.m_bm_size);
+    StarParameters m_params = new StarParameters (m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
 
-    ClickListener m_listener = new StarsPatternActivity.ClickListener();
+    EventListener m_listener = new StarsPatternActivity.EventListener();
     View m_layout_background;
     View m_layout_foreground1;
     View m_layout_foreground2;
@@ -53,9 +52,13 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     TextView m_layout_foreground1_text;
     TextView m_layout_foreground2_text;
 
-    View m_top;
-
-    int m_temp = 0;
+    Handler m_timer_handler = new Handler();
+    Runnable m_timer_runnable = new Runnable() {
+        @Override
+        public void run() {
+            animate ();
+            m_timer_handler.postDelayed(this, 100);
+        }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +91,14 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_foreground1.setOnClickListener(m_listener);
         m_layout_foreground2.setOnClickListener(m_listener);
 
-        setColours();
-        Draw ();
+        m_timer_handler.postDelayed(m_timer_runnable, 0);
+        Update();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        m_timer_handler.removeCallbacks(m_timer_runnable);
     }
 
     @Override
@@ -105,8 +114,19 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         if (params != null) {
             m_params.fromBundle (params);
         }
+        Update();
+    }
+
+    void startAnimation ()
+    {
+    }
+
+    /**
+     * Redraw the controls and the image
+     */
+    void Update () {
         setColours();
-        showSettings ();
+        showSettings();
         Draw();
     }
 
@@ -132,7 +152,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     void Draw ()
     {
         ImageView img = findViewById(R.id.image);
-        m_params.Draw (getResources(), img, m_settings.m_colouring_mode);
+        m_params.Draw (getResources(), img, m_settings.m_pattern.m_colouring_mode);
         showSettings ();
     }
 
@@ -169,6 +189,12 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         ((TextView)findViewById(R.id.text_n3)).setText(Integer.toString(m_params.m_n3));
         ((TextView)findViewById(R.id.text_da)).setText(m_params.getAngleString());
         ((TextView)findViewById(R.id.text_sh)).setText(m_params.getShrinkString());
+    }
+
+    void animate ()
+    {
+        m_params.animate(m_settings);
+        Update();
     }
 
     /**
@@ -263,13 +289,16 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     }
 
     @Override
-    public void UpdateStarSettings(int id, Bundle b) {
+    public void UpdateStarSettings(PatternSet ps, RandomSet rs, AnimateSet as) {
 
-        m_settings.fromBundle(b);
-        m_params.setSize(m_settings.m_bm_size, m_settings.m_bm_size);
+        m_settings.m_pattern.fromBundle(ps.toBundle());
+        m_settings.m_random.fromBundle(rs.toBundle());
+        m_settings.m_animate.fromBundle(as.toBundle());
+        m_params.setSize(m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
         Draw();
     }
-    public class ClickListener extends Activity implements View.OnClickListener {
+
+    public class EventListener extends Activity implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
@@ -293,8 +322,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     onClickShrink ();
                     break;
                 case R.id.layout_random:
-                    m_params.Randomise (m_settings);
-                    Draw();
+                    m_params.Randomise (m_settings.m_random);
+                    m_settings.randomise_colour_mode();
+                    Update ();
                     break;
                 case R.id.layout_settings:
                     onClickSettings ();

@@ -15,32 +15,35 @@ import com.example.tutorialapp.R;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StarBasicSettings extends Fragment {
+public class StarPatternFragment extends Fragment {
 
-    StarSettings m_settings;
+    PatternSet m_result = null;  // Set on accept
+    PatternSet m_working_settings = new PatternSet ();
+
     NumberPicker m_size_picker;
     EventListener m_listener = new EventListener();
     Integer m_current_border = null;
     Map<Integer,View> m_cm_buttons = new HashMap<Integer,View>();
-    Map<StarSettings.ColouringMode,Integer> m_mode_to_id = new HashMap<StarSettings.ColouringMode,Integer>();
+    Map<PatternSet.ColouringMode,Integer> m_mode_to_id = new HashMap<PatternSet.ColouringMode,Integer>();
 
     static String[] size_value_strs = {"80px", "160px", "320px", "480px", "640px", "800px", "1024px", "1280px", "1600px"};
     static int[] size_values = {80, 160, 320, 480, 640, 800, 1024, 1280, 1600};
 
-    public StarBasicSettings () {
+    public StarPatternFragment() {
 
-        m_mode_to_id.put (StarSettings.ColouringMode.ALTERNATE, R.id.button_cm_alternate);
-        m_mode_to_id.put (StarSettings.ColouringMode.AROUND, R.id.button_cm_around);
-        m_mode_to_id.put (StarSettings.ColouringMode.BOTH, R.id.button_cm_both);
-        m_mode_to_id.put (StarSettings.ColouringMode.INWARDS, R.id.button_cm_inwards);
+        m_mode_to_id.put (PatternSet.ColouringMode.ALTERNATE, R.id.button_cm_alternate);
+        m_mode_to_id.put (PatternSet.ColouringMode.AROUND, R.id.button_cm_around);
+        m_mode_to_id.put (PatternSet.ColouringMode.BOTH, R.id.button_cm_both);
+        m_mode_to_id.put (PatternSet.ColouringMode.INWARDS, R.id.button_cm_inwards);
     }
 
     /**
      * Gives us a reference to the shared settings
      * @param settings the settings
      */
-    void setSettings (StarSettings settings){
-        m_settings = settings;
+    void setSettings (PatternSet settings){
+
+        m_working_settings.fromBundle(settings.toBundle());
     }
 
     /**
@@ -48,9 +51,9 @@ public class StarBasicSettings extends Fragment {
      * this fragment using the provided parameters.
      * @return A new instance of fragment StarrandomiserSettings.
      */
-    public static StarBasicSettings newInstance(StarSettings settings) {
+    public static StarPatternFragment newInstance(PatternSet settings) {
 
-        StarBasicSettings fragment = new StarBasicSettings();
+        StarPatternFragment fragment = new StarPatternFragment();
         fragment.setSettings(settings);
         return fragment;
     }
@@ -79,7 +82,7 @@ public class StarBasicSettings extends Fragment {
         m_size_picker.setMaxValue(size_value_strs.length - 1);
         m_size_picker.setDisplayedValues(size_value_strs);
 
-        String temp = Integer.toString(m_settings.m_bm_size) + "px";
+        String temp = Integer.toString(m_working_settings.m_bm_size) + "px";
         int idx = -1;
 
         for (int i = 0; i < size_value_strs.length; i++) {
@@ -92,7 +95,7 @@ public class StarBasicSettings extends Fragment {
 
         m_size_picker.setValue(Math.max(idx, 0));
 
-        ShowBorder (m_mode_to_id.get(m_settings.m_colouring_mode));
+        ShowBorder (m_mode_to_id.get(m_working_settings.m_colouring_mode));
 
         return v;
     }
@@ -112,9 +115,16 @@ public class StarBasicSettings extends Fragment {
      * Called when the parent dialog is accepted
      */
     public boolean onAccept (){
+
         int x = m_size_picker.getValue();
-        m_settings.m_bm_size = size_values[x];
+        m_working_settings.m_bm_size = size_values[x];
+
+        m_result = m_working_settings;
         return true;
+    }
+
+    public PatternSet getResult (){
+        return m_result;
     }
 
     public class EventListener implements View.OnClickListener {
@@ -126,16 +136,16 @@ public class StarBasicSettings extends Fragment {
 
             switch (id) {
                 case R.id.button_cm_alternate:
-                    m_settings.m_colouring_mode = StarSettings.ColouringMode.ALTERNATE;
+                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.ALTERNATE;
                     break;
                 case R.id.button_cm_around:
-                    m_settings.m_colouring_mode = StarSettings.ColouringMode.AROUND;
+                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.AROUND;
                     break;
                 case R.id.button_cm_both:
-                    m_settings.m_colouring_mode = StarSettings.ColouringMode.BOTH;
+                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.BOTH;
                     break;
                 case R.id.button_cm_inwards:
-                    m_settings.m_colouring_mode = StarSettings.ColouringMode.INWARDS;
+                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.INWARDS;
                     break;
             }
             ShowBorder (id);

@@ -9,7 +9,9 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.tutorialapp.R;
 import com.misc.ColourHelpers;
 import com.misc.MyMath;
 
@@ -29,6 +31,9 @@ public class StarParameters {
     public int m_first_line = Color.BLUE;       ///< Foreground ground colour
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
 
+    double m_rotate = 0;                        ///< Rotates the whole pattern, used in animation
+    long m_counter = 0;                         ///< Used in animation
+
     String KEY_N1 = "n1";
     String KEY_N2 = "n2";
     String KEY_N3 = "n3";
@@ -44,11 +49,11 @@ public class StarParameters {
 
     public final static ArrayList<String> m_angle_str = new ArrayList<String>( Arrays.asList(
             "0", "0.05°", "0.1°", "0.2°", "0.3°", "0.4°", "0.5°", "1°", "2°", "3°", "4°", "5°", "6°", "10°", "12°", "15°", "20°", "30°", "45°", "60°", "72°", "90°", "108°", "120°", "144°", "180°",
-            "216°", "240°", "270°", "288°", "300°", "315°", "330°", "340°", "345°", "348°", "350°", "354°", "355°", "356°", "357°", "358°", "359°", "359.5°", "359.75°"));
+            "-144°", "-120°", "-108°", "-90°", "-72°", "-60°", "-45°", "-30°", "-20°", "-15°", "-12°", "-10°", "-6°", "-5°", "-4°", "-3°", "-2°", "-1°", "-0.5°", "-0.4°", "-0.3°", "-0.2°", "-0.1°", "-0.05°"));
 
     public final static double [] m_angles = {
             0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 45, 60, 72, 90, 108, 120, 144, 180,
-            216, 240, 270, 288, 300, 315, 330, 340, 345, 348, 350, 354, 355, 356, 357, 358, 359, 359.5, 359.75 };
+            216, 240, 252, 270, 288, 300, 315, 330, 340, 345, 348, 350, 354, 355, 356, 357, 358, 359, 359.5, 359.6, 359.7, 359.8, 359.9, 359.95 };
 
     public final static ArrayList<String> m_shrink_str = new ArrayList<String>( Arrays.asList(
             "none", "0.05%", "0.1%", "0.2%", "0.25%", "0.3%", "0.4%", "0.5%", "0.6%", "0.7%", "0.8%", "0.9%", "1%", "1.5%", "2%", "3%",
@@ -78,7 +83,7 @@ public class StarParameters {
         m_bmp = Bitmap.createBitmap(m_width, m_height, Bitmap.Config.RGB_565);
     }
 
-    public void Randomise(StarSettings settings)
+    public void Randomise(RandomSet settings)
     {
         Random rand = new Random();
 
@@ -99,6 +104,14 @@ public class StarParameters {
                 m_n1 /= hcf;
                 m_n2 /= hcf;
             }
+            if (m_n1 < 3) {
+                ++m_n1;
+            }
+        }
+
+        if (settings.m_randomise_repeats)
+        {
+            m_n3 = rand.nextInt(119 + 1);
         }
 
         if (settings.m_randomise_angles)
@@ -121,8 +134,6 @@ public class StarParameters {
             m_first_line = ColourHelpers.random_solid_colour ();
             m_last_line = ColourHelpers.random_solid_colour ();
         }
-
-        settings.randomise_colour_mode();
     }
 
     public Bitmap bitmap ()
@@ -136,7 +147,7 @@ public class StarParameters {
      * @param img
      * @param colour_mode
      */
-    public void Draw(Resources resources, ImageView img, StarSettings.ColouringMode colour_mode) {
+    public void Draw(Resources resources, ImageView img, PatternSet.ColouringMode colour_mode) {
 
         Rect rect = new Rect(0, 0, m_width, m_height);
         Canvas canvas = new Canvas(m_bmp);
@@ -161,6 +172,37 @@ public class StarParameters {
                 break;
         }
 
+        int h = m_height/40;
+
+        if (h >= 8) {
+
+            int colour = ColourHelpers.GetContrastColour (m_background);
+            int m = m_height/80;
+
+            paint.setColor(colour);
+            paint.setTextSize(h);
+            paint.setTextAlign(Paint.Align.LEFT);
+
+            String star = "(" + m_n1 + "," + m_n2 + ")";
+
+            canvas.drawText(star, m, h + m, paint);
+
+            if (m_n3 > 1) {
+
+                paint.setTextAlign(Paint.Align.RIGHT);
+                String settings = Integer.toString(m_n3) + " x " + getAngleString() + " x " + getShrinkString();
+                canvas.drawText(settings, m_width - m, h + m, paint);
+                paint.setTextAlign(Paint.Align.LEFT);
+            }
+
+            colour = ColourHelpers.MakeTransparent(colour, 0.5);
+            paint.setTextSize((int)(h * 1.3));
+            paint.setColor(colour);
+            canvas.drawText("www.eddaardvark.co.uk", m, m_height - m, paint);
+        }
+
+        // Render
+
         img.setImageDrawable(new BitmapDrawable(resources, m_bmp));
     }
 
@@ -181,7 +223,7 @@ public class StarParameters {
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = rotate * j;
+            double t2 = rotate * j + m_rotate;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -235,7 +277,7 @@ public class StarParameters {
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = rotate * j;
+            double t2 = rotate * j + m_rotate;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -287,7 +329,7 @@ public class StarParameters {
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = rotate * j;
+            double t2 = rotate * j + m_rotate;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -326,7 +368,7 @@ public class StarParameters {
         for (int j = 0; j < m_n3; ++j) {
 
             int n = 0;
-            double t2 = rotate * j;
+            double t2 = rotate * j + m_rotate;
             double c = Math.cos(t2);
             double s = Math.sin(t2);
             double x0 = xc + r * c;
@@ -351,6 +393,16 @@ public class StarParameters {
         }
     }
 
+
+
+    public void animate (StarSettings settings){
+
+        ++ m_counter;
+        m_rotate += Math.PI / 180.0;
+    }
+
+
+
     public void fromBundle(Bundle bundle) {
 
         m_n1 = bundle.getInt(KEY_N1, m_n1);
@@ -364,7 +416,6 @@ public class StarParameters {
     }
 
     public Bundle toBundle() {
-
 
         Bundle b = new Bundle();
 

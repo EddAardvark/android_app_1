@@ -1,13 +1,10 @@
 package com.dialogs;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,23 +15,26 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tutorialapp.R;
 import com.google.android.material.tabs.TabLayout;
-import com.patterns.StarAnimationSettings;
-import com.patterns.StarBasicSettings;
-import com.patterns.StarRandomiserSettings;
+import com.patterns.AnimateSet;
+import com.patterns.PatternSet;
+import com.patterns.RandomSet;
+import com.patterns.StarAnimationFragment;
+import com.patterns.StarPatternFragment;
+import com.patterns.StarRandomiserFragment;
 import com.patterns.StarSettings;
 
 public class ManageStarSettings extends DialogFragment {
 
     public interface Result {
-        abstract void UpdateStarSettings(int id, Bundle value);
+        abstract void UpdateStarSettings(PatternSet ps, RandomSet rs, AnimateSet as);
     }
 
     ManageStarSettings.EventListener m_listener = new ManageStarSettings.EventListener();
     ManageStarSettings.Result m_result;
     StarSettings m_settings = new StarSettings();
-    StarBasicSettings m_pattern_fragment;
-    StarAnimationSettings m_animation_fragment;
-    StarRandomiserSettings m_randomiser_fragment;
+    StarPatternFragment m_pattern_fragment;
+    StarAnimationFragment m_animation_fragment;
+    StarRandomiserFragment m_randomiser_fragment;
     TextView m_caption;
 
     int m_id;
@@ -65,9 +65,9 @@ public class ManageStarSettings extends DialogFragment {
             m_settings.fromBundle(current);
         }
 
-        m_pattern_fragment = StarBasicSettings.newInstance(m_settings);
-        m_animation_fragment = StarAnimationSettings.newInstance(m_settings);
-        m_randomiser_fragment = StarRandomiserSettings.newInstance(m_settings);
+        m_pattern_fragment = StarPatternFragment.newInstance(m_settings.m_pattern);
+        m_animation_fragment = StarAnimationFragment.newInstance(m_settings.m_animate);
+        m_randomiser_fragment = StarRandomiserFragment.newInstance(m_settings.m_random);
     }
 
     @Nullable
@@ -90,7 +90,6 @@ public class ManageStarSettings extends DialogFragment {
         m_caption = (TextView) dialog.findViewById(R.id.star_settings_caption);
         String caption = getString(R.string.star_params_caption);
         m_caption.setText(caption);
-
 
         FragmentManager manager = getChildFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -141,8 +140,7 @@ public class ManageStarSettings extends DialogFragment {
                     if (m_animation_fragment.onAccept () && m_pattern_fragment.onAccept() && m_randomiser_fragment.onAccept ()) {
                         dismiss ();
 
-                        m_randomiser_fragment.UpdateSettings();
-                        m_result.UpdateStarSettings(m_id, m_settings.toBundle());
+                        m_result.UpdateStarSettings(m_pattern_fragment.getResult(), m_randomiser_fragment.getResult(), m_animation_fragment.getResult());
                     }
                     break;
             }

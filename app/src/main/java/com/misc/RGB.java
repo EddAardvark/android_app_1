@@ -1,5 +1,7 @@
 package com.misc;
 
+import android.graphics.Color;
+
 /**
  * Package for the components of a colour
  */
@@ -18,4 +20,8 @@ public class RGB
         blue = colour & 0xFF;
     }
 
+    public int toColour ()
+    {
+        return Color.argb(alpha, red, green, blue);
+    }
 }
