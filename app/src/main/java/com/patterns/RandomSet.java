@@ -7,14 +7,14 @@ import android.os.Bundle;
  */
 public class RandomSet {
 
-    final String KEY_RANDOMISE_NUM_POINTS = "r1";
-    final String KEY_RANDOMISE_POINT_STEP = "r2";
-    final String KEY_RANDOMISE_ANGLES = "r3";
-    final String KEY_RANDOMISE_SHRINKAGE = "r4";
-    final String KEY_RANDOMISE_FORGROUND_COLOURS = "r5";
-    final String KEY_RANDOMISE_BACKROUND_COLOURS = "r6";
-    final String KEY_RANDOMISE_COLOUR_MODE = "r7";
-    final String KEY_RANDOMISE_REPEATS = "r8";
+    final static String KEY_RANDOMISE_NUM_POINTS = "r1";
+    final static String KEY_RANDOMISE_POINT_STEP = "r2";
+    final static String KEY_RANDOMISE_ANGLES = "r3";
+    final static String KEY_RANDOMISE_SHRINKAGE = "r4";
+    final static String KEY_RANDOMISE_FORGROUND_COLOURS = "r5";
+    final static String KEY_RANDOMISE_BACKROUND_COLOURS = "r6";
+    final static String KEY_RANDOMISE_COLOUR_MODE = "r7";
+    final static String KEY_RANDOMISE_REPEATS = "r8";
 
     boolean m_randomise_num_points = true;
     boolean m_randomise_point_step = true;

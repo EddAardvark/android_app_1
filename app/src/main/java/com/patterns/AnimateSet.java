@@ -9,15 +9,15 @@ import com.misc.AnimationSettings;
  */
 public class AnimateSet {
 
-    final String KEY_ANIM_ROTATE = "a1";
-    final String KEY_ANIM_POINTS = "a2";
-    final String KEY_ANIM_STEP = "a3";
-    final String KEY_ANIM_REPEATS = "a4";
-    final String KEY_ANIM_ANGLE = "a5";
-    final String KEY_ANIM_SHRINK = "a6";
-    final String KEY_ANIM_BACKGROUND = "a7";
-    final String KEY_ANIM_LINE1 = "a8";
-    final String KEY_ANIM_LINE2 = "a9";
+    final static String KEY_ANIM_ROTATE = "a1";
+    final static String KEY_ANIM_POINTS = "a2";
+    final static String KEY_ANIM_STEP = "a3";
+    final static String KEY_ANIM_REPEATS = "a4";
+    final static String KEY_ANIM_ANGLE = "a5";
+    final static String KEY_ANIM_SHRINK = "a6";
+    final static String KEY_ANIM_BACKGROUND = "a7";
+    final static String KEY_ANIM_LINE1 = "a8";
+    final static String KEY_ANIM_LINE2 = "a9";
 
     AnimationSettings m_anim_rotate = new AnimationSettings();
     AnimationSettings m_anim_points = new AnimationSettings();
@@ -38,6 +38,14 @@ public class AnimateSet {
         m_anim_rotate.m_inc = 1;
         m_anim_rotate.m_shape = AnimationSettings.Shape.WEDGE;
         m_anim_rotate.m_speed = 1;
+
+        // Vary the number of points
+
+        m_anim_points.m_start = 3;
+        m_anim_points.m_end = 19;
+        m_anim_points.m_inc = 2;
+        m_anim_points.m_shape = AnimationSettings.Shape.WEDGE;
+        m_anim_points.m_speed = 1;
     }
     /**
      * Save the current values to a bundle

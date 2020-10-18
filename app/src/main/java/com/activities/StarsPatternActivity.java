@@ -193,8 +193,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
     void animate ()
     {
-        m_params.animate(m_settings);
-        Update();
+        if (m_params.animate(m_settings.m_animate)) {
+            Update();
+        }
     }
 
     /**

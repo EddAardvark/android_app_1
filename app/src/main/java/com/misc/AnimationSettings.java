@@ -13,14 +13,15 @@ public class AnimationSettings {
         TOOTH,          // 1,2,3,4,3,2,1,2,3,4,3,2,1
     }
 
-    String KEY_START = "a1";
-    String KEY_END = "a2";
-    String KEY_INC = "a3";
-    String KEY_SPEED = "a4";
-    String KEY_SHAPE = "a5";
-    String KEY_COUNTER = "a6";
-    String KEY_VALUE = "a7";
-    String KEY_UP = "a8";
+    final static String KEY_START = "a1";
+    final static String KEY_END = "a2";
+    final static String KEY_INC = "a3";
+    final static String KEY_SPEED = "a4";
+    final static String KEY_SHAPE = "a5";
+    final static String KEY_COUNTER = "a6";
+    final static String KEY_VALUE = "a7";
+    final static String KEY_UP = "a8";
+    final static String KEY_ENABLED = "a9";
 
     public boolean m_enabled = false;
 
@@ -49,13 +50,13 @@ public class AnimationSettings {
         m_up = true;
     }
     /**
-     * Update the value and return it.
+     * Try to update the animation value
      * @return An integer or null.
      */
-    public Integer TryAdvance (){
+    public boolean tryAdvance (){
 
-        if (-- m_counter > 0){
-            return null;
+        if (! m_enabled || -- m_counter > 0){
+            return false;
         }
 
         // Counts from start to end and then resets to start
@@ -69,7 +70,7 @@ public class AnimationSettings {
             {
                 m_value = m_start;
             }
-            return m_value;
+            return true;
         }
 
         // Counts from start to end, then changes direction and counts back.
@@ -91,10 +92,19 @@ public class AnimationSettings {
                     m_value = 2 * m_start - m_value;
                 }
             }
-            return m_value;
+            return true;
         }
-        return null;
+        return false;
     }
+
+    /**
+     * Returns the current value, ideally this should only be called if TryAdvance has returned true.
+     * @return The current value
+     */
+    public int getValue (){
+        return m_value;
+    }
+
 
     public void fromBundle(Bundle bundle) {
 
@@ -105,6 +115,7 @@ public class AnimationSettings {
                 m_shape = (AnimationSettings.Shape) x;
             }
 
+            m_enabled = bundle.getBoolean(KEY_ENABLED, m_enabled);
             m_start = bundle.getInt(KEY_START, m_start);
             m_end = bundle.getInt(KEY_END, m_end);
             m_inc = bundle.getInt(KEY_INC, m_inc);
@@ -119,6 +130,7 @@ public class AnimationSettings {
 
         Bundle b = new Bundle();
 
+        b.putBoolean(KEY_ENABLED, m_enabled);
         b.putInt(KEY_START, m_start);
         b.putInt(KEY_END, m_end);
         b.putInt(KEY_INC, m_inc);

@@ -34,14 +34,14 @@ public class StarParameters {
     double m_rotate = 0;                        ///< Rotates the whole pattern, used in animation
     long m_counter = 0;                         ///< Used in animation
 
-    String KEY_N1 = "n1";
-    String KEY_N2 = "n2";
-    String KEY_N3 = "n3";
-    String KEY_ROTATE = "rot";
-    String KEY_SHRINK = "shrnk";
-    String KEY_BACKGROUND = "bg";
-    String KEY_LINE1 = "l1";
-    String KEY_LINE2 = "l2";
+    final static String KEY_N1 = "n1";
+    final static String KEY_N2 = "n2";
+    final static String KEY_N3 = "n3";
+    final static String KEY_ROTATE = "rot";
+    final static String KEY_SHRINK = "shrnk";
+    final static String KEY_BACKGROUND = "bg";
+    final static String KEY_LINE1 = "l1";
+    final static String KEY_LINE2 = "l2";
 
     int m_width;
     int m_height;
@@ -395,10 +395,50 @@ public class StarParameters {
 
 
 
-    public void animate (StarSettings settings){
+    public boolean animate (AnimateSet settings) {
 
-        ++ m_counter;
-        m_rotate += Math.PI / 180.0;
+        boolean ret = false;
+        ++m_counter;
+
+        if (settings.m_anim_rotate.tryAdvance()) {
+            ret = true;
+            m_rotate = settings.m_anim_rotate.getValue() * Math.PI / 180;
+        }
+
+        if (settings.m_anim_angle.tryAdvance()) {
+            ret = true;
+
+        }
+        if (settings.m_anim_background.tryAdvance()) {
+            ret = true;
+
+        }
+        if (settings.m_anim_line1.tryAdvance()) {
+            ret = true;
+
+        }
+        if (settings.m_anim_line2.tryAdvance()) {
+            ret = true;
+
+        }
+        if (settings.m_anim_points.tryAdvance()) {
+            m_n1 = settings.m_anim_points.getValue();
+            ret = true;
+
+        }
+        if (settings.m_anim_repeats.tryAdvance()) {
+            ret = true;
+
+        }
+        if (settings.m_anim_shrink.tryAdvance()) {
+            ret = true;
+
+        }
+        if (settings.m_anim_step.tryAdvance()) {
+            ret = true;
+
+        }
+        return ret;
     }
 
 
