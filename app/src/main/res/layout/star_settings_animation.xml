@@ -104,6 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginLeft="@dimen/spacing_medium"
+        android:minEms="2"
         android:text="Start"
         app:layout_constraintStart_toEndOf="@+id/anim_angle"
         app:layout_constraintTop_toTopOf="parent" />
@@ -114,6 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginLeft="@dimen/spacing_medium"
+        android:minEms="2"
         android:text="Stop"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="@+id/textView8" />
@@ -124,7 +126,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginLeft="@dimen/spacing_medium"
-        android:text="Incr"
+        android:minEms="2"
+        android:text="Inc"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/textView9" />
 
@@ -134,7 +137,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginLeft="@dimen/spacing_medium"
-        android:text="Speed"
+        android:minEms="2"
+        android:text="Delay"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
@@ -144,6 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginLeft="@dimen/spacing_medium"
+        android:maxEms="2"
         android:text="Shape"
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toTopOf="@+id/textView11" />

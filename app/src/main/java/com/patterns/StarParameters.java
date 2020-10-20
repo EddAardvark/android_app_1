@@ -404,37 +404,33 @@ public class StarParameters {
             ret = true;
             m_rotate = settings.m_anim_rotate.getValue() * Math.PI / 180;
         }
-
         if (settings.m_anim_angle.tryAdvance()) {
+            m_angle_idx = settings.m_anim_angle.getValue();
             ret = true;
-
         }
         if (settings.m_anim_background.tryAdvance()) {
             ret = true;
-
         }
         if (settings.m_anim_line1.tryAdvance()) {
             ret = true;
-
         }
         if (settings.m_anim_line2.tryAdvance()) {
             ret = true;
-
         }
         if (settings.m_anim_points.tryAdvance()) {
             m_n1 = settings.m_anim_points.getValue();
             ret = true;
-
         }
         if (settings.m_anim_repeats.tryAdvance()) {
+            m_n3 = settings.m_anim_repeats.getValue();
             ret = true;
-
         }
         if (settings.m_anim_shrink.tryAdvance()) {
+            m_shrink_idx = settings.m_anim_shrink.getValue();
             ret = true;
-
         }
         if (settings.m_anim_step.tryAdvance()) {
+            m_n2 = settings.m_anim_step.getValue();
             ret = true;
 
         }

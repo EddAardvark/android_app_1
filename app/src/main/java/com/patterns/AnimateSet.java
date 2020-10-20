@@ -46,6 +46,14 @@ public class AnimateSet {
         m_anim_points.m_inc = 2;
         m_anim_points.m_shape = AnimationSettings.Shape.WEDGE;
         m_anim_points.m_speed = 1;
+
+        // Vary the point step
+
+        m_anim_step.m_start = 1;
+        m_anim_step.m_end = 7;
+        m_anim_step.m_inc = 1;
+        m_anim_step.m_shape = AnimationSettings.Shape.WEDGE;
+        m_anim_step.m_speed = 1;
     }
     /**
      * Save the current values to a bundle
