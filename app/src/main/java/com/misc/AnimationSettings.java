@@ -2,8 +2,6 @@ package com.misc;
 
 import android.os.Bundle;
 
-import com.patterns.StarSettings;
-
 import java.io.Serializable;
 
 public class AnimationSettings {
@@ -11,7 +9,10 @@ public class AnimationSettings {
     public enum Shape{
         WEDGE,          // 1,2,3,4,1,2,3,4,1,2,3,4
         TOOTH,          // 1,2,3,4,3,2,1,2,3,4,3,2,1
+        RWEDGE,         // 4,3,2,1,4,3,2,1,4,3,2,1
     }
+
+    public static final Shape[] m_shapes = { Shape.WEDGE, Shape.TOOTH, Shape.RWEDGE};
 
     final static String KEY_START = "a1";
     final static String KEY_END = "a2";
@@ -103,6 +104,14 @@ public class AnimationSettings {
      */
     public int getValue (){
         return m_value;
+    }
+
+    public static Shape nextShape (Shape s){
+
+        if (s == Shape.WEDGE) return Shape.TOOTH;
+        if (s == Shape.TOOTH) return Shape.RWEDGE;
+        if (s == Shape.RWEDGE) return Shape.WEDGE;
+        return Shape.WEDGE;
     }
 
 

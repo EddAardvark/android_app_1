@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.dialogs.GetInteger;
 import com.example.tutorialapp.R;
+import com.misc.AnimationSettings;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +48,13 @@ public class StarAnimationFragment extends Fragment{
     TextView m_shrink_inc;
     TextView m_shrink_speed;
 
+    ImageView m_rotate_shape;
+    ImageView m_points_shape;
+    ImageView m_step_shape;
+    ImageView m_repeat_shape;
+    ImageView m_angle_shape;
+    ImageView m_shrink_shape;
+
     final static int CB_ROTATE_SPEED = 1;
     final static int CB_POINTS_START = 2;
     final static int CB_POINTS_END = 3;
@@ -67,6 +76,12 @@ public class StarAnimationFragment extends Fragment{
     final static int CB_SHRINK_END = 19;
     final static int CB_SHRINK_INC = 20;
     final static int CB_SHRINK_SPEED = 21;
+    final static int CB_ROTATE_SHAPE = 22;
+    final static int CB_POINTS_SHAPE = 23;
+    final static int CB_STEP_SHAPE = 24;
+    final static int CB_REPEAT_SHAPE = 25;
+    final static int CB_ANGLE_SHAPE = 26;
+    final static int CB_SHRINK_SHAPE = 27;
 
     public StarAnimationFragment() {
     }
@@ -130,6 +145,13 @@ public class StarAnimationFragment extends Fragment{
         m_shrink_inc   = (TextView)v.findViewById(R.id.shrink_inc);
         m_shrink_speed = (TextView)v.findViewById(R.id.shrink_speed);
 
+        m_rotate_shape  = (ImageView) v.findViewById(R.id.rotate_shape);
+        m_points_shape = (ImageView) v.findViewById(R.id.points_shape);
+        m_step_shape   = (ImageView) v.findViewById(R.id.step_shape);
+        m_repeat_shape = (ImageView) v.findViewById(R.id.rep_shape);
+        m_angle_shape  = (ImageView) v.findViewById(R.id.angle_shape);
+        m_shrink_shape = (ImageView) v.findViewById(R.id.shrink_shape);
+
         m_rotate_speed.setOnClickListener(m_listener);
 
         m_points_start.setOnClickListener(m_listener);
@@ -157,27 +179,40 @@ public class StarAnimationFragment extends Fragment{
         m_shrink_inc.setOnClickListener(m_listener);
         m_shrink_speed.setOnClickListener(m_listener);
 
+        m_rotate_shape.setOnClickListener(m_listener);
+        m_points_shape.setOnClickListener(m_listener);
+        m_step_shape.setOnClickListener(m_listener);
+        m_repeat_shape.setOnClickListener(m_listener);
+        m_angle_shape.setOnClickListener(m_listener);
+        m_shrink_shape.setOnClickListener(m_listener);
+
         show_rotate_speed ();
+        show_rotate_shape ();
         show_points_start ();
         show_points_end ();
         show_points_inc ();
         show_points_speed ();
+        show_points_shape ();
         show_step_start ();
         show_step_end ();
         show_step_inc ();
         show_step_speed ();
+        show_step_shape ();
         show_repeat_start ();
         show_repeat_end ();
         show_repeat_inc ();
         show_repeat_speed ();
+        show_repeat_shape ();
         show_angle_start ();
         show_angle_end ();
         show_angle_inc ();
         show_angle_speed ();
+        show_angle_shape ();
         show_shrink_start ();
         show_shrink_end ();
         show_shrink_inc ();
         show_shrink_speed ();
+        show_shrink_shape ();
 
         ((Switch)v.findViewById(R.id.anim_rotate)).setChecked(m_working_settings.m_anim_rotate.m_enabled);
         ((Switch)v.findViewById(R.id.anim_points)).setChecked(m_working_settings.m_anim_points.m_enabled);
@@ -296,6 +331,30 @@ public class StarAnimationFragment extends Fragment{
                     break;
                 case R.id.shrink_speed:
                     ShowIntegerDialog(CB_SHRINK_SPEED, m_working_settings.m_anim_shrink.m_speed, 1, 30, "Shrinkage change delay", "The delay before updating the shrinkage between repeats");
+                    break;
+                case R.id.rotate_shape:
+                    m_working_settings.m_anim_rotate.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_rotate.m_shape);
+                    show_rotate_shape();
+                    break;
+                case R.id.points_shape:
+                    m_working_settings.m_anim_points.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_points.m_shape);
+                    show_points_shape();
+                    break;
+                case R.id.step_shape:
+                    m_working_settings.m_anim_step.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_step.m_shape);
+                    show_step_shape();
+                    break;
+                case R.id.rep_shape:
+                    m_working_settings.m_anim_repeats.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_repeats.m_shape);
+                    show_repeat_shape();
+                    break;
+                case R.id.angle_shape:
+                    m_working_settings.m_anim_angle.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_angle.m_shape);
+                    show_angle_shape();
+                    break;
+                case R.id.shrink_shape:
+                    m_working_settings.m_anim_shrink.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_shrink.m_shape);
+                    show_shrink_shape();
                     break;
             }
         }
@@ -435,4 +494,24 @@ public class StarAnimationFragment extends Fragment{
     void show_shrink_inc ()   { m_shrink_inc.setText(Integer.toString (m_working_settings.m_anim_shrink.m_inc)); }
     void show_shrink_speed () { m_shrink_speed.setText(Integer.toString (m_working_settings.m_anim_shrink.m_speed)); }
 
+
+    void show_rotate_shape () { m_rotate_shape.setImageResource(getShapeImage(m_working_settings.m_anim_rotate.m_shape)); }
+    void show_points_shape () { m_points_shape.setImageResource(getShapeImage(m_working_settings.m_anim_points.m_shape)); }
+    void show_step_shape ()   { m_step_shape.setImageResource(getShapeImage(m_working_settings.m_anim_step.m_shape)); }
+    void show_repeat_shape () { m_repeat_shape.setImageResource(getShapeImage(m_working_settings.m_anim_repeats.m_shape)); }
+    void show_angle_shape ()  { m_angle_shape.setImageResource(getShapeImage(m_working_settings.m_anim_angle.m_shape)); }
+    void show_shrink_shape () { m_shrink_shape.setImageResource(getShapeImage(m_working_settings.m_anim_shrink.m_shape)); }
+
+    /**
+     * Make a shape to a drawable resource
+     * @param s The shape
+     * @return The resource id
+     */
+    int getShapeImage (AnimationSettings.Shape s) {
+
+        if (s == AnimationSettings.Shape.WEDGE) return R.drawable.up_ramp;
+        if (s == AnimationSettings.Shape.TOOTH) return R.drawable.up_and_down;
+        if (s == AnimationSettings.Shape.RWEDGE) return R.drawable.down_ramp;
+        return R.drawable.up_ramp;
+    }
 }
