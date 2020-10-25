@@ -76,12 +76,6 @@ public class StarAnimationFragment extends Fragment{
     final static int CB_SHRINK_END = 19;
     final static int CB_SHRINK_INC = 20;
     final static int CB_SHRINK_SPEED = 21;
-    final static int CB_ROTATE_SHAPE = 22;
-    final static int CB_POINTS_SHAPE = 23;
-    final static int CB_STEP_SHAPE = 24;
-    final static int CB_REPEAT_SHAPE = 25;
-    final static int CB_ANGLE_SHAPE = 26;
-    final static int CB_SHRINK_SHAPE = 27;
 
     public StarAnimationFragment() {
     }
@@ -223,7 +217,6 @@ public class StarAnimationFragment extends Fragment{
         ((Switch)v.findViewById(R.id.anim_backround)).setChecked(m_working_settings.m_anim_background.m_enabled);
         ((Switch)v.findViewById(R.id.anim_l1)).setChecked(m_working_settings.m_anim_line1.m_enabled);
         ((Switch)v.findViewById(R.id.anim_l2)).setChecked(m_working_settings.m_anim_line2.m_enabled);
-
 
         return v;
     }

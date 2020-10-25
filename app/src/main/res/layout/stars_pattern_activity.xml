@@ -94,8 +94,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_n1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginLeft="@dimen/spacing_medium"
             android:background="@android:color/holo_blue_dark"
@@ -119,8 +119,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_n2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark"
@@ -144,8 +144,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_n3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark"
@@ -168,8 +168,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_share"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginTop="16dp"
             android:background="@android:color/holo_blue_dark"
             android:clickable="true"
@@ -191,8 +191,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_angle"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark"
@@ -216,8 +216,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_shrink"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="@dimen/spacing_medium"
@@ -244,8 +244,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_random"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark"
@@ -270,8 +270,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_settings"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark"
@@ -295,8 +295,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_back_colour"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark"
@@ -320,8 +320,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_fore_colour1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginTop="16dp"
             android:background="@android:color/holo_blue_dark"
             android:clickable="true"
@@ -343,8 +343,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_fore_colour2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:background="@android:color/holo_blue_dark"

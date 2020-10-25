@@ -35,25 +35,37 @@ public class AnimateSet {
 
         m_anim_rotate.m_start = 0;
         m_anim_rotate.m_end = 359;
-        m_anim_rotate.m_inc = 1;
-        m_anim_rotate.m_shape = AnimationSettings.Shape.WEDGE;
-        m_anim_rotate.m_speed = 1;
 
         // Vary the number of points
 
         m_anim_points.m_start = 3;
-        m_anim_points.m_end = 19;
-        m_anim_points.m_inc = 2;
-        m_anim_points.m_shape = AnimationSettings.Shape.WEDGE;
-        m_anim_points.m_speed = 1;
+        m_anim_points.m_end = 119;
 
         // Vary the point step
 
         m_anim_step.m_start = 1;
         m_anim_step.m_end = 7;
-        m_anim_step.m_inc = 1;
-        m_anim_step.m_shape = AnimationSettings.Shape.WEDGE;
-        m_anim_step.m_speed = 1;
+
+        // Repeats
+
+        m_anim_repeats.m_start = 0;
+        m_anim_repeats.m_end = 20;
+
+        // Angles
+
+        m_anim_angle.m_start = 0;
+        m_anim_angle.m_end = 20;
+
+        // Shrink
+
+        m_anim_shrink.m_start = 0;
+        m_anim_shrink.m_end = 20;
+
+        // Colours
+
+        m_anim_background.setIsColour();
+        m_anim_line1.setIsColour();
+        m_anim_line2.setIsColour();
     }
     /**
      * Save the current values to a bundle

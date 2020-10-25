@@ -27,7 +27,7 @@ public class AnimationSettings {
     public boolean m_enabled = false;
 
     public int m_start;     ///< Start of the animation
-    public int m_end;       ///< Start of the animation (inclusive)
+    public int m_end;       ///< End of the animation (inclusive)
     public int m_inc;       ///< Increment
     public int m_speed;     ///< Larger numbers are slower.
     public Shape m_shape;   ///< Controls the shape of the sequence
@@ -36,7 +36,6 @@ public class AnimationSettings {
     int m_value;            ///< The current value
     boolean m_up;           ///< Used in TOOTH mode
 
-
     public AnimationSettings (){
         m_start = 0;
         m_end = 15;
@@ -44,11 +43,32 @@ public class AnimationSettings {
         m_speed = 1;
         m_shape = Shape.WEDGE;
     }
-
+    /**
+     * Returns the value as a colour based on the start and end values.
+     * Blensd from 0 - 1, uses end - start as the number of colours
+     */
+    public int getColour ()
+    {
+        double f = (double) m_value / Math.abs (m_end - m_start);
+        return ColourHelpers.Blend(m_end, m_start, f);
+    }
+    /**
+     * Set the animation to the start
+     */
     public void start (){
         m_counter = m_speed;
         m_value = m_start;
         m_up = true;
+    }
+    /**
+     * Colours always cycle from 0 to 1 in 256 steps.
+     */
+    public void setIsColour () {
+        m_start = 0;
+        m_end = 255;
+        m_inc = 1;
+        m_shape = AnimationSettings.Shape.WEDGE;
+        m_speed = 1;
     }
     /**
      * Try to update the animation value
@@ -60,16 +80,28 @@ public class AnimationSettings {
             return false;
         }
 
-        // Counts from start to end and then resets to start
-
         m_counter = m_speed;
+
+        // Counts from start to end and then resets to start
 
         if (m_shape == Shape.WEDGE)
         {
             m_value += m_inc;
             if (m_value > m_end)
             {
-                m_value = m_start;
+                m_value = m_start + (m_value - m_end - 1);
+            }
+            return true;
+        }
+
+        // Counts from end to start and then resets to end
+
+        if (m_shape == Shape.RWEDGE)
+        {
+            m_value -= m_inc;
+            if (m_value < m_start)
+            {
+                m_value = m_end - (m_start - m_value - 1);
             }
             return true;
         }
@@ -97,6 +129,7 @@ public class AnimationSettings {
         }
         return false;
     }
+
 
     /**
      * Returns the current value, ideally this should only be called if TryAdvance has returned true.

@@ -8,4 +8,5 @@
     <dimen name="spacing_xl">24dp</dimen>
     <dimen name="spacing_large">12dp</dimen>
     <dimen name="spacing_xxl">24dp</dimen>
+    <dimen name="square_button_size">80dp</dimen>
 </resources>
