@@ -75,10 +75,11 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         findViewById(R.id.layout_n2).setOnClickListener(m_listener);
         findViewById(R.id.layout_n3).setOnClickListener(m_listener);
         findViewById(R.id.layout_angle).setOnClickListener(m_listener);
-        findViewById(R.id.layout_share).setOnClickListener(m_listener);
-        findViewById(R.id.layout_random).setOnClickListener(m_listener);
+        findViewById(R.id.share_pattern).setOnClickListener(m_listener);
+        findViewById(R.id.random_picture).setOnClickListener(m_listener);
         findViewById(R.id.layout_shrink).setOnClickListener(m_listener);
-        findViewById(R.id.layout_settings).setOnClickListener(m_listener);
+        findViewById(R.id.edit_settings).setOnClickListener(m_listener);
+        findViewById(R.id.app_info).setOnClickListener(m_listener);
 
         m_layout_background = findViewById(R.id.layout_back_colour);
         m_layout_foreground1 = findViewById(R.id.layout_fore_colour1);
@@ -91,14 +92,20 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_foreground1.setOnClickListener(m_listener);
         m_layout_foreground2.setOnClickListener(m_listener);
 
-        m_timer_handler.postDelayed(m_timer_runnable, 0);
+        startAnimation ();
         Update();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        m_timer_handler.removeCallbacks(m_timer_runnable);
+        stopAnimation ();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startAnimation ();
     }
 
     @Override
@@ -119,8 +126,12 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
     void startAnimation ()
     {
+        m_timer_handler.postDelayed(m_timer_runnable, 0);
     }
-
+    void stopAnimation ()
+    {
+        m_timer_handler.removeCallbacks(m_timer_runnable);
+    }
     /**
      * Redraw the controls and the image
      */
@@ -129,7 +140,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         showSettings();
         Draw();
     }
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -304,7 +314,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.layout_share:
+                case R.id.share_pattern:
                     share();
                     break;
                 case R.id.layout_n1:
@@ -322,12 +332,12 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                 case R.id.layout_shrink:
                     onClickShrink ();
                     break;
-                case R.id.layout_random:
+                case R.id.random_picture:
                     m_params.Randomise (m_settings.m_random);
                     m_settings.randomise_colour_mode();
                     Update ();
                     break;
-                case R.id.layout_settings:
+                case R.id.edit_settings:
                     onClickSettings ();
                     break;
                 case R.id.layout_back_colour:
@@ -338,6 +348,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
                 case R.id.layout_fore_colour2:
                     onClickLineColour2 ();
+                    break;
+                case R.id.app_info:
                     break;
             }
         }
