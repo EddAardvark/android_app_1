@@ -82,4 +82,10 @@
     <string name="star_params_caption">Here you can set aspects of how the pattern is drawn.</string>
     <string name="star_randomiser_caption">Here you can set which attributes of the pattern can be changed by the randomiser.</string>
     <string name="star_animation_caption">Here you can set the parameters used for animation</string>
+    <string name="edit_settings">Click to launch the settings editor</string>
+    <string name="draw_random">Click to draw a random pattern</string>
+    <string name="share_pattern">Click to share this pattern</string>
+    <string name="app_info">Click to display the application\'s information page</string>
+    <string name="resume_animation">Click to start or resume the animation</string>
+    <string name="pause_animation">Click to pause the animation</string>
 </resources>

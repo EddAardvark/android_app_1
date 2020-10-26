@@ -55,6 +55,13 @@ public class StarAnimationFragment extends Fragment{
     ImageView m_angle_shape;
     ImageView m_shrink_shape;
 
+    View m_background_start;
+    View m_background_end;
+    View m_line1_start;
+    View m_line1_end;
+    View m_line2_start;
+    View m_line2_end;
+
     final static int CB_ROTATE_SPEED = 1;
     final static int CB_POINTS_START = 2;
     final static int CB_POINTS_END = 3;
@@ -76,6 +83,12 @@ public class StarAnimationFragment extends Fragment{
     final static int CB_SHRINK_END = 19;
     final static int CB_SHRINK_INC = 20;
     final static int CB_SHRINK_SPEED = 21;
+    final static int CB_BACKGROUND_COLOUR_START = 22;
+    final static int CB_BACKGROUND_COLOUR_END = 23;
+    final static int CB_L1_COLOUR_START = 24;
+    final static int CB_L1_COLOUR_END = 25;
+    final static int CB_L2_COLOUR_START = 26;
+    final static int CB_L2_COLOUR_END = 27;
 
     public StarAnimationFragment() {
     }
@@ -146,6 +159,13 @@ public class StarAnimationFragment extends Fragment{
         m_angle_shape  = (ImageView) v.findViewById(R.id.angle_shape);
         m_shrink_shape = (ImageView) v.findViewById(R.id.shrink_shape);
 
+        m_background_start = v.findViewById(R.id.back_colour_start);
+        m_background_end = v.findViewById(R.id.back_colour_end);
+        m_line1_start = v.findViewById(R.id.line1_colour_start);
+        m_line1_end = v.findViewById(R.id.line1_colour_end);
+        m_line2_start = v.findViewById(R.id.line2_colour_start);
+        m_line2_end = v.findViewById(R.id.line2_colour_end);
+
         m_rotate_speed.setOnClickListener(m_listener);
 
         m_points_start.setOnClickListener(m_listener);
@@ -180,6 +200,13 @@ public class StarAnimationFragment extends Fragment{
         m_angle_shape.setOnClickListener(m_listener);
         m_shrink_shape.setOnClickListener(m_listener);
 
+        m_background_start.setOnClickListener(m_listener);
+        m_background_end.setOnClickListener(m_listener);
+        m_line1_start.setOnClickListener(m_listener);
+        m_line1_end.setOnClickListener(m_listener);
+        m_line2_start.setOnClickListener(m_listener);
+        m_line2_end.setOnClickListener(m_listener);
+
         show_rotate_speed ();
         show_rotate_shape ();
         show_points_start ();
@@ -207,6 +234,12 @@ public class StarAnimationFragment extends Fragment{
         show_shrink_inc ();
         show_shrink_speed ();
         show_shrink_shape ();
+        show_background_start();
+        show_background_end();
+        show_line1_start();
+        show_line1_end();
+        show_line2_start();
+        show_line2_end();
 
         ((Switch)v.findViewById(R.id.anim_rotate)).setChecked(m_working_settings.m_anim_rotate.m_enabled);
         ((Switch)v.findViewById(R.id.anim_points)).setChecked(m_working_settings.m_anim_points.m_enabled);
@@ -459,6 +492,30 @@ public class StarAnimationFragment extends Fragment{
                     m_working_settings.m_anim_shrink.m_speed = value;
                     show_shrink_speed ();
                     break;
+                case CB_BACKGROUND_COLOUR_START:
+                    m_working_settings.m_anim_background.m_start = value;
+                    show_background_start ();
+                    break;
+                case CB_BACKGROUND_COLOUR_END:
+                    m_working_settings.m_anim_background.m_end = value;
+                    show_background_end ();
+                    break;
+                case CB_L1_COLOUR_START:
+                    m_working_settings.m_anim_line1.m_start = value;
+                    show_line1_start ();
+                    break;
+                case CB_L1_COLOUR_END:
+                    m_working_settings.m_anim_line1.m_end = value;
+                    show_line1_end ();
+                    break;
+                case CB_L2_COLOUR_START:
+                    m_working_settings.m_anim_line2.m_start = value;
+                    show_line2_start ();
+                    break;
+                case CB_L2_COLOUR_END:
+                    m_working_settings.m_anim_line2.m_end = value;
+                    show_line2_end ();
+                    break;
                 default:
                     break;
             }
@@ -487,6 +544,12 @@ public class StarAnimationFragment extends Fragment{
     void show_shrink_inc ()   { m_shrink_inc.setText(Integer.toString (m_working_settings.m_anim_shrink.m_inc)); }
     void show_shrink_speed () { m_shrink_speed.setText(Integer.toString (m_working_settings.m_anim_shrink.m_speed)); }
 
+    void show_background_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_background.m_start); }
+    void show_background_end (){m_background_start.setBackgroundColor(m_working_settings.m_anim_background.m_end); }
+    void show_line1_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line1.m_start); }
+    void show_line1_end (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line1.m_end); }
+    void show_line2_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line2.m_start); }
+    void show_line2_end (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line2.m_end); }
 
     void show_rotate_shape () { m_rotate_shape.setImageResource(getShapeImage(m_working_settings.m_anim_rotate.m_shape)); }
     void show_points_shape () { m_points_shape.setImageResource(getShapeImage(m_working_settings.m_anim_points.m_shape)); }

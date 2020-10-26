@@ -1,7 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_medium"
@@ -387,5 +386,65 @@
         app:layout_constraintTop_toTopOf="@+id/shrink_speed"
         app:srcCompat="@drawable/up_ramp" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/back_colour_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/anim_backround"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/anim_backround" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/back_colour_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/anim_backround"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/anim_backround" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/line1_colour_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/anim_l1"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/anim_l1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/line1_colour_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/anim_l1"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/anim_l1" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/line2_colour_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/anim_l2"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/anim_l2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/line2_colour_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/anim_l2"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/anim_l2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

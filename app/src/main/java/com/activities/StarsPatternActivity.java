@@ -43,11 +43,14 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
     StarSettings m_settings = new StarSettings ();
     StarParameters m_params = new StarParameters (m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
+    boolean m_in_animation = false;
 
     EventListener m_listener = new StarsPatternActivity.EventListener();
     View m_layout_background;
     View m_layout_foreground1;
     View m_layout_foreground2;
+    View m_pause_button;
+    View m_resume_button;
     TextView m_layout_background_text;
     TextView m_layout_foreground1_text;
     TextView m_layout_foreground2_text;
@@ -87,25 +90,54 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_background_text = (TextView)findViewById(R.id.text_backcolour);
         m_layout_foreground1_text = (TextView)findViewById(R.id.text_forecolour1);
         m_layout_foreground2_text = (TextView)findViewById(R.id.text_forecolour2);
+        m_pause_button = findViewById(R.id.pause_animation);
+        m_resume_button = findViewById(R.id.resume_animation);
 
         m_layout_background.setOnClickListener(m_listener);
         m_layout_foreground1.setOnClickListener(m_listener);
         m_layout_foreground2.setOnClickListener(m_listener);
+        m_pause_button.setOnClickListener(m_listener);
+        m_resume_button.setOnClickListener(m_listener);
 
-        startAnimation ();
+        setAnimationState (false);
         Update();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        stopAnimation ();
+        if (m_in_animation) {
+            stopAnimation();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        startAnimation ();
+        if (m_in_animation) {
+            startAnimation();
+        }
+    }
+    void startAnimation ()
+    {
+        m_timer_handler.postDelayed(m_timer_runnable, 0);
+    }
+    void stopAnimation ()
+    {
+        m_timer_handler.removeCallbacks(m_timer_runnable);
+    }
+    void setAnimationState (boolean active)
+    {
+        m_in_animation = active;
+
+        if (m_in_animation){
+            m_resume_button.setVisibility(View.GONE);
+            m_pause_button.setVisibility(View.VISIBLE);
+        }
+        else{
+            m_pause_button.setVisibility(View.GONE);
+            m_resume_button.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -122,15 +154,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             m_params.fromBundle (params);
         }
         Update();
-    }
-
-    void startAnimation ()
-    {
-        m_timer_handler.postDelayed(m_timer_runnable, 0);
-    }
-    void stopAnimation ()
-    {
-        m_timer_handler.removeCallbacks(m_timer_runnable);
     }
     /**
      * Redraw the controls and the image
@@ -350,6 +373,14 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     onClickLineColour2 ();
                     break;
                 case R.id.app_info:
+                    break;
+                case R.id.pause_animation:
+                    stopAnimation ();
+                    setAnimationState (false);
+                    break;
+                case R.id.resume_animation:
+                    startAnimation ();
+                    setAnimationState (true);
                     break;
             }
         }
