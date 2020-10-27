@@ -299,10 +299,10 @@ public class StarAnimationFragment extends Fragment{
                     ShowIntegerDialog(CB_ROTATE_SPEED, m_working_settings.m_anim_rotate.m_speed, 1, 30, "Rotation Speed", "The delay before rotating the pattern");
                     break;
                 case R.id.pts_start:
-                    ShowIntegerDialog(CB_POINTS_START, m_working_settings.m_anim_points.m_start, 3, 100, "Starting Points", "The number of points defining the first pattern");
+                    ShowIntegerDialog(CB_POINTS_START, m_working_settings.m_anim_points.getStart(), 3, 100, "Starting Points", "The number of points defining the first pattern");
                     break;
                 case R.id.pts_end:
-                    ShowIntegerDialog(CB_POINTS_END, m_working_settings.m_anim_points.m_end, 3, 100, "End Points", "The number of points defining the last pattern");
+                    ShowIntegerDialog(CB_POINTS_END, m_working_settings.m_anim_points.getEnd(), 3, 100, "End Points", "The number of points defining the last pattern");
                     break;
                 case R.id.pts_inc:
                     ShowIntegerDialog(CB_POINTS_INC, m_working_settings.m_anim_points.m_inc, 1, 7, "Points Increment", "The increment in the number of points between patterns");
@@ -311,10 +311,10 @@ public class StarAnimationFragment extends Fragment{
                     ShowIntegerDialog(CB_POINTS_SPEED, m_working_settings.m_anim_points.m_speed, 1, 30, "Points Speed", "The delay before updating the number of points");
                     break;
                 case R.id.step_start:
-                    ShowIntegerDialog(CB_STEP_START, m_working_settings.m_anim_step.m_start, 3, 100, "Starting Step", "The starting step size");
+                    ShowIntegerDialog(CB_STEP_START, m_working_settings.m_anim_step.getStart(), 3, 100, "Starting Step", "The starting step size");
                     break;
                 case R.id.step_end:
-                    ShowIntegerDialog(CB_STEP_END, m_working_settings.m_anim_step.m_end, 3, 100, "End Step", "The last step size");
+                    ShowIntegerDialog(CB_STEP_END, m_working_settings.m_anim_step.getEnd(), 3, 100, "End Step", "The last step size");
                     break;
                 case R.id.step_inc:
                     ShowIntegerDialog(CB_STEP_INC, m_working_settings.m_anim_step.m_inc, 1, 7, "Step Increment", "The increment in the step size between patterns");
@@ -323,10 +323,10 @@ public class StarAnimationFragment extends Fragment{
                     ShowIntegerDialog(CB_STEP_SPEED, m_working_settings.m_anim_step.m_speed, 1, 30, "Step Speed", "The delay before updating the step size");
                     break;
                 case R.id.rep_start:
-                    ShowIntegerDialog(CB_REPEAT_START, m_working_settings.m_anim_repeats.m_start, 1, 120, "Starting Repeat", "The starting number of repeats");
+                    ShowIntegerDialog(CB_REPEAT_START, m_working_settings.m_anim_repeats.getStart(), 1, 120, "Starting Repeat", "The starting number of repeats");
                     break;
                 case R.id.rep_end:
-                    ShowIntegerDialog(CB_REPEAT_END, m_working_settings.m_anim_repeats.m_end, 3, 120, "End Repeat", "The last number of repeats");
+                    ShowIntegerDialog(CB_REPEAT_END, m_working_settings.m_anim_repeats.getEnd(), 3, 120, "End Repeat", "The last number of repeats");
                     break;
                 case R.id.rep_inc:
                     ShowIntegerDialog(CB_REPEAT_INC, m_working_settings.m_anim_repeats.m_inc, 1, 7, "Repeat Increment", "The increment in the number of repeats between patterns");
@@ -335,10 +335,10 @@ public class StarAnimationFragment extends Fragment{
                     ShowIntegerDialog(CB_REPEAT_SPEED, m_working_settings.m_anim_repeats.m_speed, 1, 30, "Repeat change delay", "The delay before updating the number of repeats");
                     break;
                 case R.id.angle_start:
-                    ShowIntegerDialog(CB_ANGLE_START, m_working_settings.m_anim_angle.m_start, 0, StarParameters.m_angles.length - 1, "Starting Angle", "The starting angle between repeats");
+                    ShowIntegerDialog(CB_ANGLE_START, m_working_settings.m_anim_angle.getStart(), 0, StarParameters.m_angles.length - 1, "Starting Angle", "The starting angle between repeats");
                     break;
                 case R.id.angle_end:
-                    ShowIntegerDialog(CB_ANGLE_END, m_working_settings.m_anim_angle.m_end, 0, StarParameters.m_angles.length - 1, "End Angle", "The last angle between repeats");
+                    ShowIntegerDialog(CB_ANGLE_END, m_working_settings.m_anim_angle.getEnd(), 0, StarParameters.m_angles.length - 1, "End Angle", "The last angle between repeats");
                     break;
                 case R.id.angle_inc:
                     ShowIntegerDialog(CB_ANGLE_INC, m_working_settings.m_anim_angle.m_inc, 1, 7, "Angle Increment", "The increment in the angle between repeats");
@@ -347,10 +347,10 @@ public class StarAnimationFragment extends Fragment{
                     ShowIntegerDialog(CB_ANGLE_SPEED, m_working_settings.m_anim_angle.m_speed, 1, 30, "Angle change delay", "The delay before updating the angle between repeats");
                     break;
                 case R.id.shrink_start:
-                    ShowIntegerDialog(CB_SHRINK_START, m_working_settings.m_anim_shrink.m_start, 1, StarParameters.m_shrink_pc.length - 1, "Starting Shrinkage", "The starting shrinkage between repeats");
+                    ShowIntegerDialog(CB_SHRINK_START, m_working_settings.m_anim_shrink.getStart(), 1, StarParameters.m_shrink_pc.length - 1, "Starting Shrinkage", "The starting shrinkage between repeats");
                     break;
                 case R.id.shrink_end:
-                    ShowIntegerDialog(CB_SHRINK_END, m_working_settings.m_anim_shrink.m_end, 3, StarParameters.m_shrink_pc.length - 1, "End Shrinkage", "The last shrinkage between repeats");
+                    ShowIntegerDialog(CB_SHRINK_END, m_working_settings.m_anim_shrink.getEnd(), 3, StarParameters.m_shrink_pc.length - 1, "End Shrinkage", "The last shrinkage between repeats");
                     break;
                 case R.id.shrink_inc:
                     ShowIntegerDialog(CB_SHRINK_INC, m_working_settings.m_anim_shrink.m_inc, 1, 7, "Shrinkage Increment", "The increment in the shrinkage between repeats");
@@ -413,11 +413,11 @@ public class StarAnimationFragment extends Fragment{
                     show_rotate_speed ();
                     break;
                 case CB_POINTS_START:
-                    m_working_settings.m_anim_points.m_start = value;
+                    m_working_settings.m_anim_points.setStart(value);
                     show_points_start ();
                     break;
                 case CB_POINTS_END:
-                    m_working_settings.m_anim_points.m_end = value;
+                    m_working_settings.m_anim_points.setEnd(value);
                     show_points_end ();
                     break;
                 case CB_POINTS_INC:
@@ -429,11 +429,11 @@ public class StarAnimationFragment extends Fragment{
                     show_points_speed ();
                     break;
                 case CB_STEP_START:
-                    m_working_settings.m_anim_step.m_start = value;
+                    m_working_settings.m_anim_step.setStart(value);
                     show_step_start ();
                     break;
                 case CB_STEP_END:
-                    m_working_settings.m_anim_step.m_end = value;
+                    m_working_settings.m_anim_step.setEnd(value);
                     show_step_end ();
                     break;
                 case CB_STEP_INC:
@@ -445,11 +445,11 @@ public class StarAnimationFragment extends Fragment{
                     show_step_speed ();
                     break;
                 case CB_REPEAT_START:
-                    m_working_settings.m_anim_repeats.m_start = value;
+                    m_working_settings.m_anim_repeats.setStart(value);
                     show_repeat_start ();
                     break;
                 case CB_REPEAT_END:
-                    m_working_settings.m_anim_repeats.m_end = value;
+                    m_working_settings.m_anim_repeats.setEnd(value);
                     show_repeat_end ();
                     break;
                 case CB_REPEAT_INC:
@@ -461,11 +461,11 @@ public class StarAnimationFragment extends Fragment{
                     show_repeat_speed ();
                     break;
                 case CB_ANGLE_START:
-                    m_working_settings.m_anim_angle.m_start = value;
+                    m_working_settings.m_anim_angle.setStart(value);
                     show_angle_start ();
                     break;
                 case CB_ANGLE_END:
-                    m_working_settings.m_anim_angle.m_end = value;
+                    m_working_settings.m_anim_angle.setEnd(value);
                     show_angle_end ();
                     break;
                 case CB_ANGLE_INC:
@@ -477,11 +477,11 @@ public class StarAnimationFragment extends Fragment{
                     show_angle_speed ();
                     break;
                 case CB_SHRINK_START:
-                    m_working_settings.m_anim_shrink.m_start = value;
+                    m_working_settings.m_anim_shrink.setStart(value);
                     show_shrink_start ();
                     break;
                 case CB_SHRINK_END:
-                    m_working_settings.m_anim_shrink.m_end = value;
+                    m_working_settings.m_anim_shrink.setEnd(value);
                     show_shrink_end ();
                     break;
                 case CB_SHRINK_INC:
@@ -493,27 +493,27 @@ public class StarAnimationFragment extends Fragment{
                     show_shrink_speed ();
                     break;
                 case CB_BACKGROUND_COLOUR_START:
-                    m_working_settings.m_anim_background.m_start = value;
+                    m_working_settings.m_anim_background.setStartColour(value);
                     show_background_start ();
                     break;
                 case CB_BACKGROUND_COLOUR_END:
-                    m_working_settings.m_anim_background.m_end = value;
+                    m_working_settings.m_anim_background.setEndColour(value);
                     show_background_end ();
                     break;
                 case CB_L1_COLOUR_START:
-                    m_working_settings.m_anim_line1.m_start = value;
+                    m_working_settings.m_anim_line1.setStartColour(value);
                     show_line1_start ();
                     break;
                 case CB_L1_COLOUR_END:
-                    m_working_settings.m_anim_line1.m_end = value;
+                    m_working_settings.m_anim_line1.setEndColour(value);
                     show_line1_end ();
                     break;
                 case CB_L2_COLOUR_START:
-                    m_working_settings.m_anim_line2.m_start = value;
+                    m_working_settings.m_anim_line2.setStartColour(value);
                     show_line2_start ();
                     break;
                 case CB_L2_COLOUR_END:
-                    m_working_settings.m_anim_line2.m_end = value;
+                    m_working_settings.m_anim_line2.setEndColour(value);
                     show_line2_end ();
                     break;
                 default:
@@ -523,33 +523,33 @@ public class StarAnimationFragment extends Fragment{
     }
 
     void show_rotate_speed () { m_rotate_speed.setText(Integer.toString (m_working_settings.m_anim_rotate.m_speed)); }
-    void show_points_start () { m_points_start.setText(Integer.toString (m_working_settings.m_anim_points.m_start)); }
-    void show_points_end () { m_points_end.setText(Integer.toString (m_working_settings.m_anim_points.m_end)); }
+    void show_points_start () { m_points_start.setText(Integer.toString (m_working_settings.m_anim_points.getStart())); }
+    void show_points_end () { m_points_end.setText(Integer.toString (m_working_settings.m_anim_points.getEnd())); }
     void show_points_inc () { m_points_inc.setText(Integer.toString (m_working_settings.m_anim_points.m_inc)); }
     void show_points_speed () { m_points_speed.setText(Integer.toString (m_working_settings.m_anim_points.m_speed)); }
-    void show_step_start () { m_step_start.setText(Integer.toString (m_working_settings.m_anim_step.m_start)); }
-    void show_step_end ()   { m_step_end.setText(Integer.toString (m_working_settings.m_anim_step.m_end)); }
+    void show_step_start () { m_step_start.setText(Integer.toString (m_working_settings.m_anim_step.getStart())); }
+    void show_step_end ()   { m_step_end.setText(Integer.toString (m_working_settings.m_anim_step.getEnd())); }
     void show_step_inc ()   { m_step_inc.setText(Integer.toString (m_working_settings.m_anim_step.m_inc)); }
     void show_step_speed () { m_step_speed.setText(Integer.toString (m_working_settings.m_anim_step.m_speed)); }
-    void show_repeat_start () { m_repeat_start.setText(Integer.toString (m_working_settings.m_anim_repeats.m_start)); }
-    void show_repeat_end ()   { m_repeat_end.setText(Integer.toString (m_working_settings.m_anim_repeats.m_end)); }
+    void show_repeat_start () { m_repeat_start.setText(Integer.toString (m_working_settings.m_anim_repeats.getStart())); }
+    void show_repeat_end ()   { m_repeat_end.setText(Integer.toString (m_working_settings.m_anim_repeats.getEnd())); }
     void show_repeat_inc ()   { m_repeat_inc.setText(Integer.toString (m_working_settings.m_anim_repeats.m_inc)); }
     void show_repeat_speed () { m_repeat_speed.setText(Integer.toString (m_working_settings.m_anim_repeats.m_speed)); }
-    void show_angle_start () { m_angle_start.setText(Integer.toString (m_working_settings.m_anim_angle.m_start)); }
-    void show_angle_end ()   { m_angle_end.setText(Integer.toString (m_working_settings.m_anim_angle.m_end)); }
+    void show_angle_start () { m_angle_start.setText(Integer.toString (m_working_settings.m_anim_angle.getStart())); }
+    void show_angle_end ()   { m_angle_end.setText(Integer.toString (m_working_settings.m_anim_angle.getEnd())); }
     void show_angle_inc ()   { m_angle_inc.setText(Integer.toString (m_working_settings.m_anim_angle.m_inc)); }
     void show_angle_speed () { m_angle_speed.setText(Integer.toString (m_working_settings.m_anim_angle.m_speed)); }
-    void show_shrink_start () { m_shrink_start.setText(Integer.toString (m_working_settings.m_anim_shrink.m_start)); }
-    void show_shrink_end ()   { m_shrink_end.setText(Integer.toString (m_working_settings.m_anim_shrink.m_end)); }
+    void show_shrink_start () { m_shrink_start.setText(Integer.toString (m_working_settings.m_anim_shrink.getStart())); }
+    void show_shrink_end ()   { m_shrink_end.setText(Integer.toString (m_working_settings.m_anim_shrink.getEnd())); }
     void show_shrink_inc ()   { m_shrink_inc.setText(Integer.toString (m_working_settings.m_anim_shrink.m_inc)); }
     void show_shrink_speed () { m_shrink_speed.setText(Integer.toString (m_working_settings.m_anim_shrink.m_speed)); }
 
-    void show_background_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_background.m_start); }
-    void show_background_end (){m_background_start.setBackgroundColor(m_working_settings.m_anim_background.m_end); }
-    void show_line1_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line1.m_start); }
-    void show_line1_end (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line1.m_end); }
-    void show_line2_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line2.m_start); }
-    void show_line2_end (){m_background_start.setBackgroundColor(m_working_settings.m_anim_line2.m_end); }
+    void show_background_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_background.getStartColour()); }
+    void show_background_end (){m_background_end.setBackgroundColor(m_working_settings.m_anim_background.getEndColour()); }
+    void show_line1_start (){m_line1_start.setBackgroundColor(m_working_settings.m_anim_line1.getStartColour()); }
+    void show_line1_end (){m_line1_end.setBackgroundColor(m_working_settings.m_anim_line1.getEndColour()); }
+    void show_line2_start (){m_line2_start.setBackgroundColor(m_working_settings.m_anim_line2.getStartColour()); }
+    void show_line2_end (){m_line2_end.setBackgroundColor(m_working_settings.m_anim_line2.getEndColour()); }
 
     void show_rotate_shape () { m_rotate_shape.setImageResource(getShapeImage(m_working_settings.m_anim_rotate.m_shape)); }
     void show_points_shape () { m_points_shape.setImageResource(getShapeImage(m_working_settings.m_anim_points.m_shape)); }

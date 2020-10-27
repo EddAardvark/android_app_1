@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import java.io.Serializable;
 
-public class AnimationSettings {
+public abstract class AnimationSettings {
 
     public enum Shape{
         WEDGE,          // 1,2,3,4,1,2,3,4,1,2,3,4
@@ -26,70 +26,46 @@ public class AnimationSettings {
 
     public boolean m_enabled = false;
 
-    public int m_start;     ///< Start of the animation
-    public int m_end;       ///< End of the animation (inclusive)
     public int m_inc;       ///< Increment
     public int m_speed;     ///< Larger numbers are slower.
     public Shape m_shape;   ///< Controls the shape of the sequence
 
-    int m_counter;          ///< Manages speed
-    int m_value;            ///< The current value
+    int m_delay_counter;    ///< Manages speed
+    int m_pos;              ///< The current value
+    int m_range;            ///< We count from 0 to m_range
     boolean m_up;           ///< Used in TOOTH mode
 
     public AnimationSettings (){
-        m_start = 0;
-        m_end = 15;
+        m_range = 15;
         m_inc = 1;
         m_speed = 1;
         m_shape = Shape.WEDGE;
     }
-    /**
-     * Returns the value as a colour based on the start and end values.
-     * Blensd from 0 - 1, uses end - start as the number of colours
-     */
-    public int getColour ()
-    {
-        double f = (double) m_value / Math.abs (m_end - m_start);
-        return ColourHelpers.Blend(m_end, m_start, f);
+
+    protected void setRange (int x){
+        m_range = x;
     }
-    /**
-     * Set the animation to the start
-     */
-    public void start (){
-        m_counter = m_speed;
-        m_value = m_start;
-        m_up = true;
-    }
-    /**
-     * Colours always cycle from 0 to 1 in 256 steps.
-     */
-    public void setIsColour () {
-        m_start = 0;
-        m_end = 255;
-        m_inc = 1;
-        m_shape = AnimationSettings.Shape.WEDGE;
-        m_speed = 1;
-    }
+
     /**
      * Try to update the animation value
      * @return An integer or null.
      */
     public boolean tryAdvance (){
 
-        if (! m_enabled || -- m_counter > 0){
+        if (! m_enabled || -- m_delay_counter > 0){
             return false;
         }
 
-        m_counter = m_speed;
+        m_delay_counter = m_speed;
 
-        // Counts from start to end and then resets to start
+        // Counts from 0 to range (inclusive) and then back to 0. If inc > 1 it may overstep.
 
         if (m_shape == Shape.WEDGE)
         {
-            m_value += m_inc;
-            if (m_value > m_end)
+            m_pos += m_inc;
+            if (m_pos > m_range)
             {
-                m_value = m_start + (m_value - m_end - 1);
+                m_pos = m_pos - m_range - 1;
             }
             return true;
         }
@@ -98,10 +74,10 @@ public class AnimationSettings {
 
         if (m_shape == Shape.RWEDGE)
         {
-            m_value -= m_inc;
-            if (m_value < m_start)
+            m_pos -= m_inc;
+            if (m_pos < 0)
             {
-                m_value = m_end - (m_start - m_value - 1);
+                m_pos = m_pos + m_range - 1;
             }
             return true;
         }
@@ -111,32 +87,23 @@ public class AnimationSettings {
         if (m_shape == Shape.TOOTH)
         {
             if (m_up) {
-                ++m_value;
-                if (m_value > m_end) {
+                m_pos += m_inc;
+                if (m_pos > m_range) {
                     m_up = false;
-                    m_value = 2 * m_end - m_value;
+                    m_pos = 2 * m_range - m_pos;
                 }
             }
             else {
-                m_value -= m_inc;
+                m_pos -= m_inc;
 
-                if (m_value < m_start) {
+                if (m_pos < 0) {
                     m_up = true;
-                    m_value = 2 * m_start - m_value;
+                    m_pos = - m_pos;
                 }
             }
             return true;
         }
         return false;
-    }
-
-
-    /**
-     * Returns the current value, ideally this should only be called if TryAdvance has returned true.
-     * @return The current value
-     */
-    public int getValue (){
-        return m_value;
     }
 
     public static Shape nextShape (Shape s){
@@ -146,7 +113,6 @@ public class AnimationSettings {
         if (s == Shape.RWEDGE) return Shape.WEDGE;
         return Shape.WEDGE;
     }
-
 
     public void fromBundle(Bundle bundle) {
 
@@ -158,12 +124,10 @@ public class AnimationSettings {
             }
 
             m_enabled = bundle.getBoolean(KEY_ENABLED, m_enabled);
-            m_start = bundle.getInt(KEY_START, m_start);
-            m_end = bundle.getInt(KEY_END, m_end);
             m_inc = bundle.getInt(KEY_INC, m_inc);
             m_speed = bundle.getInt(KEY_SPEED, m_speed);
-            m_counter = bundle.getInt(KEY_COUNTER, m_counter);
-            m_value = bundle.getInt(KEY_VALUE, m_value);
+            m_delay_counter = bundle.getInt(KEY_COUNTER, m_delay_counter);
+            m_pos = bundle.getInt(KEY_VALUE, m_pos);
             m_up = bundle.getBoolean(KEY_UP, m_up);
         }
     }
@@ -173,13 +137,11 @@ public class AnimationSettings {
         Bundle b = new Bundle();
 
         b.putBoolean(KEY_ENABLED, m_enabled);
-        b.putInt(KEY_START, m_start);
-        b.putInt(KEY_END, m_end);
         b.putInt(KEY_INC, m_inc);
         b.putInt(KEY_SPEED, m_speed);
         b.putSerializable(KEY_SHAPE, m_shape);
-        b.putInt(KEY_COUNTER, m_counter);
-        b.putInt(KEY_VALUE, m_value);
+        b.putInt(KEY_COUNTER, m_delay_counter);
+        b.putInt(KEY_VALUE, m_pos);
         b.putBoolean(KEY_UP, m_up);
 
         return b;

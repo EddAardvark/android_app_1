@@ -1,8 +1,11 @@
 package com.patterns;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.misc.AnimationSettings;
+import com.misc.ColourAnimationSettings;
+import com.misc.IntegerAnimationSettings;
 
 /**
  * Settings used to animate the star pattern
@@ -19,54 +22,16 @@ public class AnimateSet {
     final static String KEY_ANIM_LINE1 = "a8";
     final static String KEY_ANIM_LINE2 = "a9";
 
-    AnimationSettings m_anim_rotate = new AnimationSettings();
-    AnimationSettings m_anim_points = new AnimationSettings();
-    AnimationSettings m_anim_step = new AnimationSettings();
-    AnimationSettings m_anim_repeats = new AnimationSettings();
-    AnimationSettings m_anim_angle = new AnimationSettings();
-    AnimationSettings m_anim_shrink = new AnimationSettings();
-    AnimationSettings m_anim_background = new AnimationSettings();
-    AnimationSettings m_anim_line1 = new AnimationSettings();
-    AnimationSettings m_anim_line2 = new AnimationSettings();
+    IntegerAnimationSettings m_anim_rotate = new IntegerAnimationSettings(0, 359);
+    IntegerAnimationSettings m_anim_points = new IntegerAnimationSettings(3, 119);
+    IntegerAnimationSettings m_anim_step = new IntegerAnimationSettings(1, 7);
+    IntegerAnimationSettings m_anim_repeats = new IntegerAnimationSettings(0, 20);
+    IntegerAnimationSettings m_anim_angle = new IntegerAnimationSettings(0, 20);
+    IntegerAnimationSettings m_anim_shrink = new IntegerAnimationSettings(0, 20);
+    ColourAnimationSettings m_anim_background = new ColourAnimationSettings(Color.WHITE, Color.BLACK);
+    ColourAnimationSettings m_anim_line1 = new ColourAnimationSettings(Color.BLACK, Color.CYAN);
+    ColourAnimationSettings m_anim_line2 = new ColourAnimationSettings(Color.RED, Color.YELLOW);
 
-    public AnimateSet () {
-
-        // Rotate the whole pattern
-
-        m_anim_rotate.m_start = 0;
-        m_anim_rotate.m_end = 359;
-
-        // Vary the number of points
-
-        m_anim_points.m_start = 3;
-        m_anim_points.m_end = 119;
-
-        // Vary the point step
-
-        m_anim_step.m_start = 1;
-        m_anim_step.m_end = 7;
-
-        // Repeats
-
-        m_anim_repeats.m_start = 0;
-        m_anim_repeats.m_end = 20;
-
-        // Angles
-
-        m_anim_angle.m_start = 0;
-        m_anim_angle.m_end = 20;
-
-        // Shrink
-
-        m_anim_shrink.m_start = 0;
-        m_anim_shrink.m_end = 20;
-
-        // Colours
-
-        m_anim_background.setIsColour();
-        m_anim_line1.setIsColour();
-        m_anim_line2.setIsColour();
-    }
     /**
      * Save the current values to a bundle
      */

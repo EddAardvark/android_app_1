@@ -103,6 +103,10 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         Update();
     }
 
+    /**
+     * Part of the activity lifecycle, we stop the animation events but dont turn animation off, so that when resume is called
+     * we can start up again
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -111,6 +115,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         }
     }
 
+    /**
+     * Part of the activity lifecycle. If animation was active when we were paused we resume it here.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -118,14 +125,26 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             startAnimation();
         }
     }
+
+    /**
+     * Start the timer events that drive the animation
+     */
     void startAnimation ()
     {
         m_timer_handler.postDelayed(m_timer_runnable, 0);
     }
+
+    /**
+     * Stop the timer events that drive the animation
+     */
     void stopAnimation ()
     {
         m_timer_handler.removeCallbacks(m_timer_runnable);
     }
+    /**
+     * Update the animation flag to the new state and adjust the pause and play buttons accordingly
+     * @param active The new animation state.
+     */
     void setAnimationState (boolean active)
     {
         m_in_animation = active;

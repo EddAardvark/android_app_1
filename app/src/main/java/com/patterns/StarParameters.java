@@ -402,35 +402,38 @@ public class StarParameters {
 
         if (settings.m_anim_rotate.tryAdvance()) {
             ret = true;
-            m_rotate = settings.m_anim_rotate.getValue() * Math.PI / 180;
+            m_rotate = settings.m_anim_rotate.getIntegerValue() * Math.PI / 180;
         }
         if (settings.m_anim_angle.tryAdvance()) {
-            m_angle_idx = settings.m_anim_angle.getValue();
+            m_angle_idx = settings.m_anim_angle.getIntegerValue();
             ret = true;
         }
         if (settings.m_anim_background.tryAdvance()) {
+            m_background = settings.m_anim_background.getColour();
             ret = true;
         }
         if (settings.m_anim_line1.tryAdvance()) {
+            m_first_line = settings.m_anim_line1.getColour();
             ret = true;
         }
         if (settings.m_anim_line2.tryAdvance()) {
+            m_last_line = settings.m_anim_line2.getColour();
             ret = true;
         }
         if (settings.m_anim_points.tryAdvance()) {
-            m_n1 = settings.m_anim_points.getValue();
+            m_n1 = settings.m_anim_points.getIntegerValue();
             ret = true;
         }
         if (settings.m_anim_repeats.tryAdvance()) {
-            m_n3 = settings.m_anim_repeats.getValue();
+            m_n3 = settings.m_anim_repeats.getIntegerValue();
             ret = true;
         }
         if (settings.m_anim_shrink.tryAdvance()) {
-            m_shrink_idx = settings.m_anim_shrink.getValue();
+            m_shrink_idx = settings.m_anim_shrink.getIntegerValue();
             ret = true;
         }
         if (settings.m_anim_step.tryAdvance()) {
-            m_n2 = settings.m_anim_step.getValue();
+            m_n2 = settings.m_anim_step.getIntegerValue();
             ret = true;
 
         }
