@@ -9,6 +9,7 @@ public class ColourAnimationSettings extends AnimationSettings {
 
     int m_end_colour;
     int m_start_colour;
+    static final int RANGE = 64;
 
     public ColourAnimationSettings (int scolour, int ecolour) {
         super ();
@@ -16,7 +17,7 @@ public class ColourAnimationSettings extends AnimationSettings {
         m_end_colour = ecolour;
         m_start_colour = scolour;
 
-        setRange (255);
+        setRange (RANGE);
     }
 
     public int getStartColour () { return m_start_colour; }
@@ -50,7 +51,7 @@ public class ColourAnimationSettings extends AnimationSettings {
      */
     public int getColour ()
     {
-        double f = 1.0 - (double) m_pos / 255;
+        double f = (double) m_pos / RANGE;
         return ColourHelpers.Blend(m_end_colour, m_start_colour, f);
     }
 

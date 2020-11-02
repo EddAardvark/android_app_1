@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.example.tutorialapp.R;
 import com.misc.AnimationSettings;
@@ -287,7 +288,7 @@ public class StarAnimationFragment extends Fragment{
     }
 
 
-    public class EventListener implements View.OnClickListener,  GetInteger.Result  {
+    public class EventListener implements View.OnClickListener, GetInteger.Result, GetColour.Result  {
 
         @Override
         public void onClick(View view) {
@@ -382,8 +383,27 @@ public class StarAnimationFragment extends Fragment{
                     m_working_settings.m_anim_shrink.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_shrink.m_shape);
                     show_shrink_shape();
                     break;
+                case R.id.back_colour_start:
+                    ShowColourDialog (CB_BACKGROUND_COLOUR_START, m_working_settings.m_anim_background.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_back_descr));
+                    break;
+                case R.id.back_colour_end:
+                    ShowColourDialog (CB_BACKGROUND_COLOUR_END, m_working_settings.m_anim_background.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_back_descr));
+                    break;
+                case R.id.line1_colour_start:
+                    ShowColourDialog (CB_L1_COLOUR_START, m_working_settings.m_anim_line1.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_line1_descr));
+                    break;
+                case R.id.line1_colour_end:
+                    ShowColourDialog (CB_L1_COLOUR_END, m_working_settings.m_anim_line1.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_line1_descr));
+                    break;
+                case R.id.line2_colour_start:
+                    ShowColourDialog (CB_L2_COLOUR_START, m_working_settings.m_anim_line2.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_line2_descr));
+                    break;
+                case R.id.line2_colour_end:
+                    ShowColourDialog (CB_L2_COLOUR_END, m_working_settings.m_anim_line2.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_line2_descr));
+                    break;
             }
         }
+
         /**
          * Show a dialog that allows the user to select an integer from a range
          * @param id    The id of the integer being edited
@@ -396,6 +416,11 @@ public class StarAnimationFragment extends Fragment{
         void ShowIntegerDialog (int id, int value, int start, int end, String title, String descr)
         {
             GetInteger dialog = GetInteger.construct(this, id, value, start, end, 1, title, descr);
+            dialog.show (getActivity().getSupportFragmentManager(), "Hello");
+        }
+        void ShowColourDialog (int id, int value, String title, String descr)
+        {
+            GetColour dialog = GetColour.construct(this, id, value, title, descr);
             dialog.show (getActivity().getSupportFragmentManager(), "Hello");
         }
 
@@ -492,31 +517,37 @@ public class StarAnimationFragment extends Fragment{
                     m_working_settings.m_anim_shrink.m_speed = value;
                     show_shrink_speed ();
                     break;
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public void SetColour(int id, int value) {
+            switch (id) {
                 case CB_BACKGROUND_COLOUR_START:
                     m_working_settings.m_anim_background.setStartColour(value);
-                    show_background_start ();
+                    show_background_start();
                     break;
                 case CB_BACKGROUND_COLOUR_END:
                     m_working_settings.m_anim_background.setEndColour(value);
-                    show_background_end ();
+                    show_background_end();
                     break;
                 case CB_L1_COLOUR_START:
                     m_working_settings.m_anim_line1.setStartColour(value);
-                    show_line1_start ();
+                    show_line1_start();
                     break;
                 case CB_L1_COLOUR_END:
                     m_working_settings.m_anim_line1.setEndColour(value);
-                    show_line1_end ();
+                    show_line1_end();
                     break;
                 case CB_L2_COLOUR_START:
                     m_working_settings.m_anim_line2.setStartColour(value);
-                    show_line2_start ();
+                    show_line2_start();
                     break;
                 case CB_L2_COLOUR_END:
                     m_working_settings.m_anim_line2.setEndColour(value);
-                    show_line2_end ();
-                    break;
-                default:
+                    show_line2_end();
                     break;
             }
         }

@@ -351,6 +351,18 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         Draw();
     }
 
+    void showInfoPage ()
+    {
+        Intent intent = new Intent(this, InfoPageActivity.class);
+
+        Bundle b = new Bundle();
+        b.putInt("title", R.string.stars_page_label);
+        b.putInt("url", R.string.stars_page_url);
+        intent.putExtras(b);
+
+        startActivity(intent);
+    }
+
     public class EventListener extends Activity implements View.OnClickListener {
 
         @Override
@@ -392,6 +404,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     onClickLineColour2 ();
                     break;
                 case R.id.app_info:
+                    showInfoPage();
                     break;
                 case R.id.pause_animation:
                     stopAnimation ();

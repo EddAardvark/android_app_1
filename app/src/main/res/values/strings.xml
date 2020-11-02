@@ -60,11 +60,6 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="general_star_settings">General Settings</string>
     <string name="line_thickness">Line Width:</string>
     <string name="line_style">Line Style:</string>
@@ -88,4 +83,21 @@
     <string name="app_info">Click to display the application\'s information page</string>
     <string name="resume_animation">Click to start or resume the animation</string>
     <string name="pause_animation">Click to pause the animation</string>
+    <string name="anim_start_colour">Animation Starting Colour</string>
+    <string name="anim_start_colour_back_descr">The starting colour when animating the background.</string>
+    <string name="anim_end_colour">Animation Finishing Colour</string>
+    <string name="anim_end_colour_back_descr">The finishing colour when animating the background.</string>
+    <string name="anim_start_colour_line1_descr">The starting colour when animating the first line colour.</string>
+    <string name="anim_end_colour_line1_descr">The finishing colour when animating the first line colour</string>
+    <string name="anim_start_colour_line2_descr">The starting colour when animating the second line colour</string>
+    <string name="anim_end_colour_line2_descr">The finishing colour when animating the second line colour</string>
+    <string name="email_me">Contact me (email)</string>
+    <string name="stars_page">Instructions for the stars page (website)</string>
+    <string name="home_page">My website</string>
+    <string name="home_page_descr">Click to visit my website</string>
+    <string name="email_me_descr">Click to email me</string>
+    <string name="view_the_stars_page">Click to view the stars help page</string>
+    <string name="email_address">mailto:eddaardvark@yahoo.co.uk</string>
+    <string name="home_page_url">http://www.eddaardvark.co.uk/</string>
+    <string name="stars_page_url">http://www.eddaardvark.co.uk/apps/patterns/stars.html</string>
 </resources>
