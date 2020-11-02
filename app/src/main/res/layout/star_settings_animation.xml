@@ -1,6 +1,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_medium"
@@ -326,6 +327,30 @@
         app:layout_constraintEnd_toEndOf="@+id/angle_speed"
         app:layout_constraintTop_toTopOf="@+id/shrink_inc" />
 
+    <TextView
+        android:id="@+id/back_colour_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sh4"
+        app:layout_constraintEnd_toEndOf="@+id/shrink_speed"
+        app:layout_constraintTop_toTopOf="@+id/back_colour_end" />
+
+    <TextView
+        android:id="@+id/l1_colour_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sh4"
+        app:layout_constraintEnd_toEndOf="@+id/back_colour_speed"
+        app:layout_constraintTop_toTopOf="@+id/line1_colour_end" />
+
+    <TextView
+        android:id="@+id/l2_colour_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sh4"
+        app:layout_constraintEnd_toEndOf="@+id/l1_colour_speed"
+        app:layout_constraintTop_toTopOf="@+id/line2_colour_end" />
+
     <ImageView
         android:id="@+id/rotate_shape"
         android:layout_width="0dp"
@@ -384,6 +409,39 @@
         app:layout_constraintEnd_toEndOf="@+id/textView12"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toTopOf="@+id/shrink_speed"
+        app:srcCompat="@drawable/up_ramp" />
+
+    <ImageView
+        android:id="@+id/back_colour_shape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_colour_speed"
+        app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="@+id/back_colour_speed"
+        app:srcCompat="@drawable/up_ramp" />
+
+    <ImageView
+        android:id="@+id/l1_colour_shape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/l1_colour_speed"
+        app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="@+id/l1_colour_speed"
+        app:srcCompat="@drawable/up_ramp" />
+
+    <ImageView
+        android:id="@+id/l2_colour_shape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/l2_colour_speed"
+        app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="@+id/l2_colour_speed"
         app:srcCompat="@drawable/up_ramp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

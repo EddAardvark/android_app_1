@@ -166,6 +166,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         Bundle params = savedInstanceState.getBundle("params");
         Bundle settings = savedInstanceState.getBundle("settings");
 
+        m_in_animation = savedInstanceState.getBoolean("animate", m_in_animation);
+
         if (settings != null) {
             m_settings.fromBundle (settings);
         }
@@ -186,6 +188,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        outState.putBoolean("animate", m_in_animation);
         outState.putBundle("params", m_params.toBundle ());
         outState.putBundle("settings", m_settings.toBundle ());
     }

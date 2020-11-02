@@ -49,12 +49,19 @@ public class StarAnimationFragment extends Fragment{
     TextView m_shrink_inc;
     TextView m_shrink_speed;
 
+    TextView m_background_speed;
+    TextView m_line1_speed;
+    TextView m_line2_speed;
+
     ImageView m_rotate_shape;
     ImageView m_points_shape;
     ImageView m_step_shape;
     ImageView m_repeat_shape;
     ImageView m_angle_shape;
     ImageView m_shrink_shape;
+    ImageView m_back_colour_shape;
+    ImageView m_l1_colour_shape;
+    ImageView m_l2_colour_shape;
 
     View m_background_start;
     View m_background_end;
@@ -90,6 +97,9 @@ public class StarAnimationFragment extends Fragment{
     final static int CB_L1_COLOUR_END = 25;
     final static int CB_L2_COLOUR_START = 26;
     final static int CB_L2_COLOUR_END = 27;
+    final static int CB_BACK_COLOUR_SPEED = 28;
+    final static int CB_L1_COLOUR_SPEED = 29;
+    final static int CB_L2_COLOUR_SPEED = 30;
 
     public StarAnimationFragment() {
     }
@@ -153,12 +163,19 @@ public class StarAnimationFragment extends Fragment{
         m_shrink_inc   = (TextView)v.findViewById(R.id.shrink_inc);
         m_shrink_speed = (TextView)v.findViewById(R.id.shrink_speed);
 
+        m_background_speed = (TextView)v.findViewById(R.id.back_colour_speed);
+        m_line1_speed = (TextView)v.findViewById(R.id.l1_colour_speed);
+        m_line2_speed = (TextView)v.findViewById(R.id.l2_colour_speed);
+
         m_rotate_shape  = (ImageView) v.findViewById(R.id.rotate_shape);
         m_points_shape = (ImageView) v.findViewById(R.id.points_shape);
         m_step_shape   = (ImageView) v.findViewById(R.id.step_shape);
         m_repeat_shape = (ImageView) v.findViewById(R.id.rep_shape);
         m_angle_shape  = (ImageView) v.findViewById(R.id.angle_shape);
         m_shrink_shape = (ImageView) v.findViewById(R.id.shrink_shape);
+        m_back_colour_shape = (ImageView) v.findViewById(R.id.back_colour_shape);
+        m_l1_colour_shape = (ImageView) v.findViewById(R.id.l1_colour_shape);
+        m_l2_colour_shape = (ImageView) v.findViewById(R.id.l2_colour_shape);
 
         m_background_start = v.findViewById(R.id.back_colour_start);
         m_background_end = v.findViewById(R.id.back_colour_end);
@@ -201,6 +218,13 @@ public class StarAnimationFragment extends Fragment{
         m_angle_shape.setOnClickListener(m_listener);
         m_shrink_shape.setOnClickListener(m_listener);
 
+        m_back_colour_shape.setOnClickListener(m_listener);
+        m_l1_colour_shape.setOnClickListener(m_listener);
+        m_l2_colour_shape.setOnClickListener(m_listener);
+        m_background_speed.setOnClickListener(m_listener);
+        m_line1_speed.setOnClickListener(m_listener);
+        m_line2_speed.setOnClickListener(m_listener);
+
         m_background_start.setOnClickListener(m_listener);
         m_background_end.setOnClickListener(m_listener);
         m_line1_start.setOnClickListener(m_listener);
@@ -237,10 +261,16 @@ public class StarAnimationFragment extends Fragment{
         show_shrink_shape ();
         show_background_start();
         show_background_end();
+        show_background_speed();
+        show_back_colour_shape();
         show_line1_start();
         show_line1_end();
+        show_l1_colour_shape();
+        show_l1_colour_speed();
         show_line2_start();
         show_line2_end();
+        show_l2_colour_shape();
+        show_l2_colour_speed();
 
         ((Switch)v.findViewById(R.id.anim_rotate)).setChecked(m_working_settings.m_anim_rotate.m_enabled);
         ((Switch)v.findViewById(R.id.anim_points)).setChecked(m_working_settings.m_anim_points.m_enabled);
@@ -383,6 +413,30 @@ public class StarAnimationFragment extends Fragment{
                     m_working_settings.m_anim_shrink.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_shrink.m_shape);
                     show_shrink_shape();
                     break;
+                case R.id.back_colour_shape:
+                    m_working_settings.m_anim_background.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_background.m_shape);
+                    show_back_colour_shape();
+                    break;
+                case R.id.l1_colour_shape:
+                    m_working_settings.m_anim_line1.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_line1.m_shape);
+                    show_l1_colour_shape();
+                    break;
+                case R.id.l2_colour_shape:
+                    m_working_settings.m_anim_line2.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_line2.m_shape);
+                    show_l2_colour_shape();
+                    break;
+                case R.id.back_colour_speed:
+                    ShowIntegerDialog(CB_BACK_COLOUR_SPEED, m_working_settings.m_anim_background.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
+                    show_back_colour_shape();
+                    break;
+                case R.id.l1_colour_speed:
+                    ShowIntegerDialog(CB_L1_COLOUR_SPEED, m_working_settings.m_anim_line1.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
+                    show_l1_colour_shape();
+                    break;
+                case R.id.l2_colour_speed:
+                    ShowIntegerDialog(CB_L2_COLOUR_SPEED, m_working_settings.m_anim_line2.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
+                    show_l2_colour_shape();
+                    break;
                 case R.id.back_colour_start:
                     ShowColourDialog (CB_BACKGROUND_COLOUR_START, m_working_settings.m_anim_background.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_back_descr));
                     break;
@@ -517,6 +571,18 @@ public class StarAnimationFragment extends Fragment{
                     m_working_settings.m_anim_shrink.m_speed = value;
                     show_shrink_speed ();
                     break;
+                case CB_BACK_COLOUR_SPEED:
+                    m_working_settings.m_anim_background.m_speed = value;
+                    show_background_speed ();
+                    break;
+                case CB_L1_COLOUR_SPEED:
+                    m_working_settings.m_anim_line1.m_speed = value;
+                    show_l1_colour_speed ();
+                    break;
+                case CB_L2_COLOUR_SPEED:
+                    m_working_settings.m_anim_line2.m_speed = value;
+                    show_l2_colour_speed ();
+                    break;
                 default:
                     break;
             }
@@ -574,6 +640,9 @@ public class StarAnimationFragment extends Fragment{
     void show_shrink_end ()   { m_shrink_end.setText(Integer.toString (m_working_settings.m_anim_shrink.getEnd())); }
     void show_shrink_inc ()   { m_shrink_inc.setText(Integer.toString (m_working_settings.m_anim_shrink.m_inc)); }
     void show_shrink_speed () { m_shrink_speed.setText(Integer.toString (m_working_settings.m_anim_shrink.m_speed)); }
+    void show_background_speed(){ m_background_speed.setText(Integer.toString (m_working_settings.m_anim_background.m_speed)); }
+    void show_l1_colour_speed(){ m_line1_speed.setText(Integer.toString (m_working_settings.m_anim_line1.m_speed)); }
+    void show_l2_colour_speed(){ m_line2_speed.setText(Integer.toString (m_working_settings.m_anim_line2.m_speed)); }
 
     void show_background_start (){m_background_start.setBackgroundColor(m_working_settings.m_anim_background.getStartColour()); }
     void show_background_end (){m_background_end.setBackgroundColor(m_working_settings.m_anim_background.getEndColour()); }
@@ -588,7 +657,9 @@ public class StarAnimationFragment extends Fragment{
     void show_repeat_shape () { m_repeat_shape.setImageResource(getShapeImage(m_working_settings.m_anim_repeats.m_shape)); }
     void show_angle_shape ()  { m_angle_shape.setImageResource(getShapeImage(m_working_settings.m_anim_angle.m_shape)); }
     void show_shrink_shape () { m_shrink_shape.setImageResource(getShapeImage(m_working_settings.m_anim_shrink.m_shape)); }
-
+    void show_back_colour_shape(){ m_back_colour_shape.setImageResource(getShapeImage(m_working_settings.m_anim_background.m_shape)); }
+    void show_l1_colour_shape(){ m_l1_colour_shape.setImageResource(getShapeImage(m_working_settings.m_anim_line1.m_shape)); }
+    void show_l2_colour_shape(){ m_l2_colour_shape.setImageResource(getShapeImage(m_working_settings.m_anim_line2.m_shape)); }
     /**
      * Make a shape to a drawable resource
      * @param s The shape

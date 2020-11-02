@@ -29,7 +29,7 @@ public class AnimateSet {
     IntegerAnimationSettings m_anim_angle = new IntegerAnimationSettings(0, 20);
     IntegerAnimationSettings m_anim_shrink = new IntegerAnimationSettings(0, 20);
     ColourAnimationSettings m_anim_background = new ColourAnimationSettings(Color.WHITE, Color.BLACK);
-    ColourAnimationSettings m_anim_line1 = new ColourAnimationSettings(Color.BLACK, Color.CYAN);
+    ColourAnimationSettings m_anim_line1 = new ColourAnimationSettings(Color.BLUE, Color.CYAN);
     ColourAnimationSettings m_anim_line2 = new ColourAnimationSettings(Color.RED, Color.YELLOW);
 
     /**
