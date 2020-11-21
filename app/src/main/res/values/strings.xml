@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JW\'s Mathematical Patterns</string>
+    <string name="app_name">JW\'s Math Patterns</string>
     <string name="stars_page_label">Stars Pattern</string>
     <string name="intro_text">
         This application acts as a gateway to a collection of my mathematical pattern drawing algorithms,

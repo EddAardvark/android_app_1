@@ -28,6 +28,7 @@ import com.patterns.StarSettings;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 
 public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageStarSettings.Result {
 
@@ -225,7 +226,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             return;
         }
         File imagePath = new File(this.getCacheDir(), "images");
-        File newFile = new File(imagePath, "image.png");
+        File newFile = new File(imagePath, m_params.makeFleName());
         Uri contentUri = FileProvider.getUriForFile(this, "com.example.myapp.fileprovider", newFile);
 
         if (contentUri != null) {
@@ -239,9 +240,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     }
     void showSettings ()
     {
-        ((TextView)findViewById(R.id.text_n1)).setText(Integer.toString(m_params.m_n1));
-        ((TextView)findViewById(R.id.text_n2)).setText(Integer.toString(m_params.m_n2));
-        ((TextView)findViewById(R.id.text_n3)).setText(Integer.toString(m_params.m_n3));
+        ((TextView)findViewById(R.id.text_n1)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n1));
+        ((TextView)findViewById(R.id.text_n2)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n2));
+        ((TextView)findViewById(R.id.text_n3)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n3));
         ((TextView)findViewById(R.id.text_da)).setText(m_params.getAngleString());
         ((TextView)findViewById(R.id.text_sh)).setText(m_params.getShrinkString());
     }

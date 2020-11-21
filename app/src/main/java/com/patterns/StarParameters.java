@@ -18,6 +18,7 @@ import com.misc.MyMath;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class StarParameters {
@@ -468,5 +469,12 @@ public class StarParameters {
         b.putInt(KEY_LINE2, m_last_line);
 
         return b;
+    }
+
+    public String makeFleName() {
+
+        return (m_n3 > 1)
+                ? String.format(Locale.UK, "Star_%d_%d_%d_%d_%d_%x_%x_%x.png", m_n1, m_n2, m_n3, m_angle_idx, m_shrink_idx, m_background, m_first_line, m_last_line)
+                : String.format(Locale.UK, "Star_%d_%d_%d_%x_%x_%x.png", m_n1, m_n2, m_n3, m_background, m_first_line, m_last_line);
     }
 }
