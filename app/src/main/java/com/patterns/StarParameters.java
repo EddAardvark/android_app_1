@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.tutorialapp.R;
 import com.misc.ColourHelpers;
 import com.misc.MyMath;
 

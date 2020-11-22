@@ -100,4 +100,11 @@
     <string name="email_address">mailto:eddaardvark@yahoo.co.uk</string>
     <string name="home_page_url">http://www.eddaardvark.co.uk/</string>
     <string name="stars_page_url">http://www.eddaardvark.co.uk/apps/patterns/stars.html</string>
+    <string name="evolve_mode">Launch the evolution viewer</string>
+    <string name="stars_evolve_label">Stars Evolution Page</string>
+    <string name="stars_evolve_intro">
+        This view allows you to use directed evolution to explore the pattern space looking for patterns that appeal to you.
+        Click on the pattern you like best and the algorithm will generate a new set, each with one attribute changed.
+        Repeat this process and the patterns will converge on the ones you like.
+    </string>
 </resources>

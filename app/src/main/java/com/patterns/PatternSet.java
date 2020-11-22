@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class PatternSet {
 
-    enum ColouringMode {
+    public enum ColouringMode {
         INWARDS, AROUND, BOTH, ALTERNATE
     }
 

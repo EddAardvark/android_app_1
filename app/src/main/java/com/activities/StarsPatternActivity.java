@@ -73,7 +73,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             m_settings.fromBundle (savedInstanceState);
         }
 
-        setContentView(R.layout.stars_pattern_activity);
+        setContentView(R.layout.activity_stars_pattern);
 
         findViewById(R.id.layout_n1).setOnClickListener(m_listener);
         findViewById(R.id.layout_n2).setOnClickListener(m_listener);
@@ -81,6 +81,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         findViewById(R.id.layout_angle).setOnClickListener(m_listener);
         findViewById(R.id.share_pattern).setOnClickListener(m_listener);
         findViewById(R.id.random_picture).setOnClickListener(m_listener);
+        findViewById(R.id.evolve_star).setOnClickListener(m_listener);
         findViewById(R.id.layout_shrink).setOnClickListener(m_listener);
         findViewById(R.id.edit_settings).setOnClickListener(m_listener);
         findViewById(R.id.app_info).setOnClickListener(m_listener);
@@ -367,6 +368,14 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         startActivity(intent);
     }
 
+    void showEvolvePage ()
+    {
+        Intent intent = new Intent(this, StarsEvolve.class);
+        Bundle b = StarsEvolve.makeBundle(m_params, m_settings.m_pattern.m_colouring_mode);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+
     public class EventListener extends Activity implements View.OnClickListener {
 
         @Override
@@ -394,6 +403,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     m_params.Randomise (m_settings.m_random);
                     m_settings.randomise_colour_mode();
                     Update ();
+                    break;
+                case R.id.evolve_star:
+                    showEvolvePage();
                     break;
                 case R.id.edit_settings:
                     onClickSettings ();
