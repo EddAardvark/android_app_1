@@ -3,6 +3,7 @@ package com.patterns;
 import android.os.Bundle;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Pattern specific settings of the star pattern
@@ -20,6 +21,18 @@ public class PatternSet {
 
     public int m_bm_size = 800;
     public ColouringMode m_colouring_mode = ColouringMode.INWARDS;
+    static Random m_random = new Random();
+
+    /**
+     * Return a random colouring mode
+     * @return the colour mode
+     */
+    public static ColouringMode randomColourMode () {
+
+        int idx = m_random.nextInt(PatternSet.cmodes.length);
+
+        return PatternSet.cmodes[idx];
+    }
 
     /**
      * Save the current values to a bundle

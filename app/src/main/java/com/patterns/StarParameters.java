@@ -31,6 +31,16 @@ public class StarParameters {
     public int m_first_line = Color.BLUE;       ///< Foreground ground colour
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
 
+    final static int IDX_N1 = 0;
+    final static int IDX_N2 = 1;
+    final static int IDX_N3 = 2;
+    final static int IDX_ROTATE = 3;
+    final static int IDX_SHRINK = 4;
+    final static int IDX_BACKGROUND = 5;
+    final static int IDX_LINE1 = 6;
+    final static int IDX_LINE2 = 7;
+    final static int NUM_ATTRIBUTES = 8;
+
     double m_rotate = 0;                        ///< Rotates the whole pattern, used in animation
     long m_counter = 0;                         ///< Used in animation
 
@@ -46,6 +56,7 @@ public class StarParameters {
     int m_width;
     int m_height;
     Bitmap m_bmp;
+    static Random m_random = new Random();
 
     public final static ArrayList<String> m_angle_str = new ArrayList<String>( Arrays.asList(
             "0", "0.05°", "0.1°", "0.2°", "0.3°", "0.4°", "0.5°", "1°", "2°", "3°", "4°", "5°", "6°", "10°", "12°", "15°", "20°", "30°", "45°", "60°", "72°", "90°", "108°", "120°", "144°", "180°",
@@ -71,6 +82,25 @@ public class StarParameters {
     public String getShrinkString () { return m_shrink_str.get(m_shrink_idx);}
 
     /**
+     * Create a copy of this object
+     * @return the copy
+     */
+    public StarParameters clone (){
+        StarParameters ret = new StarParameters (m_width, m_height);
+
+        ret.m_n1 = m_n1;
+        ret.m_n2 = m_n2;
+        ret.m_n3 = m_n3;
+        ret.m_angle_idx = m_angle_idx;
+        ret.m_shrink_idx = m_shrink_idx;
+        ret.m_background = m_background;
+        ret.m_first_line = m_first_line;
+        ret.m_last_line = m_last_line;
+
+        return ret;
+    }
+
+    /**
      * Sets the size of the bitmap drawn. This doesn't affect the size no the screen but does change the detail when the image is shared.
      * @param w Width in pixels
      * @param h Height in pixels
@@ -83,56 +113,90 @@ public class StarParameters {
         m_bmp = Bitmap.createBitmap(m_width, m_height, Bitmap.Config.RGB_565);
     }
 
-    public void Randomise(RandomSet settings)
-    {
-        Random rand = new Random();
+    /**
+     * Randomises one of the patterns attributes, chosen at random
+     */
+    public void Randomise() {
 
+        RandomiseAttr (m_random.nextInt(NUM_ATTRIBUTES));
+    }
+
+    void RandomiseAttr (int attr){
+        switch (attr) {
+            case IDX_N1:
+                m_n1 = m_random.nextInt(98) + 3;
+                fixPoints ();
+                break;
+            case IDX_N2:
+                m_n2 = m_random.nextInt(m_n1-1) + 1;
+                fixPoints ();
+                break;
+            case IDX_N3:
+                m_n3 = m_random.nextInt(119 + 1);
+                break;
+            case IDX_ROTATE:
+                m_angle_idx = m_random.nextInt(m_angles.length);
+                break;
+            case IDX_SHRINK:
+                m_shrink_idx = m_random.nextInt(m_shrink_pc.length);
+                break;
+            case IDX_BACKGROUND:
+                m_background = ColourHelpers.random_solid_colour ();
+                break;
+            case IDX_LINE1:
+                m_first_line = ColourHelpers.random_solid_colour ();
+                break;
+            case IDX_LINE2:
+                m_last_line = ColourHelpers.random_solid_colour ();
+                break;
+        }
+    }
+
+    void fixPoints (){
+
+        int hcf = MyMath.hcf(m_n1, m_n2);
+
+        if (hcf > 1) {
+            m_n1 /= hcf;
+            m_n2 /= hcf;
+        }
+        if (m_n1 < 3) {
+            ++m_n1;
+        }
+    }
+
+    /**
+     * Randomises the pattern based on the randomiser settings
+     * @param settings the randomiser settings
+     */
+    public void Randomise(RandomSet settings){
         if (settings.m_randomise_num_points) {
-            m_n1 = rand.nextInt(98) + 3;
+            RandomiseAttr (IDX_N1);
         }
 
-        if (settings.m_randomise_point_step)
-        {
-            m_n2 = rand.nextInt(m_n1-1) + 1;
+        if (settings.m_randomise_point_step){
+            RandomiseAttr (IDX_N2);
         }
 
-        if (settings.m_randomise_num_points || settings.m_randomise_point_step) {
-
-            int hcf = MyMath.hcf(m_n1, m_n2);
-
-            if (hcf > 1) {
-                m_n1 /= hcf;
-                m_n2 /= hcf;
-            }
-            if (m_n1 < 3) {
-                ++m_n1;
-            }
+        if (settings.m_randomise_repeats){
+            RandomiseAttr (IDX_N3);
         }
 
-        if (settings.m_randomise_repeats)
-        {
-            m_n3 = rand.nextInt(119 + 1);
+        if (settings.m_randomise_angles){
+        RandomiseAttr (IDX_ROTATE);
         }
 
-        if (settings.m_randomise_angles)
-        {
-            m_angle_idx = rand.nextInt(m_angles.length);
+        if (settings.m_randomise_shrinkage){
+                RandomiseAttr (IDX_SHRINK);
         }
 
-        if (settings.m_randomise_shrinkage)
-        {
-            m_shrink_idx = rand.nextInt(m_shrink_pc.length);
+        if (settings.m_randomise_backround_colours){
+                RandomiseAttr (IDX_BACKGROUND);
         }
 
-        if (settings.m_randomise_backround_colours)
-        {
-            m_background = ColourHelpers.random_solid_colour ();
-        }
-
-        if (settings.m_randomise_forground_colours)
-        {
-            m_first_line = ColourHelpers.random_solid_colour ();
-            m_last_line = ColourHelpers.random_solid_colour ();
+        if (settings.m_randomise_forground_colours){
+                RandomiseAttr (IDX_LINE1);
+                RandomiseAttr (IDX_LINE2);
         }
     }
 

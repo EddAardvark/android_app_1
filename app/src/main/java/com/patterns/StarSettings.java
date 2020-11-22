@@ -43,11 +43,9 @@ public class StarSettings {
      * Choose a random colouring mode
      */
     public void randomise_colour_mode() {
-        if (m_random.m_randomise_colour_mode){
-            Random rand = new Random();
-            int idx = rand.nextInt(PatternSet.cmodes.length);
 
-            m_pattern.m_colouring_mode = PatternSet.cmodes[idx];
+        if (m_random.m_randomise_colour_mode) {
+            m_pattern.m_colouring_mode = PatternSet.randomColourMode();
         }
     }
 }
