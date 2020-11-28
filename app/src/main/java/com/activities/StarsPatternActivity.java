@@ -123,9 +123,12 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     @Override
     protected void onResume() {
         super.onResume();
+
         if (m_in_animation) {
             startAnimation();
         }
+        // In case anything changed while we were paused
+        draw();
     }
 
     /**
@@ -184,7 +187,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     void Update () {
         setColours();
         showSettings();
-        Draw();
+        draw();
     }
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -206,8 +209,16 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_foreground2_text.setTextColor(ColourHelpers.GetContrastColour (m_params.m_last_line));
     }
 
-    void Draw ()
+    void draw()
     {
+        // If we have just returned from an evolution this will recover the most recent generation
+
+        StarParameters eparams = StarParameters.detachEvolutionParameters();
+
+        if (eparams != null)
+        {
+            m_params = eparams;
+        }
         ImageView img = findViewById(R.id.image);
         m_params.Draw (getResources(), img, m_settings.m_pattern.m_colouring_mode);
         showSettings ();
@@ -332,7 +343,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             case CB_ANGLE: m_params.m_angle_idx = value; break;
             case CB_SHRINK: m_params.m_shrink_idx = value; break;
         }
-        Draw ();
+        draw();
     }
     @Override
     public void SetColour(int id, int value) {
@@ -343,7 +354,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             case CB_LINECOLOUR2: m_params.m_last_line = value; break;
         }
         setColours();
-        Draw ();
+        draw();
     }
 
     @Override
@@ -353,7 +364,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_settings.m_random.fromBundle(rs.toBundle());
         m_settings.m_animate.fromBundle(as.toBundle());
         m_params.setSize(m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
-        Draw();
+        draw();
     }
 
     void showInfoPage ()
