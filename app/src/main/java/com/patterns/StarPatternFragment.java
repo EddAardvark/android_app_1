@@ -24,17 +24,17 @@ public class StarPatternFragment extends Fragment {
     EventListener m_listener = new EventListener();
     Integer m_current_border = null;
     Map<Integer,View> m_cm_buttons = new HashMap<Integer,View>();
-    Map<PatternSet.ColouringMode,Integer> m_mode_to_id = new HashMap<PatternSet.ColouringMode,Integer>();
+    Map<StarParameters.ColouringMode,Integer> m_mode_to_id = new HashMap<StarParameters.ColouringMode,Integer>();
 
     static String[] size_value_strs = {"80px", "160px", "320px", "480px", "640px", "800px", "1024px", "1280px", "1600px"};
     static int[] size_values = {80, 160, 320, 480, 640, 800, 1024, 1280, 1600};
 
     public StarPatternFragment() {
 
-        m_mode_to_id.put (PatternSet.ColouringMode.ALTERNATE, R.id.button_cm_alternate);
-        m_mode_to_id.put (PatternSet.ColouringMode.AROUND, R.id.button_cm_around);
-        m_mode_to_id.put (PatternSet.ColouringMode.BOTH, R.id.button_cm_both);
-        m_mode_to_id.put (PatternSet.ColouringMode.INWARDS, R.id.button_cm_inwards);
+        m_mode_to_id.put (StarParameters.ColouringMode.ALTERNATE, R.id.button_cm_alternate);
+        m_mode_to_id.put (StarParameters.ColouringMode.AROUND, R.id.button_cm_around);
+        m_mode_to_id.put (StarParameters.ColouringMode.BOTH, R.id.button_cm_both);
+        m_mode_to_id.put (StarParameters.ColouringMode.INWARDS, R.id.button_cm_inwards);
     }
 
     /**
@@ -136,16 +136,16 @@ public class StarPatternFragment extends Fragment {
 
             switch (id) {
                 case R.id.button_cm_alternate:
-                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.ALTERNATE;
+                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.ALTERNATE;
                     break;
                 case R.id.button_cm_around:
-                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.AROUND;
+                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.AROUND;
                     break;
                 case R.id.button_cm_both:
-                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.BOTH;
+                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.BOTH;
                     break;
                 case R.id.button_cm_inwards:
-                    m_working_settings.m_colouring_mode = PatternSet.ColouringMode.INWARDS;
+                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.INWARDS;
                     break;
             }
             ShowBorder (id);

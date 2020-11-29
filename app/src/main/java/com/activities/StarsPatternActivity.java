@@ -220,7 +220,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             m_params = eparams;
         }
         ImageView img = findViewById(R.id.image);
-        m_params.Draw (getResources(), img, m_settings.m_pattern.m_colouring_mode);
+        m_params.Draw (getResources(), img);
         showSettings ();
     }
 
@@ -238,7 +238,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             return;
         }
         File imagePath = new File(this.getCacheDir(), "images");
-        File newFile = new File(imagePath, m_params.makeFleName());
+        File newFile = new File(imagePath, m_params.makeFileName());
         Uri contentUri = FileProvider.getUriForFile(this, "com.example.myapp.fileprovider", newFile);
 
         if (contentUri != null) {
@@ -382,7 +382,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     void showEvolvePage ()
     {
         Intent intent = new Intent(this, StarsEvolve.class);
-        Bundle b = StarsEvolve.makeBundle(m_params, m_settings.m_pattern.m_colouring_mode);
+        Bundle b = StarsEvolve.makeBundle(m_params);
         intent.putExtras(b);
         startActivity(intent);
     }
@@ -412,7 +412,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
                     break;
                 case R.id.random_picture:
                     m_params.Randomise (m_settings.m_random);
-                    m_settings.randomise_colour_mode();
                     Update ();
                     break;
                 case R.id.evolve_star:

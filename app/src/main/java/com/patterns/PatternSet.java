@@ -10,29 +10,11 @@ import java.util.Random;
  */
 public class PatternSet {
 
-    public enum ColouringMode {
-        INWARDS, AROUND, BOTH, ALTERNATE
-    }
-
-    final public static ColouringMode[] cmodes = {ColouringMode.INWARDS, ColouringMode.AROUND, ColouringMode.BOTH, ColouringMode.ALTERNATE};
-
     final String KEY_BITMAP_SIZE = "p1";
     final String KEY_COLOURING_MODE = "p2";
 
     public int m_bm_size = 800;
-    public ColouringMode m_colouring_mode = ColouringMode.INWARDS;
-    static Random m_random = new Random();
-
-    /**
-     * Return a random colouring mode
-     * @return the colour mode
-     */
-    public static ColouringMode randomColourMode () {
-
-        int idx = m_random.nextInt(PatternSet.cmodes.length);
-
-        return PatternSet.cmodes[idx];
-    }
+    public StarParameters.ColouringMode m_colouring_mode = StarParameters.ColouringMode.INWARDS;
 
     /**
      * Save the current values to a bundle
@@ -57,7 +39,7 @@ public class PatternSet {
             Serializable x = b.getSerializable(KEY_COLOURING_MODE);
 
             if (x != null) {
-                m_colouring_mode = (ColouringMode) x;
+                m_colouring_mode = (StarParameters.ColouringMode) x;
             }
         }
     }

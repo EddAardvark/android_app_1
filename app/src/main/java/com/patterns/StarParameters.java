@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.misc.ColourHelpers;
 import com.misc.MyMath;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +22,12 @@ import java.util.Locale;
 import java.util.Random;
 
 public class StarParameters {
+
+    public enum ColouringMode {
+        INWARDS, AROUND, BOTH, ALTERNATE
+    }
+
+    final public static ColouringMode[] cmodes = {ColouringMode.INWARDS, ColouringMode.AROUND, ColouringMode.BOTH, ColouringMode.ALTERNATE};
 
     public int m_n1 = 5;                        ///< Number of points in the circle
     public int m_n2 = 2;                        ///< Increment when joining points
@@ -31,6 +38,9 @@ public class StarParameters {
     public int m_first_line = Color.BLUE;       ///< Foreground ground colour
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
 
+    public ColouringMode m_colouring_mode = ColouringMode.INWARDS;
+    public int m_bitmap_size = 800;
+
     final static int IDX_N1 = 0;
     final static int IDX_N2 = 1;
     final static int IDX_N3 = 2;
@@ -39,7 +49,8 @@ public class StarParameters {
     final static int IDX_BACKGROUND = 5;
     final static int IDX_LINE1 = 6;
     final static int IDX_LINE2 = 7;
-    final static int NUM_ATTRIBUTES = 8;
+    final static int IDX_CMODE = 8;
+    final static int NUM_ATTRIBUTES = 9;
 
     double m_rotate = 0;                        ///< Rotates the whole pattern, used in animation
     long m_counter = 0;                         ///< Used in animation
@@ -52,6 +63,8 @@ public class StarParameters {
     final static String KEY_BACKGROUND = "bg";
     final static String KEY_LINE1 = "l1";
     final static String KEY_LINE2 = "l2";
+    final static String KEY_COLOURING_MODE = "cm";
+    final static String KEY_BM_SIZE = "cm";
 
     int m_width;
     int m_height;
@@ -82,9 +95,15 @@ public class StarParameters {
     public String getShrinkString () { return m_shrink_str.get(m_shrink_idx);}
 
     /**
+     * Used to return evolution parameters from the evolve activity to the drawing activity
+     */
+    static StarParameters m_EvolutionParameters = null;
+
+    /**
      * Create a copy of this object
      * @return the copy
      */
+    @Override
     public StarParameters clone (){
         StarParameters ret = new StarParameters (m_width, m_height);
 
@@ -96,8 +115,29 @@ public class StarParameters {
         ret.m_background = m_background;
         ret.m_first_line = m_first_line;
         ret.m_last_line = m_last_line;
+        ret.m_colouring_mode = m_colouring_mode;
+
 
         return ret;
+    }
+
+    /**
+     * Get the current evolution parameters. Calling this clears the settings.
+     * @return the parameters
+     */
+    public static StarParameters detachEvolutionParameters (){
+        StarParameters ret = m_EvolutionParameters;
+        m_EvolutionParameters = null;
+        return ret;
+    }
+
+    /**
+     * Set the evolution parameters
+     * @param params The parameters
+     */
+
+    public static void setEvolutionParameters (StarParameters params){
+        m_EvolutionParameters = params;
     }
 
     /**
@@ -121,15 +161,15 @@ public class StarParameters {
         RandomiseAttr (m_random.nextInt(NUM_ATTRIBUTES));
     }
 
-    void RandomiseAttr (int attr){
+    void RandomiseAttr (int attr) {
         switch (attr) {
             case IDX_N1:
                 m_n1 = m_random.nextInt(98) + 3;
-                fixPoints ();
+                fixPoints();
                 break;
             case IDX_N2:
-                m_n2 = m_random.nextInt(m_n1-1) + 1;
-                fixPoints ();
+                m_n2 = m_random.nextInt(m_n1 - 1) + 1;
+                fixPoints();
                 break;
             case IDX_N3:
                 m_n3 = m_random.nextInt(119 + 1);
@@ -141,13 +181,16 @@ public class StarParameters {
                 m_shrink_idx = m_random.nextInt(m_shrink_pc.length);
                 break;
             case IDX_BACKGROUND:
-                m_background = ColourHelpers.random_solid_colour ();
+                m_background = ColourHelpers.random_solid_colour();
                 break;
             case IDX_LINE1:
-                m_first_line = ColourHelpers.random_solid_colour ();
+                m_first_line = ColourHelpers.random_solid_colour();
                 break;
             case IDX_LINE2:
-                m_last_line = ColourHelpers.random_solid_colour ();
+                m_last_line = ColourHelpers.random_solid_colour();
+                break;
+            case IDX_CMODE:
+                m_colouring_mode = cmodes[m_random.nextInt(cmodes.length)];
                 break;
         }
     }
@@ -198,6 +241,11 @@ public class StarParameters {
                 RandomiseAttr (IDX_LINE1);
                 RandomiseAttr (IDX_LINE2);
         }
+
+        if (settings.m_randomise_colour_mode)
+        {
+            RandomiseAttr(IDX_CMODE);
+        }
     }
 
     public Bitmap bitmap ()
@@ -209,9 +257,8 @@ public class StarParameters {
      * Draws the pattern using the current parameters
      * @param resources
      * @param img
-     * @param colour_mode
      */
-    public void Draw(Resources resources, ImageView img, PatternSet.ColouringMode colour_mode) {
+    public void Draw(Resources resources, ImageView img) {
 
         Rect rect = new Rect(0, 0, m_width, m_height);
         Canvas canvas = new Canvas(m_bmp);
@@ -221,7 +268,7 @@ public class StarParameters {
 
         canvas.drawRect(rect, paint);
 
-        switch (colour_mode) {
+        switch (m_colouring_mode) {
             case BOTH:
                 DrawBoth(paint, canvas);
                 break;
@@ -516,6 +563,11 @@ public class StarParameters {
         m_background = bundle.getInt(KEY_BACKGROUND, m_background);
         m_first_line = bundle.getInt(KEY_LINE1, m_first_line);
         m_last_line = bundle.getInt(KEY_LINE2, m_last_line);
+        Serializable x = bundle.getSerializable(KEY_COLOURING_MODE);
+
+        if (x != null) {
+            m_colouring_mode = (ColouringMode) x;
+        }
     }
 
     public Bundle toBundle() {
@@ -530,11 +582,12 @@ public class StarParameters {
         b.putInt(KEY_BACKGROUND, m_background);
         b.putInt(KEY_LINE1, m_first_line);
         b.putInt(KEY_LINE2, m_last_line);
-
+        b.putSerializable(KEY_COLOURING_MODE, m_colouring_mode);
+        
         return b;
     }
 
-    public String makeFleName() {
+    public String makeFileName() {
 
         return (m_n3 > 1)
                 ? String.format(Locale.UK, "Star_%d_%d_%d_%d_%d_%x_%x_%x.png", m_n1, m_n2, m_n3, m_angle_idx, m_shrink_idx, m_background, m_first_line, m_last_line)

@@ -9,15 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.tutorialapp.R;
-import com.patterns.PatternSet;
 import com.patterns.StarParameters;
 
 import java.util.Random;
 
 public class StarsEvolve extends AppCompatActivity {
 
-    public static String KEY_COLOURING_MODE = "cmode";
     public static String KEY_PARAMS = "params";
+    public static String KEY_STATE = "state";
+
     final static double colour_change = 0.05;
 
     ImageView m_cell_11;
@@ -33,7 +33,6 @@ public class StarsEvolve extends AppCompatActivity {
     Random m_random = new Random();
 
     StarParameters [] m_params = new StarParameters[9];
-    PatternSet.ColouringMode [] m_cmode = new PatternSet.ColouringMode[9];
 
     StarsEvolve.EventListener m_listener = new EventListener();
 
@@ -42,18 +41,7 @@ public class StarsEvolve extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stars_evolve);
 
-        if (savedInstanceState != null)
-        {
-            fromBundle(savedInstanceState);
-        }
-        else
-        {
-            Bundle b = getIntent().getExtras();
-
-            if (b != null){
-                fromBundle(b);
-            }
-        }
+        fromBundle(getIntent().getExtras());
 
         m_cell_11 = findViewById(R.id.image_1x1);
         m_cell_12 = findViewById(R.id.image_1x2);
@@ -77,30 +65,30 @@ public class StarsEvolve extends AppCompatActivity {
 
         draw();
     }
-
     /**
      * Create a bundle containing the Activity startup parameters
      * @param params The pattern parameters
-     * @param cmode The colouring mode
      * @return A bundle
      */
-    public static Bundle makeBundle (StarParameters params, PatternSet.ColouringMode cmode)
+    public static Bundle makeBundle (StarParameters params)
     {
         Bundle b = new Bundle();
         b.putBundle (KEY_PARAMS, params.toBundle());
-        b.putSerializable(KEY_COLOURING_MODE, cmode);
 
         return b;
     }
-    void fromBundle (@NonNull Bundle b) {
+    void fromBundle (Bundle b) {
 
-        // [0] is the centre one
+        if (b != null) {
 
-        m_params[0] = new StarParameters(512, 512);
-        m_params[0].fromBundle(b.getBundle(KEY_PARAMS));
-        m_cmode[0] = (PatternSet.ColouringMode) b.getSerializable(KEY_COLOURING_MODE);
+            Bundle b2 = b.getBundle(KEY_PARAMS);
 
-        evolve();
+            if (b2 != null) {
+                m_params[0] = new StarParameters(512, 512);
+                m_params[0].fromBundle(b2);
+                evolve();
+            }
+        }
     }
 
     void evolve(){
@@ -110,7 +98,6 @@ public class StarsEvolve extends AppCompatActivity {
         for (int i = 1 ; i < 9 ; ++i)
         {
             m_params[i] = m_params[0].clone ();
-            m_cmode[i] = m_cmode[0];
             randomise(i);
         }
     }
@@ -118,28 +105,24 @@ public class StarsEvolve extends AppCompatActivity {
      * Ransomise one of the patters
      * @param idx the pattern
      */
-    void randomise(int idx){
-
-        if (m_random.nextDouble() < colour_change)
-        {
-            m_cmode[idx] = PatternSet.randomColourMode();
-        }
-        else {
-            m_params[idx].Randomise();
-        }
+    void randomise(int idx) {
+        m_params[idx].Randomise();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState = makeBundle (m_params[0], m_cmode[0]);
+        outState.putBundle(KEY_STATE, makeBundle (m_params[0]));
     }
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        fromBundle (savedInstanceState);
+        Bundle b =  savedInstanceState.getBundle(KEY_STATE);
+
+        fromBundle (b);
+        draw();
     }
 
     void draw() {
@@ -156,13 +139,14 @@ public class StarsEvolve extends AppCompatActivity {
 
     void draw(int id, int idx){
         ImageView img = findViewById(id);
-        m_params[idx].Draw (getResources(), img, m_cmode[idx]);
+        m_params[idx].Draw (getResources(), img);
     }
 
     void setPattern(int idx){
         m_params[0] = m_params [idx];
         evolve();
         draw ();
+        StarParameters.setEvolutionParameters(m_params[0].clone());
     }
 
     public class EventListener extends Activity implements View.OnClickListener {
