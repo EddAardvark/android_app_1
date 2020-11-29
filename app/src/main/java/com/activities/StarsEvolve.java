@@ -98,15 +98,8 @@ public class StarsEvolve extends AppCompatActivity {
         for (int i = 1 ; i < 9 ; ++i)
         {
             m_params[i] = m_params[0].clone ();
-            randomise(i);
+            m_params[i].Randomise();
         }
-    }
-    /**
-     * Ransomise one of the patters
-     * @param idx the pattern
-     */
-    void randomise(int idx) {
-        m_params[idx].Randomise();
     }
 
     @Override
