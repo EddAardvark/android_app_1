@@ -254,34 +254,33 @@ public class StarParameters {
     }
 
     /**
-     * Draws the pattern using the current parameters
-     * @param resources
-     * @param img
+     * Colour a rectangle using this patterns background colour
+     * @param paint
+     * @param rect
      */
-    public void Draw(Resources resources, ImageView img) {
+    public void draw_background(Paint paint, Canvas canvas, Rect rect){
 
-        Rect rect = new Rect(0, 0, m_width, m_height);
-        Canvas canvas = new Canvas(m_bmp);
-        Paint paint = new Paint();
         paint.setColor(m_background);
         paint.setStyle(Paint.Style.FILL);
 
         canvas.drawRect(rect, paint);
+    }
+    /**
+     * Draws the pattern using the current parameters, this version manages it's own bitmap and image size.
+     * @param resources
+     * @param img
+     */
+    public void draw(Resources resources, ImageView img) {
 
-        switch (m_colouring_mode) {
-            case BOTH:
-                DrawBoth(paint, canvas);
-                break;
-            case INWARDS:
-                DrawInwards(paint, canvas);
-                break;
-            case AROUND:
-                DrawAround(paint, canvas);
-                break;
-            case ALTERNATE:
-                DrawAlternate(paint, canvas);
-                break;
-        }
+        Rect rect = new Rect(0, 0, m_width, m_height);
+        Canvas canvas = new Canvas(m_bmp);
+        Paint paint = new Paint();
+        double xc = m_width * 0.5;
+        double yc = m_height * 0.5;
+        double r = m_height * 0.48;
+
+        draw_background(paint, canvas, rect);
+        draw(paint, canvas, xc, yc, r);
 
         int h = m_height/40;
 
@@ -316,17 +315,37 @@ public class StarParameters {
 
         img.setImageDrawable(new BitmapDrawable(resources, m_bmp));
     }
+    /**
+     * Draws the pattern using the current parameters, this version draws into a canvas owned by the caller
+     * which may already have some conten.
+     * @param resources
+     * @param img
+     */
+    public void draw(Paint paint, Canvas canvas, double xc, double yc, double r) {
+
+        switch (m_colouring_mode) {
+            case BOTH:
+                DrawBoth(paint, canvas, xc, yc, r);
+                break;
+            case INWARDS:
+                DrawInwards(paint, canvas, xc, yc, r);
+                break;
+            case AROUND:
+                DrawAround(paint, canvas, xc, yc, r);
+                break;
+            case ALTERNATE:
+                DrawAlternate(paint, canvas, xc, yc, r);
+                break;
+        }
+    }
 
     /**
      * Colour progresses from the first colour to the second as we move inwards
      * @param paint
      * @param canvas
      */
-    void DrawInwards(Paint paint, Canvas canvas) {
+    void DrawInwards(Paint paint, Canvas canvas, double xc, double yc, double r) {
 
-        double xc = m_width * 0.5;
-        double yc = m_height * 0.5;
-        double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
         double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;
@@ -362,11 +381,8 @@ public class StarParameters {
      * @param paint
      * @param canvas
      */
-    void DrawAround (Paint paint, Canvas canvas) {
+    void DrawAround (Paint paint, Canvas canvas, double xc, double yc, double r) {
 
-        double xc = m_width * 0.5;
-        double yc = m_height * 0.5;
-        double r = m_height * 0.48;
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
         double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;
@@ -416,10 +432,8 @@ public class StarParameters {
      * @param paint
      * @param canvas
      */
-    void DrawAlternate (Paint paint, Canvas canvas) {
-        double xc = m_width * 0.5;
-        double yc = m_height * 0.5;
-        double r = m_height * 0.48;
+    void DrawAlternate (Paint paint, Canvas canvas, double xc, double yc, double r) {
+
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
         double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;
@@ -468,10 +482,8 @@ public class StarParameters {
      * @param paint
      * @param canvas
      */
-    void DrawBoth (Paint paint, Canvas canvas) {
-        double xc = m_width * 0.5;
-        double yc = m_height * 0.5;
-        double r = m_height * 0.48;
+    void DrawBoth (Paint paint, Canvas canvas, double xc, double yc, double r) {
+
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
         double shrink = (100 - m_shrink_pc [m_shrink_idx]) * 0.01;

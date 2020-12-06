@@ -219,8 +219,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         {
             m_params = eparams;
         }
-        ImageView img = findViewById(R.id.image);
-        m_params.Draw (getResources(), img);
+        ImageView img = findViewById(R.id.evolve_image);
+        m_params.draw (getResources(), img);
         showSettings ();
     }
 
