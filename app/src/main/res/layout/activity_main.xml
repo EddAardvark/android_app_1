@@ -48,7 +48,7 @@
         <ImageView
             android:id="@+id/button_stars"
             android:layout_width="@dimen/pattern_chooser_size"
-            android:layout_height=":wq"
+            android:layout_height="@dimen/pattern_chooser_size"
             android:layout_marginStart="@dimen/spacing_xxl"
             android:layout_marginLeft="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"

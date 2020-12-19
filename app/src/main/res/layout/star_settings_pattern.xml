@@ -1,7 +1,12 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:isScrollContainer="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_medium"
@@ -98,4 +103,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+</HorizontalScrollView>
