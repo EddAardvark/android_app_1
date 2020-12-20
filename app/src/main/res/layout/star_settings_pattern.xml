@@ -1,0 +1,106 @@
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:isScrollContainer="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_medium"
+    android:background="@drawable/selection_border"
+    android:padding="@dimen/spacing_medium">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginRight="@dimen/spacing_medium"
+        android:text="@string/bitmap_size"
+        app:layout_constraintBottom_toBottomOf="@+id/size_pricker"
+        app:layout_constraintEnd_toStartOf="@+id/size_pricker"
+        app:layout_constraintTop_toTopOf="@+id/size_pricker" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginLeft="@dimen/spacing_medium"
+        android:text="@string/colouring_mode"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/size_pricker" />
+
+    <NumberPicker
+        android:id="@+id/size_pricker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginLeft="@dimen/spacing_medium"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/tv3"
+        app:layout_constraintTop_toBottomOf="@+id/size_pricker">
+
+
+        <ImageView
+            android:id="@+id/button_cm_inwards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:contentDescription="@string/inward_colour_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/star_inward"
+            app:layout_constraintTop_toBottomOf="@+id/label_stars" />
+
+        <ImageView
+            android:id="@+id/button_cm_around"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:contentDescription="@string/around_colour_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/star_around"
+            app:layout_constraintTop_toBottomOf="@+id/label_stars" />
+
+        <ImageView
+            android:id="@+id/button_cm_both"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:contentDescription="@string/both_colour_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/star_both"
+            app:layout_constraintTop_toBottomOf="@+id/label_stars" />
+
+        <ImageView
+            android:id="@+id/button_cm_alternate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:contentDescription="@string/alternate_colour_description"
+            android:scaleType="fitCenter"
+            android:src="@drawable/star_alt"
+            app:layout_constraintTop_toBottomOf="@+id/label_stars" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</HorizontalScrollView>

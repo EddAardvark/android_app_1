@@ -1,4 +1,110 @@
 <resources>
-    <string name="app_name">JW\'s Mathematical Patterns</string>
-    <string name="second_page">Drawing Pattern</string>
+    <string name="app_name">JW\'s Math Patterns</string>
+    <string name="stars_page_label">Stars Pattern</string>
+    <string name="intro_text">
+        This application acts as a gateway to a collection of my mathematical pattern drawing algorithms,
+        Please click on the icon representing the type of pattern you would like to explore further.
+    </string>
+    <string name="stars_label">Stars</string>
+    <string name="n1">Points</string>
+    <string name="n2">Step</string>
+    <string name="n3">Repeat</string>
+    <string name="share">Share</string>
+    <string name="random">Random</string>
+    <string name="angle">Angle</string>
+    <string name="shrink">Shrink</string>
+    <string name="foreground1">Line 1</string>
+    <string name="foreground2">Line 2</string>
+    <string name="background">Back</string>
+    <string name="star_n1_description">
+        This parameter is the number of points on the star. It can be any integer value in the
+        range 3 to 101.
+    </string>
+    <string name="star_n2_description">
+        This parameter is the number of points advanced by each edge vector. One will draw a simple polygon, larger numbers will draw
+        stars. If n1 and n2 have a factor in common the resulting star will be simplified by that factor, for instance, (10,4) will draw the
+        star (5,2).
+    </string>
+    <string name="star_n3_description">
+        This parameter determines the number of copies of the star that will be drawn. Each copy will be rotated and shrunk, based on the values of the
+        relevant parameters.
+    </string>
+    <string name="star_angle_description">
+        This parameter determines the number that each copy of the original pattern will be rotated.
+    </string>
+    <string name="star_shrink_description">
+        This parameter determines by how much to shrink each copy of the original pattern. It is a percentage, 0 is full size, 5
+        will reduce each successive image by 5%.
+    </string>
+    <string name="star_n1_title">Number of points</string>
+    <string name="star_n2_title">Hop between points</string>
+    <string name="star_n3_title">Number of copies</string>
+    <string name="star_rotate_title">Angle increment</string>
+    <string name="star_shrink_title">Size change</string>
+    <string name="star_background_title">Background colour</string>
+    <string name="star_first_colour_title">First colour</string>
+    <string name="star_last_colour_title">Last colour</string>
+    <string name="star_first_colour_description">This is the colour of the line use to draw the first pattern and the start of the sequence when drawing multiple patterns</string>
+    <string name="star_last_colour_description">This is the last colour in the sequence when drawing multiple patterns, intermediate patterns are drawn using a blend of the 2.</string>
+    <string name="star_background_description">This is the colour used to fill in the background upon which the pattern is drawn</string>
+    <string name="settings">Settings</string>
+    <string name="star_settings_description">Here you can configure the settings used to manage the star drawing, including bitmap size, randomiser settings and the animator.</string>
+    <string name="star_settings_title">Manage Star Settings</string>
+    <string name="pattern">Pattern</string>
+    <string name="randomiser">Randomiser</string>
+    <string name="animator">Animator</string>
+    <string name="bitmap_size">Bitmap size:</string>
+    <string name="title_activity_star_settings">Star Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="general_star_settings">General Settings</string>
+    <string name="line_thickness">Line Width:</string>
+    <string name="line_style">Line Style:</string>
+    <string name="line_style_hint">Line style</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="colouring_mode">Colouring Mode:</string>
+    <string name="inward_colour_description">Colours progress as the images shring towards the centre.</string>
+    <string name="around_colour_description">Colours advance as we move around the star</string>
+    <string name="both_colour_description">Colours advance half way and then retreat</string>
+    <string name="title_activity_an">AnActivity</string>
+    <string name="alternate_colour_description">Colours alternate around the star</string>
+    <string name="stars_image_text">This is where the stars are drawn</string>
+    <string name="star_applet_button">Click here to enter the star drawing screen</string>
+    <string name="star_params_caption">Here you can set aspects of how the pattern is drawn.</string>
+    <string name="star_randomiser_caption">Here you can set which attributes of the pattern can be changed by the randomiser.</string>
+    <string name="star_animation_caption">Here you can set the parameters used for animation</string>
+    <string name="edit_settings">Click to launch the settings editor</string>
+    <string name="draw_random">Click to draw a random pattern</string>
+    <string name="share_pattern">Click to share this pattern</string>
+    <string name="app_info">Click to display the application\'s information page</string>
+    <string name="resume_animation">Click to start or resume the animation</string>
+    <string name="pause_animation">Click to pause the animation</string>
+    <string name="anim_start_colour">Animation Starting Colour</string>
+    <string name="anim_start_colour_back_descr">The starting colour when animating the background.</string>
+    <string name="anim_end_colour">Animation Finishing Colour</string>
+    <string name="anim_end_colour_back_descr">The finishing colour when animating the background.</string>
+    <string name="anim_start_colour_line1_descr">The starting colour when animating the first line colour.</string>
+    <string name="anim_end_colour_line1_descr">The finishing colour when animating the first line colour</string>
+    <string name="anim_start_colour_line2_descr">The starting colour when animating the second line colour</string>
+    <string name="anim_end_colour_line2_descr">The finishing colour when animating the second line colour</string>
+    <string name="email_me">Contact me (email)</string>
+    <string name="stars_page">Instructions for the stars page (website)</string>
+    <string name="home_page">My website</string>
+    <string name="home_page_descr">Click to visit my website</string>
+    <string name="email_me_descr">Click to email me</string>
+    <string name="view_the_stars_page">Click to view the stars help page</string>
+    <string name="email_address">mailto:eddaardvark@yahoo.co.uk</string>
+    <string name="home_page_url">http://www.eddaardvark.co.uk/</string>
+    <string name="stars_page_url">http://www.eddaardvark.co.uk/apps/patterns/stars.html</string>
+    <string name="evolve_mode">Launch the evolution viewer</string>
+    <string name="stars_evolve_label">Stars Evolution Page</string>
+    <string name="stars_evolve_intro">
+        This view allows you to use directed evolution to explore the pattern space looking for patterns that appeal to you.
+        Click on the pattern you like best and the algorithm will generate a new set, each with one attribute changed.
+        Repeat this process and the patterns will converge on the ones you like.
+    </string>
 </resources>
