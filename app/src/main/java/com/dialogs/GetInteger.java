@@ -2,8 +2,11 @@ package com.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.NumberPicker;
 
 import androidx.annotation.Nullable;
@@ -11,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.activities.StarsPatternActivity;
 import com.example.tutorialapp.R;
+import com.misc.MessageBox;
 
 import java.util.ArrayList;
 
@@ -26,10 +30,20 @@ public class GetInteger extends DialogFragment {
     Result m_result;
     int m_id;
 
-    GetInteger (Result res, int id){
+    public GetInteger (Result res, int id){
 
         m_id = id;
         m_result = res;
+    }
+
+    /**
+     * Seems to be required for rotation handling, without this the app will crash with MethodNotFoundExtension
+     * However, the dialog is now useless as the callback interface in m_result no longer exists. I can keep the instance
+     * alive by storing the reference statically, but it no longer points to the active instance of the called,
+     * which has been recreated during the rotation, so we just need to make the dialog disappear.
+     */
+    public GetInteger (){
+
     }
 
     public static GetInteger construct(Result res, int id, int n, int min, int max, int inc, String title, String message) {
@@ -74,6 +88,7 @@ public class GetInteger extends DialogFragment {
         }
         else{
             String [] strings = new String [objects.size()];
+
             for (int i = 0 ; i < strings.length ; ++i)
             {
                 strings [i] = objects.get(i).toString();
@@ -96,17 +111,22 @@ public class GetInteger extends DialogFragment {
 
         @Override
         public void onClick(DialogInterface dialog, int id) {
+
             switch (id) {
                 case Dialog.BUTTON_NEGATIVE:
                     break;
                 case Dialog.BUTTON_POSITIVE:
+                    if (m_result == null) {
+                        MessageBox.showOK(getActivity(), "No owner", "This dialog no longer has an owner, possibly because a screen rotate has disconnected it", "OK");
+                        return;
+                    }
+                    Log.i("GetInteger", "Returning " + m_picker.getValue() + " for id " + m_id);
                     m_result.SetInteger(m_id, m_picker.getValue());
                     break;
                 case Dialog.BUTTON_NEUTRAL:
                     break;
             }
         }
-
     }
 }
 

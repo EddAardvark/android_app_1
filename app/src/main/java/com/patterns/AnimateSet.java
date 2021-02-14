@@ -25,13 +25,17 @@ public class AnimateSet {
     IntegerAnimationSettings m_anim_rotate = new IntegerAnimationSettings(0, 359);
     IntegerAnimationSettings m_anim_points = new IntegerAnimationSettings(3, 119);
     IntegerAnimationSettings m_anim_step = new IntegerAnimationSettings(1, 7);
-    IntegerAnimationSettings m_anim_repeats = new IntegerAnimationSettings(0, 20);
+    IntegerAnimationSettings m_anim_repeats = new IntegerAnimationSettings(1, 20);
     IntegerAnimationSettings m_anim_angle = new IntegerAnimationSettings(0, 20);
     IntegerAnimationSettings m_anim_shrink = new IntegerAnimationSettings(0, 20);
     ColourAnimationSettings m_anim_background = new ColourAnimationSettings(Color.WHITE, Color.BLACK);
     ColourAnimationSettings m_anim_line1 = new ColourAnimationSettings(Color.BLUE, Color.CYAN);
     ColourAnimationSettings m_anim_line2 = new ColourAnimationSettings(Color.RED, Color.YELLOW);
 
+    public AnimateSet ()
+    {
+        m_anim_rotate.m_enabled = true;
+    }
     /**
      * Save the current values to a bundle
      */

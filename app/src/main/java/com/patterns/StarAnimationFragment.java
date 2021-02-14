@@ -325,136 +325,96 @@ public class StarAnimationFragment extends Fragment{
 
             int id = view.getId();
 
-            switch (id) {
-                case R.id.anim_rotate_speed:
-                    ShowIntegerDialog(CB_ROTATE_SPEED, m_working_settings.m_anim_rotate.m_speed, 1, 30, "Rotation Speed", "The delay before rotating the pattern");
-                    break;
-                case R.id.pts_start:
-                    ShowIntegerDialog(CB_POINTS_START, m_working_settings.m_anim_points.getStart(), 3, 100, "Starting Points", "The number of points defining the first pattern");
-                    break;
-                case R.id.pts_end:
-                    ShowIntegerDialog(CB_POINTS_END, m_working_settings.m_anim_points.getEnd(), 3, 100, "End Points", "The number of points defining the last pattern");
-                    break;
-                case R.id.pts_inc:
-                    ShowIntegerDialog(CB_POINTS_INC, m_working_settings.m_anim_points.m_inc, 1, 7, "Points Increment", "The increment in the number of points between patterns");
-                    break;
-                case R.id.pts_speed:
-                    ShowIntegerDialog(CB_POINTS_SPEED, m_working_settings.m_anim_points.m_speed, 1, 30, "Points Speed", "The delay before updating the number of points");
-                    break;
-                case R.id.step_start:
-                    ShowIntegerDialog(CB_STEP_START, m_working_settings.m_anim_step.getStart(), 3, 100, "Starting Step", "The starting step size");
-                    break;
-                case R.id.step_end:
-                    ShowIntegerDialog(CB_STEP_END, m_working_settings.m_anim_step.getEnd(), 3, 100, "End Step", "The last step size");
-                    break;
-                case R.id.step_inc:
-                    ShowIntegerDialog(CB_STEP_INC, m_working_settings.m_anim_step.m_inc, 1, 7, "Step Increment", "The increment in the step size between patterns");
-                    break;
-                case R.id.step_speed:
-                    ShowIntegerDialog(CB_STEP_SPEED, m_working_settings.m_anim_step.m_speed, 1, 30, "Step Speed", "The delay before updating the step size");
-                    break;
-                case R.id.rep_start:
-                    ShowIntegerDialog(CB_REPEAT_START, m_working_settings.m_anim_repeats.getStart(), 1, 120, "Starting Repeat", "The starting number of repeats");
-                    break;
-                case R.id.rep_end:
-                    ShowIntegerDialog(CB_REPEAT_END, m_working_settings.m_anim_repeats.getEnd(), 3, 120, "End Repeat", "The last number of repeats");
-                    break;
-                case R.id.rep_inc:
-                    ShowIntegerDialog(CB_REPEAT_INC, m_working_settings.m_anim_repeats.m_inc, 1, 7, "Repeat Increment", "The increment in the number of repeats between patterns");
-                    break;
-                case R.id.rep_speed:
-                    ShowIntegerDialog(CB_REPEAT_SPEED, m_working_settings.m_anim_repeats.m_speed, 1, 30, "Repeat change delay", "The delay before updating the number of repeats");
-                    break;
-                case R.id.angle_start:
-                    ShowIntegerDialog(CB_ANGLE_START, m_working_settings.m_anim_angle.getStart(), 0, StarParameters.m_angles.length - 1, "Starting Angle", "The starting angle between repeats");
-                    break;
-                case R.id.angle_end:
-                    ShowIntegerDialog(CB_ANGLE_END, m_working_settings.m_anim_angle.getEnd(), 0, StarParameters.m_angles.length - 1, "End Angle", "The last angle between repeats");
-                    break;
-                case R.id.angle_inc:
-                    ShowIntegerDialog(CB_ANGLE_INC, m_working_settings.m_anim_angle.m_inc, 1, 7, "Angle Increment", "The increment in the angle between repeats");
-                    break;
-                case R.id.angle_speed:
-                    ShowIntegerDialog(CB_ANGLE_SPEED, m_working_settings.m_anim_angle.m_speed, 1, 30, "Angle change delay", "The delay before updating the angle between repeats");
-                    break;
-                case R.id.shrink_start:
-                    ShowIntegerDialog(CB_SHRINK_START, m_working_settings.m_anim_shrink.getStart(), 1, StarParameters.m_shrink_pc.length - 1, "Starting Shrinkage", "The starting shrinkage between repeats");
-                    break;
-                case R.id.shrink_end:
-                    ShowIntegerDialog(CB_SHRINK_END, m_working_settings.m_anim_shrink.getEnd(), 3, StarParameters.m_shrink_pc.length - 1, "End Shrinkage", "The last shrinkage between repeats");
-                    break;
-                case R.id.shrink_inc:
-                    ShowIntegerDialog(CB_SHRINK_INC, m_working_settings.m_anim_shrink.m_inc, 1, 7, "Shrinkage Increment", "The increment in the shrinkage between repeats");
-                    break;
-                case R.id.shrink_speed:
-                    ShowIntegerDialog(CB_SHRINK_SPEED, m_working_settings.m_anim_shrink.m_speed, 1, 30, "Shrinkage change delay", "The delay before updating the shrinkage between repeats");
-                    break;
-                case R.id.rotate_shape:
-                    m_working_settings.m_anim_rotate.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_rotate.m_shape);
-                    show_rotate_shape();
-                    break;
-                case R.id.points_shape:
-                    m_working_settings.m_anim_points.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_points.m_shape);
-                    show_points_shape();
-                    break;
-                case R.id.step_shape:
-                    m_working_settings.m_anim_step.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_step.m_shape);
-                    show_step_shape();
-                    break;
-                case R.id.rep_shape:
-                    m_working_settings.m_anim_repeats.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_repeats.m_shape);
-                    show_repeat_shape();
-                    break;
-                case R.id.angle_shape:
-                    m_working_settings.m_anim_angle.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_angle.m_shape);
-                    show_angle_shape();
-                    break;
-                case R.id.shrink_shape:
-                    m_working_settings.m_anim_shrink.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_shrink.m_shape);
-                    show_shrink_shape();
-                    break;
-                case R.id.back_colour_shape:
-                    m_working_settings.m_anim_background.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_background.m_shape);
-                    show_back_colour_shape();
-                    break;
-                case R.id.l1_colour_shape:
-                    m_working_settings.m_anim_line1.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_line1.m_shape);
-                    show_l1_colour_shape();
-                    break;
-                case R.id.l2_colour_shape:
-                    m_working_settings.m_anim_line2.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_line2.m_shape);
-                    show_l2_colour_shape();
-                    break;
-                case R.id.back_colour_speed:
-                    ShowIntegerDialog(CB_BACK_COLOUR_SPEED, m_working_settings.m_anim_background.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
-                    show_back_colour_shape();
-                    break;
-                case R.id.l1_colour_speed:
-                    ShowIntegerDialog(CB_L1_COLOUR_SPEED, m_working_settings.m_anim_line1.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
-                    show_l1_colour_shape();
-                    break;
-                case R.id.l2_colour_speed:
-                    ShowIntegerDialog(CB_L2_COLOUR_SPEED, m_working_settings.m_anim_line2.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
-                    show_l2_colour_shape();
-                    break;
-                case R.id.back_colour_start:
-                    ShowColourDialog (CB_BACKGROUND_COLOUR_START, m_working_settings.m_anim_background.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_back_descr));
-                    break;
-                case R.id.back_colour_end:
-                    ShowColourDialog (CB_BACKGROUND_COLOUR_END, m_working_settings.m_anim_background.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_back_descr));
-                    break;
-                case R.id.line1_colour_start:
-                    ShowColourDialog (CB_L1_COLOUR_START, m_working_settings.m_anim_line1.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_line1_descr));
-                    break;
-                case R.id.line1_colour_end:
-                    ShowColourDialog (CB_L1_COLOUR_END, m_working_settings.m_anim_line1.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_line1_descr));
-                    break;
-                case R.id.line2_colour_start:
-                    ShowColourDialog (CB_L2_COLOUR_START, m_working_settings.m_anim_line2.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_line2_descr));
-                    break;
-                case R.id.line2_colour_end:
-                    ShowColourDialog (CB_L2_COLOUR_END, m_working_settings.m_anim_line2.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_line2_descr));
-                    break;
+            if (id == R.id.anim_rotate_speed) {
+                ShowIntegerDialog(CB_ROTATE_SPEED, m_working_settings.m_anim_rotate.m_speed, 1, 30, "Rotation Speed", "The delay before rotating the pattern");
+            } else if (id == R.id.pts_start) {
+                ShowIntegerDialog(CB_POINTS_START, m_working_settings.m_anim_points.getStart(), 3, 100, "Starting Points", "The number of points defining the first pattern");
+            } else if (id == R.id.pts_end) {
+                ShowIntegerDialog(CB_POINTS_END, m_working_settings.m_anim_points.getEnd(), 3, 100, "End Points", "The number of points defining the last pattern");
+            } else if (id == R.id.pts_inc) {
+                ShowIntegerDialog(CB_POINTS_INC, m_working_settings.m_anim_points.m_inc, 1, 7, "Points Increment", "The increment in the number of points between patterns");
+            } else if (id == R.id.pts_speed) {
+                ShowIntegerDialog(CB_POINTS_SPEED, m_working_settings.m_anim_points.m_speed, 1, 30, "Points Speed", "The delay before updating the number of points");
+            } else if (id == R.id.step_start) {
+                ShowIntegerDialog(CB_STEP_START, m_working_settings.m_anim_step.getStart(), 3, 100, "Starting Step", "The starting step size");
+            } else if (id == R.id.step_end) {
+                ShowIntegerDialog(CB_STEP_END, m_working_settings.m_anim_step.getEnd(), 3, 100, "End Step", "The last step size");
+            } else if (id == R.id.step_inc) {
+                ShowIntegerDialog(CB_STEP_INC, m_working_settings.m_anim_step.m_inc, 1, 7, "Step Increment", "The increment in the step size between patterns");
+            } else if (id == R.id.step_speed) {
+                ShowIntegerDialog(CB_STEP_SPEED, m_working_settings.m_anim_step.m_speed, 1, 30, "Step Speed", "The delay before updating the step size");
+            } else if (id == R.id.rep_start) {
+                ShowIntegerDialog(CB_REPEAT_START, m_working_settings.m_anim_repeats.getStart(), 1, 120, "Starting Repeat", "The starting number of repeats");
+            } else if (id == R.id.rep_end) {
+                ShowIntegerDialog(CB_REPEAT_END, m_working_settings.m_anim_repeats.getEnd(), 3, 120, "End Repeat", "The last number of repeats");
+            } else if (id == R.id.rep_inc) {
+                ShowIntegerDialog(CB_REPEAT_INC, m_working_settings.m_anim_repeats.m_inc, 1, 7, "Repeat Increment", "The increment in the number of repeats between patterns");
+            } else if (id == R.id.rep_speed) {
+                ShowIntegerDialog(CB_REPEAT_SPEED, m_working_settings.m_anim_repeats.m_speed, 1, 30, "Repeat change delay", "The delay before updating the number of repeats");
+            } else if (id == R.id.angle_start) {
+                ShowIntegerDialog(CB_ANGLE_START, m_working_settings.m_anim_angle.getStart(), 0, StarParameters.m_angles.length - 1, "Starting Angle", "The starting angle between repeats");
+            } else if (id == R.id.angle_end) {
+                ShowIntegerDialog(CB_ANGLE_END, m_working_settings.m_anim_angle.getEnd(), 0, StarParameters.m_angles.length - 1, "End Angle", "The last angle between repeats");
+            } else if (id == R.id.angle_inc) {
+                ShowIntegerDialog(CB_ANGLE_INC, m_working_settings.m_anim_angle.m_inc, 1, 7, "Angle Increment", "The increment in the angle between repeats");
+            } else if (id == R.id.angle_speed) {
+                ShowIntegerDialog(CB_ANGLE_SPEED, m_working_settings.m_anim_angle.m_speed, 1, 30, "Angle change delay", "The delay before updating the angle between repeats");
+            } else if (id == R.id.shrink_start) {
+                ShowIntegerDialog(CB_SHRINK_START, m_working_settings.m_anim_shrink.getStart(), 1, StarParameters.m_shrink_pc.length - 1, "Starting Shrinkage", "The starting shrinkage between repeats");
+            } else if (id == R.id.shrink_end) {
+                ShowIntegerDialog(CB_SHRINK_END, m_working_settings.m_anim_shrink.getEnd(), 3, StarParameters.m_shrink_pc.length - 1, "End Shrinkage", "The last shrinkage between repeats");
+            } else if (id == R.id.shrink_inc) {
+                ShowIntegerDialog(CB_SHRINK_INC, m_working_settings.m_anim_shrink.m_inc, 1, 7, "Shrinkage Increment", "The increment in the shrinkage between repeats");
+            } else if (id == R.id.shrink_speed) {
+                ShowIntegerDialog(CB_SHRINK_SPEED, m_working_settings.m_anim_shrink.m_speed, 1, 30, "Shrinkage change delay", "The delay before updating the shrinkage between repeats");
+            } else if (id == R.id.rotate_shape) {
+                m_working_settings.m_anim_rotate.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_rotate.m_shape);
+                show_rotate_shape();
+            } else if (id == R.id.points_shape) {
+                m_working_settings.m_anim_points.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_points.m_shape);
+                show_points_shape();
+            } else if (id == R.id.step_shape) {
+                m_working_settings.m_anim_step.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_step.m_shape);
+                show_step_shape();
+            } else if (id == R.id.rep_shape) {
+                m_working_settings.m_anim_repeats.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_repeats.m_shape);
+                show_repeat_shape();
+            } else if (id == R.id.angle_shape) {
+                m_working_settings.m_anim_angle.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_angle.m_shape);
+                show_angle_shape();
+            } else if (id == R.id.shrink_shape) {
+                m_working_settings.m_anim_shrink.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_shrink.m_shape);
+                show_shrink_shape();
+            } else if (id == R.id.back_colour_shape) {
+                m_working_settings.m_anim_background.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_background.m_shape);
+                show_back_colour_shape();
+            } else if (id == R.id.l1_colour_shape) {
+                m_working_settings.m_anim_line1.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_line1.m_shape);
+                show_l1_colour_shape();
+            } else if (id == R.id.l2_colour_shape) {
+                m_working_settings.m_anim_line2.m_shape = AnimationSettings.nextShape(m_working_settings.m_anim_line2.m_shape);
+                show_l2_colour_shape();
+            } else if (id == R.id.back_colour_speed) {
+                ShowIntegerDialog(CB_BACK_COLOUR_SPEED, m_working_settings.m_anim_background.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
+                show_back_colour_shape();
+            } else if (id == R.id.l1_colour_speed) {
+                ShowIntegerDialog(CB_L1_COLOUR_SPEED, m_working_settings.m_anim_line1.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
+                show_l1_colour_shape();
+            } else if (id == R.id.l2_colour_speed) {
+                ShowIntegerDialog(CB_L2_COLOUR_SPEED, m_working_settings.m_anim_line2.m_speed, 1, 30, "Colour change delay", "The delay between colour changes");
+                show_l2_colour_shape();
+            } else if (id == R.id.back_colour_start) {
+                ShowColourDialog(CB_BACKGROUND_COLOUR_START, m_working_settings.m_anim_background.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_back_descr));
+            } else if (id == R.id.back_colour_end) {
+                ShowColourDialog(CB_BACKGROUND_COLOUR_END, m_working_settings.m_anim_background.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_back_descr));
+            } else if (id == R.id.line1_colour_start) {
+                ShowColourDialog(CB_L1_COLOUR_START, m_working_settings.m_anim_line1.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_line1_descr));
+            } else if (id == R.id.line1_colour_end) {
+                ShowColourDialog(CB_L1_COLOUR_END, m_working_settings.m_anim_line1.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_line1_descr));
+            } else if (id == R.id.line2_colour_start) {
+                ShowColourDialog(CB_L2_COLOUR_START, m_working_settings.m_anim_line2.getStartColour(), getString(R.string.anim_start_colour), getString(R.string.anim_start_colour_line2_descr));
+            } else if (id == R.id.line2_colour_end) {
+                ShowColourDialog(CB_L2_COLOUR_END, m_working_settings.m_anim_line2.getEndColour(), getString(R.string.anim_end_colour), getString(R.string.anim_end_colour_line2_descr));
             }
         }
 

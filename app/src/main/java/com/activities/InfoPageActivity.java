@@ -58,20 +58,23 @@ public class InfoPageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handle clicks on the controls
+     */
     public class EventListener extends Activity implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.email_me:
-                    openURL(R.string.email_address);
-                    break;
-                case R.id.view_stars:
-                    openURL(R.string.stars_page_url);
-                    break;
-                case R.id.home_page:
-                    openURL(R.string.home_page_url);
-                    break;
+            int id = view.getId();
+
+            if (id == R.id.email_me){
+                openURL(R.string.email_address);
+            }
+            else if (id == R.id.view_stars){
+                openURL(R.string.stars_page_url);
+            }
+            else if (id == R.id.home_page){
+                openURL(R.string.home_page_url);
             }
         }
     }

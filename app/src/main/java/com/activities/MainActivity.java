@@ -33,12 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.button_stars:
-                    showStars();
-                    break;
+
+            int id = view.getId();
+
+            if (id == R.id.button_stars) {
+                showStars();
             }
         }
     }
 }
+
 
