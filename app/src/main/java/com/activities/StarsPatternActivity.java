@@ -42,8 +42,8 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     final int CB_LINECOLOUR2 = 8;
     final int CB_SETTINGS = 9;
 
-    StarSettings m_settings = new StarSettings ();
-    StarParameters m_params = new StarParameters (m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
+    StarSettings m_settings = new StarSettings();
+    StarParameters m_params = new StarParameters(m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
     boolean m_in_animation = false;
 
     EventListener m_listener = new StarsPatternActivity.EventListener();
@@ -60,17 +60,18 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     Runnable m_timer_runnable = new Runnable() {
         @Override
         public void run() {
-            animate ();
+            animate();
             m_timer_handler.postDelayed(this, 100);
-        }};
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null){
-            m_params.fromBundle (savedInstanceState);
-            m_settings.fromBundle (savedInstanceState);
+        if (savedInstanceState != null) {
+            m_params.fromBundle(savedInstanceState);
+            m_settings.fromBundle(savedInstanceState);
         }
 
         setContentView(R.layout.activity_stars_pattern);
@@ -89,9 +90,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_background = findViewById(R.id.layout_back_colour);
         m_layout_foreground1 = findViewById(R.id.layout_fore_colour1);
         m_layout_foreground2 = findViewById(R.id.layout_fore_colour2);
-        m_layout_background_text = (TextView)findViewById(R.id.text_backcolour);
-        m_layout_foreground1_text = (TextView)findViewById(R.id.text_forecolour1);
-        m_layout_foreground2_text = (TextView)findViewById(R.id.text_forecolour2);
+        m_layout_background_text = (TextView) findViewById(R.id.text_backcolour);
+        m_layout_foreground1_text = (TextView) findViewById(R.id.text_forecolour1);
+        m_layout_foreground2_text = (TextView) findViewById(R.id.text_forecolour2);
         m_pause_button = findViewById(R.id.pause_animation);
         m_resume_button = findViewById(R.id.resume_animation);
 
@@ -101,7 +102,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_pause_button.setOnClickListener(m_listener);
         m_resume_button.setOnClickListener(m_listener);
 
-        setAnimationState (false);
+        setAnimationState(false);
         Update();
     }
 
@@ -134,31 +135,29 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     /**
      * Start the timer events that drive the animation
      */
-    void startAnimation ()
-    {
+    void startAnimation() {
         m_timer_handler.postDelayed(m_timer_runnable, 0);
     }
 
     /**
      * Stop the timer events that drive the animation
      */
-    void stopAnimation ()
-    {
+    void stopAnimation() {
         m_timer_handler.removeCallbacks(m_timer_runnable);
     }
+
     /**
      * Update the animation flag to the new state and adjust the pause and play buttons accordingly
+     *
      * @param active The new animation state.
      */
-    void setAnimationState (boolean active)
-    {
+    void setAnimationState(boolean active) {
         m_in_animation = active;
 
-        if (m_in_animation){
+        if (m_in_animation) {
             m_resume_button.setVisibility(View.GONE);
             m_pause_button.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             m_pause_button.setVisibility(View.GONE);
             m_resume_button.setVisibility(View.VISIBLE);
         }
@@ -174,28 +173,30 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_in_animation = savedInstanceState.getBoolean("animate", m_in_animation);
 
         if (settings != null) {
-            m_settings.fromBundle (settings);
+            m_settings.fromBundle(settings);
         }
         if (params != null) {
-            m_params.fromBundle (params);
+            m_params.fromBundle(params);
         }
         Update();
     }
+
     /**
      * Redraw the controls and the image
      */
-    void Update () {
+    void Update() {
         setColours();
         showSettings();
         draw();
     }
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putBoolean("animate", m_in_animation);
-        outState.putBundle("params", m_params.toBundle ());
-        outState.putBundle("settings", m_settings.toBundle ());
+        outState.putBundle("params", m_params.toBundle());
+        outState.putBundle("settings", m_settings.toBundle());
     }
 
     void setColours() {
@@ -204,33 +205,30 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         m_layout_foreground1.setBackgroundColor(m_params.m_first_line);
         m_layout_foreground2.setBackgroundColor(m_params.m_last_line);
 
-        m_layout_background_text.setTextColor(ColourHelpers.GetContrastColour (m_params.m_background));
-        m_layout_foreground1_text.setTextColor(ColourHelpers.GetContrastColour (m_params.m_first_line));
-        m_layout_foreground2_text.setTextColor(ColourHelpers.GetContrastColour (m_params.m_last_line));
+        m_layout_background_text.setTextColor(ColourHelpers.GetContrastColour(m_params.m_background));
+        m_layout_foreground1_text.setTextColor(ColourHelpers.GetContrastColour(m_params.m_first_line));
+        m_layout_foreground2_text.setTextColor(ColourHelpers.GetContrastColour(m_params.m_last_line));
     }
 
-    void draw()
-    {
+    void draw() {
         // If we have just returned from an evolution this will recover the most recent generation
 
         StarParameters eparams = StarParameters.detachEvolutionParameters();
 
-        if (eparams != null)
-        {
+        if (eparams != null) {
             m_params = eparams;
         }
         ImageView img = findViewById(R.id.evolve_image);
-        m_params.draw (getResources(), img);
-        showSettings ();
+        m_params.draw(getResources(), img);
+        showSettings();
     }
 
-    private void share ()
-    {
+    private void share() {
         try {
             File cachePath = new File(this.getCacheDir(), "images");
             cachePath.mkdirs(); // don't forget to make the directory
             FileOutputStream stream = new FileOutputStream(cachePath + "/image.png"); // overwrites this image every time
-            m_params.bitmap ().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            m_params.bitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
             stream.close();
 
         } catch (IOException e) {
@@ -250,61 +248,64 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             startActivity(Intent.createChooser(shareIntent, "Choose an app"));
         }
     }
-    void showSettings ()
-    {
-        ((TextView)findViewById(R.id.text_n1)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n1));
-        ((TextView)findViewById(R.id.text_n2)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n2));
-        ((TextView)findViewById(R.id.text_n3)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n3));
-        ((TextView)findViewById(R.id.text_da)).setText(m_params.getAngleString());
-        ((TextView)findViewById(R.id.text_sh)).setText(m_params.getShrinkString());
+
+    void showSettings() {
+        ((TextView) findViewById(R.id.text_n1)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n1));
+        ((TextView) findViewById(R.id.text_n2)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n2));
+        ((TextView) findViewById(R.id.text_n3)).setText(String.format(Locale.getDefault(), "%d", m_params.m_n3));
+        ((TextView) findViewById(R.id.text_da)).setText(m_params.getAngleString());
+        ((TextView) findViewById(R.id.text_sh)).setText(m_params.getShrinkString());
     }
 
-    void animate ()
-    {
+    void animate() {
         if (m_params.animate(m_settings.m_animate)) {
             Update();
         }
     }
 
     /**
-     * Allows you to change the number of points aroundthe circle
+     * Allows you to change the number of points around the circle
      */
-    void onClickN1 () {
+    void onClickN1() {
         GetInteger dialog = GetInteger.construct(this, CB_N1, m_params.m_n1, 3, 101, 1, getString(R.string.star_n1_title), getString(R.string.star_n1_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
 
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
-    void onClickN2 () {
-        int max_n2 = m_params.m_n1/2;
+    void onClickN2() {
+        int max_n2 = m_params.m_n1 / 2;
         int n2 = (m_params.m_n2 > max_n2) ? 1 : max_n2;
         GetInteger dialog = GetInteger.construct(this, CB_N2, n2, 1, max_n2, 1, getString(R.string.star_n2_title), getString(R.string.star_n2_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
-    void onClickN3 () {
+    void onClickN3() {
         GetInteger dialog = GetInteger.construct(this, CB_N3, m_params.m_n3, 1, 120, 1, getString(R.string.star_n3_title), getString(R.string.star_n3_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
-    void onClickAngle () {
+    void onClickAngle() {
 
         GetInteger dialog = GetInteger.construct(this, CB_ANGLE, m_params.m_angle_idx, StarParameters.m_angle_str, getString(R.string.star_rotate_title), getString(R.string.star_angle_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     /**
      * Allows you to change the number of points moved for each vector in the star. '1' draws the base polygon.
      */
-    void onClickShrink () {
+    void onClickShrink() {
         GetInteger dialog = GetInteger.construct(this, CB_SHRINK, m_params.m_shrink_idx, StarParameters.m_shrink_str, getString(R.string.star_shrink_title), getString(R.string.star_shrink_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     /**
      * Change the pattern settings
      */
@@ -312,46 +313,65 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings);
         dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     /**
      * Allows you to change the background colour.
      */
-    void onClickBackColour () {
+    void onClickBackColour() {
         GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.star_background_title), getString(R.string.star_background_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     /**
      * Allows you to change the main line colour.
      */
-    void onClickLineColour1 () {
+    void onClickLineColour1() {
         GetColour dialog = GetColour.construct(this, CB_LINECOLOUR1, m_params.m_first_line, getString(R.string.star_first_colour_title), getString(R.string.star_first_colour_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     /**
      * Allows you to change the second line colour.
      */
-    void onClickLineColour2 () {
+    void onClickLineColour2() {
         GetColour dialog = GetColour.construct(this, CB_LINECOLOUR2, m_params.m_last_line, getString(R.string.star_last_colour_title), getString(R.string.star_last_colour_description));
-        dialog.show (getSupportFragmentManager(), "Hello");
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
+
     @Override
     public void SetInteger(int id, int value) {
-        switch (id)
-        {
-            case CB_N1: m_params.m_n1 = value; break;
-            case CB_N2: m_params.m_n2 = value; break;
-            case CB_N3: m_params.m_n3 = value; break;
-            case CB_ANGLE: m_params.m_angle_idx = value; break;
-            case CB_SHRINK: m_params.m_shrink_idx = value; break;
+        switch (id) {
+            case CB_N1:
+                m_params.m_n1 = value;
+                break;
+            case CB_N2:
+                m_params.m_n2 = value;
+                break;
+            case CB_N3:
+                m_params.m_n3 = value;
+                break;
+            case CB_ANGLE:
+                m_params.m_angle_idx = value;
+                break;
+            case CB_SHRINK:
+                m_params.m_shrink_idx = value;
+                break;
         }
         draw();
     }
+
     @Override
     public void SetColour(int id, int value) {
-        switch (id)
-        {
-            case CB_BACKCOLOUR: m_params.m_background = value; break;
-            case CB_LINECOLOUR1: m_params.m_first_line = value; break;
-            case CB_LINECOLOUR2: m_params.m_last_line = value; break;
+        switch (id) {
+            case CB_BACKCOLOUR:
+                m_params.m_background = value;
+                break;
+            case CB_LINECOLOUR1:
+                m_params.m_first_line = value;
+                break;
+            case CB_LINECOLOUR2:
+                m_params.m_last_line = value;
+                break;
         }
         setColours();
         draw();
@@ -367,8 +387,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         draw();
     }
 
-    void showInfoPage ()
-    {
+    void showInfoPage() {
         Intent intent = new Intent(this, InfoPageActivity.class);
 
         Bundle b = new Bundle();
@@ -379,8 +398,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         startActivity(intent);
     }
 
-    void showEvolvePage ()
-    {
+    void showEvolvePage() {
         Intent intent = new Intent(this, StarsEvolve.class);
         Bundle b = StarsEvolve.makeBundle(m_params);
         intent.putExtras(b);
@@ -391,57 +409,42 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.share_pattern:
-                    share();
-                    break;
-                case R.id.layout_n1:
-                    onClickN1();
-                    break;
-                case R.id.layout_n2:
-                    onClickN2();
-                    break;
-                case R.id.layout_n3:
-                    onClickN3();
-                    break;
-                case R.id.layout_angle:
-                    onClickAngle ();
-                    break;
-                case R.id.layout_shrink:
-                    onClickShrink ();
-                    break;
-                case R.id.random_picture:
-                    m_params.Randomise (m_settings.m_random);
-                    Update ();
-                    break;
-                case R.id.evolve_star:
-                    showEvolvePage();
-                    break;
-                case R.id.edit_settings:
-                    onClickSettings ();
-                    break;
-                case R.id.layout_back_colour:
-                    onClickBackColour ();
-                    break;
-                case R.id.layout_fore_colour1:
-                    onClickLineColour1 ();
-                    break;
-                case R.id.layout_fore_colour2:
-                    onClickLineColour2 ();
-                    break;
-                case R.id.app_info:
-                    showInfoPage();
-                    break;
-                case R.id.pause_animation:
-                    stopAnimation ();
-                    setAnimationState (false);
-                    break;
-                case R.id.resume_animation:
-                    startAnimation ();
-                    setAnimationState (true);
-                    break;
+            int id = view.getId();
+
+            if (id == R.id.share_pattern) {
+                share();
+            } else if (id == R.id.layout_n1) {
+                onClickN1();
+            } else if (id == R.id.layout_n2) {
+                onClickN2();
+            } else if (id == R.id.layout_n3) {
+                onClickN3();
+            } else if (id == R.id.layout_angle) {
+                onClickAngle();
+            } else if (id == R.id.layout_shrink) {
+                onClickShrink();
+            } else if (id == R.id.random_picture) {
+                m_params.Randomise(m_settings.m_random);
+                Update();
+            } else if (id == R.id.evolve_star) {
+                showEvolvePage();
+            } else if (id == R.id.edit_settings) {
+                onClickSettings();
+            } else if (id == R.id.layout_back_colour) {
+                onClickBackColour();
+            } else if (id == R.id.layout_fore_colour1) {
+                onClickLineColour1();
+            } else if (id == R.id.layout_fore_colour2) {
+                onClickLineColour2();
+            } else if (id == R.id.app_info) {
+                showInfoPage();
+            } else if (id == R.id.pause_animation) {
+                stopAnimation();
+                setAnimationState(false);
+            } else if (id == R.id.resume_animation) {
+                startAnimation();
+                setAnimationState(true);
             }
         }
     }
-
 }

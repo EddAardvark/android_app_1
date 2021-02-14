@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tutorialapp.R;
 import com.google.android.material.tabs.TabLayout;
+import com.misc.MessageBox;
 import com.patterns.AnimateSet;
 import com.patterns.PatternSet;
 import com.patterns.RandomSet;
@@ -28,6 +29,7 @@ public class ManageStarSettings extends DialogFragment {
     public interface Result {
         abstract void UpdateStarSettings(PatternSet ps, RandomSet rs, AnimateSet as);
     }
+    DialogFragment m_Showing = null;
 
     ManageStarSettings.EventListener m_listener = new ManageStarSettings.EventListener();
     ManageStarSettings.Result m_result;
@@ -39,8 +41,19 @@ public class ManageStarSettings extends DialogFragment {
 
     int m_id;
 
+    /**
+     * Seems to be required for rotation handling, without this the app will crash with MethodNotFoundExtension
+     * However, the dialog is now useless as the callback interface in m_result no longer exists. I can keep the instance
+     * alive by storing the reference statically, but it no longer points to the active instance of the called,
+     * which has been recreated during the rotation, so we just need to make the dialog disappear.
+     */
+    public ManageStarSettings (){
+
+    }
+
     ManageStarSettings(ManageStarSettings.Result res, int id) {
 
+        m_Showing = this;
         m_id = id;
         m_result = res;
     }
@@ -83,7 +96,7 @@ public class ManageStarSettings extends DialogFragment {
 
         Dialog dialog = this.getDialog();
 
-        ((TabLayout)dialog.findViewById(R.id.star_settings_tabs)).addOnTabSelectedListener((TabLayout.BaseOnTabSelectedListener) m_listener);
+        ((TabLayout)dialog.findViewById(R.id.star_settings_tabs)).addOnTabSelectedListener((TabLayout.OnTabSelectedListener) m_listener);
         dialog.findViewById(R.id.ok_button).setOnClickListener(m_listener);
         dialog.findViewById(R.id.cancel_button).setOnClickListener(m_listener);
 
@@ -132,17 +145,23 @@ public class ManageStarSettings extends DialogFragment {
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.cancel_button:
-                    dismiss ();
-                    break;
-                case R.id.ok_button:
-                    if (m_animation_fragment.onAccept () && m_pattern_fragment.onAccept() && m_randomiser_fragment.onAccept ()) {
-                        dismiss ();
+            int id = view.getId();
 
-                        m_result.UpdateStarSettings(m_pattern_fragment.getResult(), m_randomiser_fragment.getResult(), m_animation_fragment.getResult());
-                    }
-                    break;
+            if (id == R.id.cancel_button) {
+                dismiss();
+            }
+            else if (id == R.id.ok_button) {
+
+                if (m_result == null) {
+                    MessageBox.showOK(getActivity(), "No owner", "This dialog no longer has an owner, possibly because a screen rotate has disconnected it", "OK");
+                    dismiss();
+                    return;
+                }
+                if (m_animation_fragment.onAccept() && m_pattern_fragment.onAccept() && m_randomiser_fragment.onAccept()) {
+                    dismiss();
+
+                    m_result.UpdateStarSettings(m_pattern_fragment.getResult(), m_randomiser_fragment.getResult(), m_animation_fragment.getResult());
+                }
             }
         }
 
