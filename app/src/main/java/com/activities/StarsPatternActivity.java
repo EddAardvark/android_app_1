@@ -17,7 +17,7 @@ import android.graphics.Bitmap;
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.dialogs.ManageStarSettings;
-import com.example.tutorialapp.R;
+import com.example.JWPatterns.R;
 import com.misc.ColourHelpers;
 import com.patterns.AnimateSet;
 import com.patterns.PatternSet;

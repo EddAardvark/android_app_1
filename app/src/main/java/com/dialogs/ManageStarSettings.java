@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.tutorialapp.R;
+import com.example.JWPatterns.R;
 import com.google.android.material.tabs.TabLayout;
 import com.misc.MessageBox;
 import com.patterns.AnimateSet;

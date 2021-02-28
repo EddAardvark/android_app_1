@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.graphics.Color;
 
@@ -15,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.tutorialapp.R;
+import com.example.JWPatterns.R;
 import com.misc.MessageBox;
 
 public class GetColour extends DialogFragment {
@@ -30,7 +28,7 @@ public class GetColour extends DialogFragment {
 
     GetColour.Result m_result;
     int m_id;
-    int m_granularty = 16;  ///< granularity in the colour component picker
+    int m_granularity = 16;  ///< granularity in the colour component picker
 
     NumberPicker m_RedPicker;
     NumberPicker m_GreenPicker;
@@ -104,16 +102,16 @@ public class GetColour extends DialogFragment {
         m_BluePicker = (NumberPicker) dialog.findViewById(R.id.set_blue);
 
         m_RedPicker.setMinValue(0);
-        m_RedPicker.setMaxValue(256/m_granularty);
-        m_RedPicker.setValue(((m_red == 255) ? 256 : m_red)/m_granularty);
+        m_RedPicker.setMaxValue(256/ m_granularity);
+        m_RedPicker.setValue(((m_red == 255) ? 256 : m_red)/ m_granularity);
 
         m_GreenPicker.setMinValue(0);
-        m_GreenPicker.setMaxValue(256/m_granularty);
-        m_GreenPicker.setValue(((m_green == 255) ? 256 : m_green)/m_granularty);
+        m_GreenPicker.setMaxValue(256/ m_granularity);
+        m_GreenPicker.setValue(((m_green == 255) ? 256 : m_green)/ m_granularity);
 
         m_BluePicker.setMinValue(0);
-        m_BluePicker.setMaxValue(256/m_granularty);
-        m_BluePicker.setValue(((m_blue == 255) ? 256 : m_blue)/m_granularty);
+        m_BluePicker.setMaxValue(256/ m_granularity);
+        m_BluePicker.setValue(((m_blue == 255) ? 256 : m_blue)/ m_granularity);
 
         m_RedPicker.setOnValueChangedListener(m_number_change);
         m_GreenPicker.setOnValueChangedListener(m_number_change);
@@ -158,11 +156,11 @@ public class GetColour extends DialogFragment {
             int id = picker.getId();
 
             if (id == R.id.set_red) {
-                m_red = Math.min(newVal * m_granularty, 255);
+                m_red = Math.min(newVal * m_granularity, 255);
             } else if (id == R.id.set_green) {
-                m_green = Math.min(newVal * m_granularty, 255);
+                m_green = Math.min(newVal * m_granularity, 255);
             } else if (id == R.id.set_blue) {
-                m_blue = Math.min(newVal * m_granularty, 255);
+                m_blue = Math.min(newVal * m_granularity, 255);
             }
             setColour();
         }

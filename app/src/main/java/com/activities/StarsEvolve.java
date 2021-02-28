@@ -12,12 +12,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.tutorialapp.R;
+import com.example.JWPatterns.R;
 import com.patterns.StarParameters;
 
 import java.util.Random;
@@ -164,28 +163,19 @@ public class StarsEvolve extends AppCompatActivity {
 
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:   // first finger down only
-                    Log.d("Motion", "mode=ACTION_DOWN"); // write to LogCat
                     get_pos(v, event);
                     break;
 
                 case MotionEvent.ACTION_UP: // first finger lifted
-
-                    Log.d("Motion", "mode=ACTION_UP"); // write to LogCat
                     break;
 
                 case MotionEvent.ACTION_POINTER_UP: // second finger lifted
-
-                    Log.d("Motion", "mode=ACTION_POINTER_UP");
                     break;
 
                 case MotionEvent.ACTION_POINTER_DOWN: // first and second finger down
-
-                    Log.d("Motion", "mode=ZOOM");
                     break;
 
                 case MotionEvent.ACTION_MOVE:
-
-                    Log.d("Motion", "mode=MOVE");
                     break;
             }
 

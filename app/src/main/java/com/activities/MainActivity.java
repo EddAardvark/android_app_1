@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.tutorialapp.R;
+import com.example.JWPatterns.R;
 
 public class MainActivity extends AppCompatActivity {
 

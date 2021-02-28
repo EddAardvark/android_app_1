@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
-import com.example.tutorialapp.R;
+import com.example.JWPatterns.R;
 import com.misc.AnimationSettings;
 
 /**

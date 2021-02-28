@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.tutorialapp.R;
+import com.example.JWPatterns.R;
 
 public class InfoPageActivity extends AppCompatActivity {
 
