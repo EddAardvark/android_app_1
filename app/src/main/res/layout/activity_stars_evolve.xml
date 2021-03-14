@@ -21,7 +21,7 @@
 
 
     <ImageView
-        android:id="@+id/evolve_image"
+        android:id="@+id/main_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/spacing_medium"

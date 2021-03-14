@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.misc.ColourHelpers;
+import com.misc.Drawing;
 import com.misc.MyMath;
 
 import java.io.Serializable;
@@ -254,33 +255,19 @@ public class StarParameters {
     }
 
     /**
-     * Colour a rectangle using this patterns background colour
-     * @param paint
-     * @param rect
-     */
-    public void draw_background(Paint paint, Canvas canvas, Rect rect){
-
-        paint.setColor(m_background);
-        paint.setStyle(Paint.Style.FILL);
-
-        canvas.drawRect(rect, paint);
-    }
-    /**
      * Draws the pattern using the current parameters, this version manages it's own bitmap and image size.
-     * @param resources
-     * @param img
      */
     public void draw(Resources resources, ImageView img) {
 
         Rect rect = new Rect(0, 0, m_width, m_height);
-        Canvas canvas = new Canvas(m_bmp);
-        Paint paint = new Paint();
+        Drawing drawing = new Drawing(m_bmp);
         double xc = m_width * 0.5;
         double yc = m_height * 0.5;
         double r = m_height * 0.48;
 
-        draw_background(paint, canvas, rect);
-        draw(paint, canvas, xc, yc, r);
+        drawing.fill_rect (rect, m_background);
+
+        draw(drawing, xc, yc, r);
 
         int h = m_height/40;
 
@@ -289,26 +276,18 @@ public class StarParameters {
             int colour = ColourHelpers.GetContrastColour (m_background);
             int m = m_height/80;
 
-            paint.setColor(colour);
-            paint.setTextSize(h);
-            paint.setTextAlign(Paint.Align.LEFT);
-
             String star = "(" + m_n1 + "," + m_n2 + ")";
 
-            canvas.drawText(star, m, h + m, paint);
+            drawing.draw_text(star, h, m, h + m, colour);
 
             if (m_n3 > 1) {
 
-                paint.setTextAlign(Paint.Align.RIGHT);
                 String settings = Integer.toString(m_n3) + " x " + getAngleString() + " x " + getShrinkString();
-                canvas.drawText(settings, m_width - m, h + m, paint);
-                paint.setTextAlign(Paint.Align.LEFT);
+                drawing.draw_text_right(settings, h, m_width - m, h + m);
             }
 
             colour = ColourHelpers.MakeTransparent(colour, 0.5);
-            paint.setTextSize((int)(h * 1.3));
-            paint.setColor(colour);
-            canvas.drawText("www.eddaardvark.co.uk", m, m_height - m, paint);
+            drawing.draw_text_right("www.eddaardvark.co.uk", h, m, m_height - m);
         }
 
         // Render
@@ -318,33 +297,29 @@ public class StarParameters {
     /**
      * Draws the pattern using the current parameters, this version draws into a canvas owned by the caller
      * which may already have some conten.
-     * @param resources
-     * @param img
      */
-    public void draw(Paint paint, Canvas canvas, double xc, double yc, double r) {
+    public void draw(Drawing drawing, double xc, double yc, double r) {
 
         switch (m_colouring_mode) {
             case BOTH:
-                DrawBoth(paint, canvas, xc, yc, r);
+                DrawBoth(drawing, xc, yc, r);
                 break;
             case INWARDS:
-                DrawInwards(paint, canvas, xc, yc, r);
+                DrawInwards(drawing, xc, yc, r);
                 break;
             case AROUND:
-                DrawAround(paint, canvas, xc, yc, r);
+                DrawAround(drawing, xc, yc, r);
                 break;
             case ALTERNATE:
-                DrawAlternate(paint, canvas, xc, yc, r);
+                DrawAlternate(drawing, xc, yc, r);
                 break;
         }
     }
 
     /**
      * Colour progresses from the first colour to the second as we move inwards
-     * @param paint
-     * @param canvas
      */
-    void DrawInwards(Paint paint, Canvas canvas, double xc, double yc, double r) {
+    void DrawInwards(Drawing drawing, double xc, double yc, double r) {
 
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
@@ -360,7 +335,7 @@ public class StarParameters {
             double y0 = yc + r * s;
             double f = (m_n3 > 1) ? 1.0 - (double) j / (m_n3 - 1) : 1.0;
 
-            paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
+            drawing.set_colour(ColourHelpers.Blend(m_first_line, m_last_line, f));
 
             for (int i = 0; i <= m_n1; i++) {
                 n += m_n2;
@@ -368,7 +343,7 @@ public class StarParameters {
                 double y = Math.sin(n * theta);
                 double x1 = xc + r * (c * x + s * y);
                 double y1 = yc + r * (s * x - c * y);
-                canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
+                drawing.draw_line(x0, y0, x1, y1);
                 x0 = x1;
                 y0 = y1;
             }
@@ -378,10 +353,8 @@ public class StarParameters {
 
     /**
      * Colour advances as we move around the pattern
-     * @param paint
-     * @param canvas
      */
-    void DrawAround (Paint paint, Canvas canvas, double xc, double yc, double r) {
+    void DrawAround (Drawing drawing, double xc, double yc, double r) {
 
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
@@ -412,14 +385,14 @@ public class StarParameters {
 
             for (int i = 0; i < m_n1; i++) {
 
-                paint.setColor(colours.get(i));
+                drawing.set_colour(colours.get(i));
 
                 n += m_n2;
                 double x = Math.cos(n * theta);
                 double y = Math.sin(n * theta);
                 double x1 = xc + r * (c * x + s * y);
                 double y1 = yc + r * (s * x - c * y);
-                canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
+                drawing.draw_line(x0, y0, x1, y1);
                 x0 = x1;
                 y0 = y1;
             }
@@ -429,10 +402,8 @@ public class StarParameters {
 
     /**
      * Colours alternate
-     * @param paint
-     * @param canvas
      */
-    void DrawAlternate (Paint paint, Canvas canvas, double xc, double yc, double r) {
+    void DrawAlternate (Drawing drawing, double xc, double yc, double r) {
 
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
@@ -462,14 +433,14 @@ public class StarParameters {
 
             for (int i = 0; i < m_n1; i++) {
 
-                paint.setColor(colours.get(i));
+                drawing.set_colour(colours.get(i));
 
                 n += m_n2;
                 double x = Math.cos(n * theta);
                 double y = Math.sin(n * theta);
                 double x1 = xc + r * (c * x + s * y);
                 double y1 = yc + r * (s * x - c * y);
-                canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
+                drawing.draw_line(x0, y0, x1, y1);
                 x0 = x1;
                 y0 = y1;
             }
@@ -479,10 +450,8 @@ public class StarParameters {
 
     /**
      * Colours Advance then retreat
-     * @param paint
-     * @param canvas
      */
-    void DrawBoth (Paint paint, Canvas canvas, double xc, double yc, double r) {
+    void DrawBoth (Drawing drawing, double xc, double yc, double r) {
 
         double theta = Math.PI * 2 / m_n1;
         double rotate = Math.PI * m_angles[m_angle_idx] / 180;
@@ -500,7 +469,7 @@ public class StarParameters {
 
             f = (f < 0.5) ? (2 * f) : (2 - 2 * f);
 
-            paint.setColor(ColourHelpers.Blend(m_first_line, m_last_line, f));
+            drawing.set_colour(ColourHelpers.Blend(m_first_line, m_last_line, f));
 
             for (int i = 0; i <= m_n1; i++) {
                 n += m_n2;
@@ -508,7 +477,7 @@ public class StarParameters {
                 double y = Math.sin(n * theta);
                 double x1 = xc + r * (c * x + s * y);
                 double y1 = yc + r * (s * x - c * y);
-                canvas.drawLine((float) x0, (float) y0, (float) x1, (float) y1, paint);
+                drawing.draw_line(x0, y0, x1, y1);
                 x0 = x1;
                 y0 = y1;
             }

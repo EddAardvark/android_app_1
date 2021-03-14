@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.usage.UsageEvents;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.JWPatterns.R;
+import com.misc.Drawing;
 import com.patterns.StarParameters;
 
 import java.util.Random;
@@ -50,7 +50,7 @@ public class StarsEvolve extends AppCompatActivity {
 
         fromBundle(getIntent().getExtras());
 
-        m_evolve_view = findViewById(R.id.evolve_image);
+        m_evolve_view = findViewById(R.id.main_image);
 
         m_evolve_view.setOnClickListener(m_listener);
         m_evolve_view.setOnTouchListener(m_listener);
@@ -115,20 +115,15 @@ public class StarsEvolve extends AppCompatActivity {
         fromBundle(b);
         draw();
     }
-
     /**
      * Draws all 9 images into the same bitmap
      */
     void draw() {
 
         Rect rect = new Rect(0, 0, m_width, m_height);
-        Canvas canvas = new Canvas(m_bmp);
-        Paint paint = new Paint();
+        Drawing drawing = new Drawing (m_bmp);
 
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.FILL);
-
-        canvas.drawRect(rect, paint);
+        drawing.fill_rect (rect, Color.WHITE);
 
         for (int i = 0; i < 9; ++i) {
             int x0 = m_cell_width * (i % m_grid);
@@ -137,8 +132,8 @@ public class StarsEvolve extends AppCompatActivity {
             int yc = y0 + m_cell_height / 2;
 
             Rect rect2 = new Rect(x0, y0, x0 + m_cell_width, y0 + m_cell_height);
-            m_params[i].draw_background(paint, canvas, rect2);
-            m_params[i].draw(paint, canvas, xc, yc, m_radius);
+            drawing.fill_rect(rect2, m_params[i].m_background);
+            m_params[i].draw(drawing, xc, yc, m_radius);
         }
 
         m_evolve_view.setImageDrawable(new BitmapDrawable(getResources(), m_bmp));

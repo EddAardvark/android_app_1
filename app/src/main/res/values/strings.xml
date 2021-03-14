@@ -107,4 +107,11 @@
         Click on the pattern you like best and the algorithm will generate a new set, each with one attribute changed.
         Repeat this process and the patterns will converge on the ones you like.
     </string>
+    <string name="tiles_label">Tiles</string>
+    <string name="tiles_page_label">Tiles Pattern</string>
+    <string name="tile_template">Template</string>
+    <string name="tiles_image_text">The generated pattern will appear here</string>
+    <string name="colour_template">Click to change colours</string>
+    <string name="tile_colour">Tile colour</string>
+    <string name="tile_colour_description">Choose a colour for the selected tile</string>
 </resources>
