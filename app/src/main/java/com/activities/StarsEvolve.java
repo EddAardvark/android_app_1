@@ -156,6 +156,8 @@ public class StarsEvolve extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
+            v.performClick();
+
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:   // first finger down only
                     get_pos(v, event);

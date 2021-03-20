@@ -11,4 +11,6 @@
     <dimen name="square_button_size">64dp</dimen>
     <dimen name="colour_button_w">64dp</dimen>
     <dimen name="colour_button_h">32dp</dimen>
+    <dimen name="tile_template_height">120dp</dimen>
+    <dimen name="tile_template_width">300dp</dimen>
 </resources>

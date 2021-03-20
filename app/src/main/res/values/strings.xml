@@ -114,4 +114,5 @@
     <string name="colour_template">Click to change colours</string>
     <string name="tile_colour">Tile colour</string>
     <string name="tile_colour_description">Choose a colour for the selected tile</string>
+    <string name="back_one">Go back one transform</string>
 </resources>

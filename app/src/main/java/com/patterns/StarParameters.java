@@ -40,7 +40,6 @@ public class StarParameters {
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
 
     public ColouringMode m_colouring_mode = ColouringMode.INWARDS;
-    public int m_bitmap_size = 800;
 
     final static int IDX_N1 = 0;
     final static int IDX_N2 = 1;

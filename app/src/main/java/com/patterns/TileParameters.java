@@ -35,12 +35,22 @@ import java.util.Random;
 
 public class TileParameters {
 
-    final static int KEY_BACKGROUND = 1;
+    final static int SIZE0 = 2;
+
+    final static String KEY_T1 = "t1";
+    final static String KEY_T2 = "t2";
+    final static String KEY_T3 = "t3";
+    final static String KEY_T4 = "t4";
+    final static String KEY_C1 = "c1";
+    final static String KEY_C2 = "c2";
+    final static String KEY_C3 = "c3";
+    final static String KEY_C4 = "c4";
+    final static String KEY_BG = "bg";
+    final static String KEY_CODE = "cd";
 
     int m_background = Color.WHITE;      ///< Background colour
-    int [] m_colour_map = { Color.BLACK, Color.BLUE, Color.BLUE, Color.BLACK };
-    int [] m_template = { 1, 2, 3, 4 };
-    int m_size = 2;
+    int [] m_colour_map = { Color.BLACK, Color.BLACK, Color.BLACK, Color.RED };
+    int [] m_template = { 2, 7, 1, 6 };
     Element[][] m_pattern;
 
     String m_code = "";
@@ -89,65 +99,65 @@ public class TileParameters {
      * One of the elements in the pattern or template
      */
     class Element {
-        int draw;
+        int idx;
         int colour;
 
-        Element(int idx, int col) {
-            draw = idx;
+        Element(int ix, int col) {
+            idx = ix;
             colour = col;
         }
 
         Element Copy() {
-            return new Element(draw, colour);
+            return new Element(idx, colour);
         }
 
         /**
          * Construct a new element by rotating this one 90 degrees
          */
         Element Rotate90() {
-            return new Element(Rotate90[draw], colour);
+            return new Element(Rotate90[idx], colour);
         }
 
         /**
          * Construct a new element by rotating this one 180 degrees
          */
         Element Rotate180() {
-            return new Element(Rotate180[draw], colour);
+            return new Element(Rotate180[idx], colour);
         }
 
         /**
          * Construct a new element by rotating this one 270 degrees
          */
         Element Rotate270() {
-            return new Element(Rotate270[draw], colour);
+            return new Element(Rotate270[idx], colour);
         }
 
         /**
          * Construct a new element by reflecting this one in the X axis
          */
         Element ReflectX() {
-            return new Element(ReflectX[draw], colour);
+            return new Element(ReflectX[idx], colour);
         }
 
         /**
          * Construct a new element by reflecting this one in the Y axis
          */
         Element ReflectY() {
-            return new Element(ReflectY[draw], colour);
+            return new Element(ReflectY[idx], colour);
         }
 
         /**
          * Construct a new element by reflecting this one in the X and Y axes (same as rotate 180)
          */
         Element ReflectXY() {
-            return new Element(Rotate180[draw], colour);
+            return new Element(Rotate180[idx], colour);
         }
 
         /**
          * Construct a new element by inverting this one (swaps foreground and background)
          */
         Element Invert() {
-            return new Element(Invert[draw], colour);
+            return new Element(Invert[idx], colour);
         }
     }
     //=============================================================================================
@@ -203,15 +213,16 @@ public class TileParameters {
      * @param colours
      */
     void MakeRandom(int type, int[] colours) {
-        m_size = 2;
-        m_pattern = new Element[m_size][];
+
+        int size = m_pattern.length;
+        m_pattern = new Element[size][];
 
         int[] shape_list = cell_types[type];
 
-        for (int x = 0; x < m_size; ++x) {
-            m_pattern[x] = new Element[m_size];
+        for (int x = 0; x < size; ++x) {
+            m_pattern[x] = new Element[size];
 
-            for (int y = 0; y < m_size; ++y) {
+            for (int y = 0; y < size; ++y) {
                 int c = (colours != null) ? colours[2 * x + y] : Color.BLACK;
                 int r = m_random.nextInt(shape_list.length);
                 m_pattern[x][y] = new Element(r, c);
@@ -223,22 +234,20 @@ public class TileParameters {
     //-----------------------------------------------------------------------------------------------------
     void MakeCustom(Element[] elements) {
 
-        m_size = 2;
-        m_pattern = new Element[m_size][];
+        m_pattern = new Element[SIZE0][];
 
         int idx = 0;
 
-        for (int x = 0; x < m_size; ++x) {
-            m_pattern[x] = new Element[m_size];
+        for (int x = 0; x < SIZE0; ++x) {
+            m_pattern[x] = new Element[SIZE0];
 
-            for (int y = 0; y < m_size; ++y) {
+            for (int y = 0; y < SIZE0; ++y) {
                 m_pattern[x][y] = elements[idx].Copy();
                 ++idx;
             }
         }
         m_code = "";
     }
-
     /**
      * Draws the pattern using the current parameters, this version manages it's own bitmap and image size.
      * @param resources
@@ -265,10 +274,10 @@ public class TileParameters {
 
         drawing.fill_rect (rect, Color.WHITE);
 
-        draw_element_at (drawing, m_template[0], Color.BLACK, 0, 0, 128);
-        draw_element_at (drawing, m_template[1], Color.BLACK, 0, 128, 128);
-        draw_element_at (drawing, m_template[2], Color.BLACK, 128, 0, 128);
-        draw_element_at (drawing, m_template[3], Color.BLACK, 128, 128, 128);
+        draw_element_at (drawing, m_template[0], m_colour_map[0], 0, 0, 128);
+        draw_element_at (drawing, m_template[1], m_colour_map[1], 0, 128, 128);
+        draw_element_at (drawing, m_template[2], m_colour_map[2], 128, 0, 128);
+        draw_element_at (drawing, m_template[3], m_colour_map[3], 128, 128, 128);
 
         img.setImageDrawable(new BitmapDrawable(resources, m_bmp_template));
     }
@@ -285,29 +294,66 @@ public class TileParameters {
 
         img.setImageDrawable(new BitmapDrawable(resources, m_bmp_colour));
     }
+    /**
+     * Draws the colour template
+     */
+    public void draw_transform_map(Resources resources, ImageView img) {
+
+        Element [][] temp = m_pattern;
+        String code = m_code;
+
+        Bitmap bmp = Bitmap.createBitmap(640, 256, Bitmap.Config.RGB_565);
+        Drawing drawing = new Drawing(bmp);
+
+        Rect rect = new Rect(0, 0, 640, 256);
+        drawing.fill_rect(rect, Color.GRAY);
+
+        for (int i = 0 ; i < 10 ; ++i) {
+            char op = "FGHIJABCDE".charAt(i);
+
+            int ix = 6 + 128 * (i % 5);
+            int iy = 6 + 128 * (int) (i / 5);
+
+            Initialise ();
+            m_code = "";
+            ExpandFromCode(op);
+
+            rect = new Rect(ix, iy, ix + 116, iy + 116);
+            draw_at (drawing, rect, m_pattern);
+        }
+
+        img.setImageDrawable(new BitmapDrawable(resources, bmp));
+        m_pattern = temp;
+        m_code = code;
+    }
 
     //-----------------------------------------------------------------------------------------------------
     void Draw(Drawing drawing) {
 
         Rect rect = new Rect(0, 0, m_width, m_height);
-        float w = m_width;
-        float h = m_height;
-        float dx = (w - 2 * MARGIN) / m_size;
-        float dy = (h - 2 * MARGIN) / m_size;
+        draw_at (drawing, rect, m_pattern);
+    }
+    //-----------------------------------------------------------------------------------------------------
+    void draw_at (Drawing drawing, Rect rect, Element [][] pattern) {
+
+        int size = pattern.length;
+        float w =rect.width();
+        float h = rect.height();
+        float dx = w / size;
+        float dy = h / size;
         float len = Math.min(dx, dy);
-        float x0 = (w - m_size * len) / 2;
-        float y0 = (h - m_size * len) / 2;
+        float x0 = rect.left;
+        float y0 = rect.top;
 
         drawing.fill_rect (rect, m_background);
 
-        for (int x = 0; x < m_size; ++x) {
-            for (int y = 0; y < m_size; ++y) {
-                Element e = m_pattern[x][y];
-                draw_element_at (drawing, e.draw, e.colour, x0 + x * len, y0 + y * len, len);
+        for (int x = 0; x < size; ++x) {
+            for (int y = 0; y < size; ++y) {
+                Element e = pattern[x][y];
+                draw_element_at (drawing, e.idx, e.colour, x0 + x * len, y0 + y * len, len);
             }
         }
     }
-
     //-----------------------------------------------------------------------------------------------------
     void draw_element_at(Drawing drawing, int idx, int colour, float x, float y, float size) {
 
@@ -328,8 +374,7 @@ public class TileParameters {
      */
     void Initialise ()
     {
-        m_size = 2;
-        m_pattern = new Element[2][];
+        m_pattern = new Element[SIZE0][];
 
         int n = 0;
 
@@ -343,8 +388,11 @@ public class TileParameters {
     }
     //-----------------------------------------------------------------------------------------------------
     void ApplyCode () {
-        for (int i = 0; i < m_code.length(); i++) {
-            ExpandFromCode(m_code.charAt(i));
+        String s = m_code;
+        m_code = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            ExpandFromCode(s.charAt(i));
         }
     }
     //-----------------------------------------------------------------------------------------------------
@@ -385,43 +433,44 @@ public class TileParameters {
     //-----------------------------------------------------------------------------------------------------
     void ExpandSlide() {
 
-        Element[][] new_pattern = new Element[2 * m_size][];
+        int size = m_pattern.length;
+        Element[][] new_pattern = new Element[2 * size][];
 
-        for (int x = 0; x < 2 * m_size; ++x) {
-            new_pattern[x] = new Element[2 * m_size];
+        for (int x = 0; x < 2 * size; ++x) {
+            new_pattern[x] = new Element[2 * size];
         }
 
-        for (int x = 0; x < m_size; ++x) {
-            for (int y = 0; y < m_size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            for (int y = 0; y < size; ++y) {
                 new_pattern[x][y] = m_pattern[x][y].Copy();
-                new_pattern[m_size + x][y] = m_pattern[x][y].Copy();
-                new_pattern[m_size + x][m_size + y] = m_pattern[x][y].Copy();
-                new_pattern[x][m_size + y] = m_pattern[x][y].Copy();
+                new_pattern[size + x][y] = m_pattern[x][y].Copy();
+                new_pattern[size + x][size + y] = m_pattern[x][y].Copy();
+                new_pattern[x][size + y] = m_pattern[x][y].Copy();
             }
         }
 
         m_pattern = new_pattern;
-        m_size *= 2;
     }
 //-----------------------------------------------------------------------------------------------------
     void ExpandInvert_X (){
-        Element[][] new_pattern = new Element[2 * m_size][];
 
-        for (int x = 0; x < 2 * m_size; ++x) {
-            new_pattern[x] = new Element[2 * m_size];
+        int size = m_pattern.length;
+        Element[][] new_pattern = new Element[2 * size][];
+
+        for (int x = 0; x < 2 * size; ++x) {
+            new_pattern[x] = new Element[2 * size];
         }
 
-        for (int x = 0; x < m_size; ++x) {
-            for (int y = 0; y < m_size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            for (int y = 0; y < size; ++y) {
                 new_pattern[x][y] = m_pattern[x][y].Copy();
-                new_pattern[m_size + x][m_size + y] = m_pattern[x][y].Copy();
-                new_pattern[m_size + x][y] = m_pattern[x][y].Invert();
-                new_pattern[x][m_size + y] = m_pattern[x][y].Invert();
+                new_pattern[size + x][size + y] = m_pattern[x][y].Copy();
+                new_pattern[size + x][y] = m_pattern[x][y].Invert();
+                new_pattern[x][size + y] = m_pattern[x][y].Invert();
             }
         }
 
         m_pattern = new_pattern;
-        m_size *= 2;
     }
 //-----------------------------------------------------------------------------------------------------
     void ExpandInvert ()
@@ -430,26 +479,27 @@ public class TileParameters {
         InvertCorners();
     }
 //-----------------------------------------------------------------------------------------------------
-    void ExpandRotate90 ()
-    {
-        Element[][] new_pattern = new Element[2 * m_size][];
+    void ExpandRotate90 () {
 
-        for (int x = 0; x < 2 * m_size; ++x) {
-            new_pattern[x] = new Element[2 * m_size];
+        int size = m_pattern.length;
+        Element[][] new_pattern = new Element[2 * size][];
+
+        for (int x = 0; x < 2 * size; ++x) {
+            new_pattern[x] = new Element[2 * size];
         }
 
-        int n = m_size - 1;
+        int n = size - 1;
 
-        for (int x = 0; x < m_size; ++x) {
-            for (int y = 0; y < m_size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            for (int y = 0; y < size; ++y) {
                 int x1 = x;
-                int x2 = m_size + (n - y);
-                int x3 = m_size + (n - x);
+                int x2 = size + (n - y);
+                int x3 = size + (n - x);
                 int x4 = y;
                 int y1 = y;
                 int y2 = x;
-                int y3 = m_size + (n - y);
-                int y4 = m_size + (n - x);
+                int y3 = size + (n - y);
+                int y4 = size + (n - x);
 
                 new_pattern[x1][y1] = m_pattern[x][y].Copy();
                 new_pattern[x2][y2] = m_pattern[x][y].Rotate90();
@@ -459,29 +509,29 @@ public class TileParameters {
         }
 
         m_pattern = new_pattern;
-        m_size *= 2;
     }
 //-----------------------------------------------------------------------------------------------------
     void ExpandRotate180 (){
 
-        Element[][] new_pattern = new Element[2 * m_size][];
+        int size = m_pattern.length;
+        Element[][] new_pattern = new Element[2 * size][];
 
-        for (int x = 0; x < 2 * m_size; ++x) {
-            new_pattern[x] = new Element[2 * m_size];
+        for (int x = 0; x < 2 * size; ++x) {
+            new_pattern[x] = new Element[2 * size];
         }
 
-        int n = m_size - 1;
+        int n = size - 1;
 
-        for (int x = 0; x < m_size; ++x) {
-            for (int y = 0; y < m_size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            for (int y = 0; y < size; ++y) {
                 int x1 = x;
-                int x2 = m_size + (n - x);
-                int x3 = m_size + x;
+                int x2 = size + (n - x);
+                int x3 = size + x;
                 int x4 = n - x;
                 int y1 = y;
                 int y2 = n - y;
-                int y3 = m_size + y;
-                int y4 = m_size + (n - y);
+                int y3 = size + y;
+                int y4 = size + (n - y);
 
                 new_pattern[x1][y1] = m_pattern[x][y].Copy();
                 new_pattern[x2][y2] = m_pattern[x][y].Rotate180();
@@ -491,29 +541,30 @@ public class TileParameters {
         }
 
         m_pattern = new_pattern;
-        m_size *= 2;
     }
 //-----------------------------------------------------------------------------------------------------
+// The pieces and squares rotate in the opposite direction
     void ExpandRotate270 (){
-        // The pieces and squares rotate in the opposite direction
-        Element[][] new_pattern = new Element[2 * m_size][];
 
-        for (int x = 0; x < 2 * m_size; ++x) {
-            new_pattern[x] = new Element[2 * m_size];
+        int size = m_pattern.length;
+        Element[][] new_pattern = new Element[2 * size][];
+
+        for (int x = 0; x < 2 * size; ++x) {
+            new_pattern[x] = new Element[2 * size];
         }
 
-        int n = m_size - 1;
+        int n = size - 1;
 
-        for (int x = 0; x < m_size; ++x) {
-            for (int y = 0; y < m_size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            for (int y = 0; y < size; ++y) {
                 int x1 = x;
-                int x2 = m_size + y;
-                int x3 = m_size + (n - x);
+                int x2 = size + y;
+                int x3 = size + (n - x);
                 int x4 = n - y;
                 int y1 = y;
                 int y2 = n - x;
-                int y3 = m_size + (n - y);
-                int y4 = m_size + x;
+                int y3 = size + (n - y);
+                int y4 = size + x;
 
                 new_pattern[x1][y1] = m_pattern[x][y];
                 new_pattern[x2][y2] = m_pattern[x][y].Rotate270();
@@ -523,30 +574,31 @@ public class TileParameters {
         }
 
         m_pattern = new_pattern;
-        m_size *= 2;
     }
 //-----------------------------------------------------------------------------------------------------
-    void ExpandReflect ()
-    {
-        // Reflect in the principle axes
-        Element[][] new_pattern = new Element[2 * m_size][];
+// Reflect in the principle axes
 
-        for (int x = 0; x < 2 * m_size; ++x) {
-            new_pattern[x] = new Element[2 * m_size];
+    void ExpandReflect () {
+
+        int size = m_pattern.length;
+        Element[][] new_pattern = new Element[2 * size][];
+
+        for (int x = 0; x < 2 * size; ++x) {
+            new_pattern[x] = new Element[2 * size];
         }
 
-        int n = m_size - 1;
+        int n = size - 1;
 
-        for (int x = 0; x < m_size; ++x) {
-            for (int y = 0; y < m_size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            for (int y = 0; y < size; ++y) {
                 int x1 = x;
-                int x2 = m_size + (n - x);
-                int x3 = m_size + (n - x);
+                int x2 = size + (n - x);
+                int x3 = size + (n - x);
                 int x4 = x;
                 int y1 = y;
                 int y2 = y;
-                int y3 = m_size + (n - y);
-                int y4 = m_size + (n - y);
+                int y3 = size + (n - y);
+                int y4 = size + (n - y);
 
                 new_pattern[x1][y1] = m_pattern[x][y].Copy();
                 new_pattern[x2][y2] = m_pattern[x][y].ReflectX();
@@ -556,7 +608,6 @@ public class TileParameters {
         }
 
         m_pattern = new_pattern;
-        m_size *= 2;
     }
 //-----------------------------------------------------------------------------------------------------
     void ExpandRotate90Invert ()
@@ -583,9 +634,9 @@ public class TileParameters {
         this.InvertCorners();
     }
 //-----------------------------------------------------------------------------------------------------
-    void InvertCorners ()
-    {
-        int n = m_size / 2;
+    void InvertCorners () {
+
+        int n = m_pattern.length / 2;
 
         for (int x = 0; x < n; ++x) {
             for (int y = 0; y < n; ++y) {
@@ -595,11 +646,25 @@ public class TileParameters {
         }
     }
 //---------------------------------------------------------------------------------------------------------
-    public void next_shape (int idx)
-    {
-        m_template [idx] = (m_template [idx] + 1) % num_shapes;
+    public void next_shape (int idx) {
+        m_template[idx] = (m_template[idx] + 1) % num_shapes;
         Initialise();
-        ApplyCode ();
+        ApplyCode();
+    }
+    //---------------------------------------------------------------------------------------------------------
+    public void add_op (char op)
+    {
+        if (m_code.length() < 7) {
+            ExpandFromCode(op);
+        }
+    }    //---------------------------------------------------------------------------------------------------------
+    public void back_one ()
+    {
+        if (m_code.length() > 0) {
+            m_code = m_code.substring(0, m_code.length() - 1);
+            Initialise();
+            ApplyCode();
+        }
     }
     //---------------------------------------------------------------------------------------------------------
     public int get_colour (int idx)
@@ -627,17 +692,48 @@ public class TileParameters {
     }
 
     public void fromBundle (Bundle bundle){
+
+        m_template[0] = bundle.getInt(KEY_T1, 2);
+        m_template[1] = bundle.getInt(KEY_T2, 7);
+        m_template[2] = bundle.getInt(KEY_T3, 1);
+        m_template[3] = bundle.getInt(KEY_T4, 6);
+
+        m_colour_map[0] = bundle.getInt(KEY_T1, Color.BLACK);
+        m_colour_map[1] = bundle.getInt(KEY_C2, Color.BLACK);
+        m_colour_map[2] = bundle.getInt(KEY_C3, Color.BLACK);
+        m_colour_map[3] = bundle.getInt(KEY_C4, Color.RED);
+
+        m_background = bundle.getInt(KEY_BG, Color.WHITE);
+        m_code = bundle.getString(KEY_CODE, "");
+    }
+
+    public Bitmap bitmap ()
+    {
+        return m_bmp;
     }
 
     public Bundle toBundle () {
 
         Bundle b = new Bundle();
 
+        b.putInt(KEY_T1, m_template[0]);
+        b.putInt(KEY_T2, m_template[1]);
+        b.putInt(KEY_T3, m_template[2]);
+        b.putInt(KEY_T4, m_template[3]);
+
+        b.putInt(KEY_C1, m_colour_map[0]);
+        b.putInt(KEY_C2, m_colour_map[1]);
+        b.putInt(KEY_C3, m_colour_map[2]);
+        b.putInt(KEY_C4, m_colour_map[3]);
+
+        b.putInt(KEY_BG, m_background);
+        b.putString(KEY_CODE, m_code);
+
         return b;
     }
 
     public String makeFileName () {
 
-        return "tile_pattern";
+        return "tile_pattern_" + m_code;
     }
 }

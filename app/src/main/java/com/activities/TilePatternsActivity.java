@@ -6,6 +6,7 @@ import androidx.core.content.FileProvider;
 
 import com.dialogs.GetColour;
 import com.example.JWPatterns.R;
+import com.misc.Misc;
 import com.patterns.TileParameters;
 
 import android.app.Activity;
@@ -28,6 +29,7 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
     TileParameters m_params = new TileParameters(1024,1024);
     ImageView m_template_view;
     ImageView m_colour_view;
+    ImageView m_transform_map;
 
     Handler m_timer_handler = new Handler();
     Runnable m_timer_runnable = new Runnable() {
@@ -54,16 +56,27 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         m_pause_button.setOnClickListener(m_listener);
         m_resume_button.setOnClickListener(m_listener);
 
+        findViewById(R.id.share_pattern).setOnClickListener(m_listener);
+        findViewById(R.id.random_picture).setOnClickListener(m_listener);
+        findViewById(R.id.evolve_star).setOnClickListener(m_listener);
+        findViewById(R.id.edit_settings).setOnClickListener(m_listener);
+        findViewById(R.id.app_info).setOnClickListener(m_listener);
+        findViewById(R.id.back_one).setOnClickListener(m_listener);
+
         m_template_view = findViewById(R.id.tile_template);
         m_colour_view = findViewById(R.id.colour_template);
+        m_transform_map = findViewById(R.id.transform_map);
 
         m_template_view.setOnClickListener(m_listener);
-        m_template_view.setOnTouchListener(m_listener);
         m_colour_view.setOnClickListener(m_listener);
-        m_colour_view.setOnTouchListener(m_listener);
+        m_transform_map.setOnClickListener(m_listener);
 
+        m_template_view.setOnTouchListener(m_listener);
+        m_colour_view.setOnTouchListener(m_listener);
+        m_transform_map.setOnTouchListener(m_listener);
 
         setAnimationState(false);
+
         Update();
     }
 
@@ -89,8 +102,6 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         if (m_in_animation) {
             startAnimation();
         }
-        // In case anything changed while we were paused
-        draw();
     }
 
     /**
@@ -128,8 +139,22 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
+        Bundle params = savedInstanceState.getBundle("params");
+
         m_in_animation = savedInstanceState.getBoolean("animate", m_in_animation);
+
+        if (params != null) {
+            m_params.fromBundle(params);
+        }
         Update();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("animate", m_in_animation);
+        outState.putBundle("params", m_params.toBundle());
     }
 
     /**
@@ -143,7 +168,19 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
 
         GetColour dialog = GetColour.construct(this, CB_TILE_COLOUR_FIRST + idx, colour, getString(R.string.tile_colour), getString(R.string.tile_colour_description));
         dialog.show(getSupportFragmentManager(), "Hello");
+    }    /**
+     * Choose a new colour for one of the template shapes
+     * @param pos Where the user clicked
+     */
+    void select_transform (float [] pos)
+    {
+        int idx  = (pos [1] > 0.5 ? 0 : 5) + (int)(5 * pos [0]);
+        char op = "ABCDEFGHIJ".charAt(idx);
+        m_params.add_op (op);
+        Update ();
     }
+
+
     /**
      * Choose a new sjape for one of the template slots
      * @param pos Where the user clicked
@@ -159,43 +196,21 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
      */
     void Update() {
 
-        ImageView img_template = findViewById(R.id.tile_template);
-        ImageView img_colours = findViewById(R.id.colour_template);
         ImageView img_main = findViewById(R.id.main_image);
 
-        m_params.draw_template(getResources(), img_template);
-        m_params.draw_template_colours(getResources(), img_colours);
+        m_params.draw_template(getResources(), m_template_view);
+        m_params.draw_template_colours(getResources(), m_colour_view);
+        m_params.draw_transform_map(getResources(), m_transform_map);
         m_params.draw(getResources(), img_main);
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putBoolean("animate", m_in_animation);
-    }
-
-    void draw() {
-        ImageView img = findViewById(R.id.main_image);
-
-        showSettings();
-    }
-
     private void share() {
-    }
 
-    void showSettings() {
+        Misc.share(this, m_params.makeFileName(), m_params.bitmap());
     }
 
     void animate() {
         Update();
-    }
-
-    /**
-     * Allows you to change the pattern template
-     */
-    void onClickTemplate() {
-
     }
 
     /**
@@ -235,6 +250,7 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
 
         @Override
         public void onClick(View view) {
+
             int id = view.getId();
 
             if (id == R.id.share_pattern) {
@@ -251,6 +267,9 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
             } else if (id == R.id.resume_animation) {
                 startAnimation();
                 setAnimationState(true);
+            } else if (id == R.id.back_one) {
+                m_params.back_one();
+                Update();
             }
         }
 
@@ -270,6 +289,11 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
                     {
                         select_colour (pos);
                     }
+                    else if (id == R.id.transform_map)
+                    {
+                        select_transform (pos);
+                    }
+
                     break;
 
                 case MotionEvent.ACTION_UP: // first finger lifted
