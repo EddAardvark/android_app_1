@@ -698,13 +698,16 @@ public class TileParameters {
         m_template[2] = bundle.getInt(KEY_T3, 1);
         m_template[3] = bundle.getInt(KEY_T4, 6);
 
-        m_colour_map[0] = bundle.getInt(KEY_T1, Color.BLACK);
+        m_colour_map[0] = bundle.getInt(KEY_C1, Color.BLACK);
         m_colour_map[1] = bundle.getInt(KEY_C2, Color.BLACK);
         m_colour_map[2] = bundle.getInt(KEY_C3, Color.BLACK);
         m_colour_map[3] = bundle.getInt(KEY_C4, Color.RED);
 
         m_background = bundle.getInt(KEY_BG, Color.WHITE);
         m_code = bundle.getString(KEY_CODE, "");
+
+        Initialise();
+        ApplyCode ();
     }
 
     public Bitmap bitmap ()
