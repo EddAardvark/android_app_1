@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.usage.UsageEvents;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,12 +12,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.tutorialapp.R;
+import com.activities.R;
+import com.misc.Drawing;
+import com.misc.Misc;
 import com.patterns.StarParameters;
 
 import java.util.Random;
@@ -51,10 +52,15 @@ public class StarsEvolve extends AppCompatActivity {
 
         fromBundle(getIntent().getExtras());
 
-        m_evolve_view = findViewById(R.id.evolve_image);
+        m_evolve_view = findViewById(R.id.main_image);
 
         m_evolve_view.setOnClickListener(m_listener);
         m_evolve_view.setOnTouchListener(m_listener);
+
+
+        findViewById(R.id.evolve_star).setOnClickListener(m_listener);
+        findViewById(R.id.share_pattern).setOnClickListener(m_listener);
+        findViewById(R.id.app_info).setOnClickListener(m_listener);
 
         draw();
     }
@@ -116,20 +122,15 @@ public class StarsEvolve extends AppCompatActivity {
         fromBundle(b);
         draw();
     }
-
     /**
      * Draws all 9 images into the same bitmap
      */
     void draw() {
 
         Rect rect = new Rect(0, 0, m_width, m_height);
-        Canvas canvas = new Canvas(m_bmp);
-        Paint paint = new Paint();
+        Drawing drawing = new Drawing (m_bmp);
 
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.FILL);
-
-        canvas.drawRect(rect, paint);
+        drawing.fill_rect (rect, Color.WHITE);
 
         for (int i = 0; i < 9; ++i) {
             int x0 = m_cell_width * (i % m_grid);
@@ -138,8 +139,8 @@ public class StarsEvolve extends AppCompatActivity {
             int yc = y0 + m_cell_height / 2;
 
             Rect rect2 = new Rect(x0, y0, x0 + m_cell_width, y0 + m_cell_height);
-            m_params[i].draw_background(paint, canvas, rect2);
-            m_params[i].draw(paint, canvas, xc, yc, m_radius);
+            drawing.fill_rect(rect2, m_params[i].m_background);
+            m_params[i].draw(drawing, xc, yc, m_radius);
         }
 
         m_evolve_view.setImageDrawable(new BitmapDrawable(getResources(), m_bmp));
@@ -152,40 +153,56 @@ public class StarsEvolve extends AppCompatActivity {
         StarParameters.setEvolutionParameters(m_params[m_centre].clone());
     }
 
+    void showInfoPage() {
+        Intent intent = new Intent(this, InfoPageActivity.class);
+
+        Bundle b = new Bundle();
+        b.putInt("title", R.string.stars_page_label);
+        b.putInt("url", R.string.stars_page_url);
+        intent.putExtras(b);
+
+        startActivity(intent);
+    }
+
+    private void share() {
+        Misc.share(this, "evolution.png", m_bmp);
+    }
+
     public class EventListener extends Activity implements View.OnClickListener, View.OnTouchListener {
 
         @Override
         public void onClick(View view) {
             int id = view.getId();
+
+            if (id == R.id.share_pattern) {
+                share();
+            } else if (id == R.id.evolve_star) {
+                setPattern(m_centre);
+            } else if (id == R.id.app_info) {
+                showInfoPage();
+            }
         }
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
+            v.performClick();
+
             switch (event.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:   // first finger down only
-                    Log.d("Motion", "mode=ACTION_DOWN"); // write to LogCat
                     get_pos(v, event);
                     break;
 
                 case MotionEvent.ACTION_UP: // first finger lifted
-
-                    Log.d("Motion", "mode=ACTION_UP"); // write to LogCat
                     break;
 
                 case MotionEvent.ACTION_POINTER_UP: // second finger lifted
-
-                    Log.d("Motion", "mode=ACTION_POINTER_UP");
                     break;
 
                 case MotionEvent.ACTION_POINTER_DOWN: // first and second finger down
-
-                    Log.d("Motion", "mode=ZOOM");
                     break;
 
                 case MotionEvent.ACTION_MOVE:
-
-                    Log.d("Motion", "mode=MOVE");
                     break;
             }
 

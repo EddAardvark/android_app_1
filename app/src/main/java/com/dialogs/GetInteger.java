@@ -5,15 +5,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.NumberPicker;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.activities.StarsPatternActivity;
-import com.example.tutorialapp.R;
+import com.activities.R;
 import com.misc.MessageBox;
 
 import java.util.ArrayList;
@@ -120,7 +118,6 @@ public class GetInteger extends DialogFragment {
                         MessageBox.showOK(getActivity(), "No owner", "This dialog no longer has an owner, possibly because a screen rotate has disconnected it", "OK");
                         return;
                     }
-                    Log.i("GetInteger", "Returning " + m_picker.getValue() + " for id " + m_id);
                     m_result.SetInteger(m_id, m_picker.getValue());
                     break;
                 case Dialog.BUTTON_NEUTRAL:

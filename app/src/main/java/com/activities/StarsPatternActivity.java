@@ -17,8 +17,9 @@ import android.graphics.Bitmap;
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.dialogs.ManageStarSettings;
-import com.example.tutorialapp.R;
+import com.activities.R;
 import com.misc.ColourHelpers;
+import com.misc.Misc;
 import com.patterns.AnimateSet;
 import com.patterns.PatternSet;
 import com.patterns.RandomSet;
@@ -181,15 +182,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         Update();
     }
 
-    /**
-     * Redraw the controls and the image
-     */
-    void Update() {
-        setColours();
-        showSettings();
-        draw();
-    }
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -197,6 +189,15 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         outState.putBoolean("animate", m_in_animation);
         outState.putBundle("params", m_params.toBundle());
         outState.putBundle("settings", m_settings.toBundle());
+    }
+
+    /**
+     * Redraw the controls and the image
+     */
+    void Update() {
+        setColours();
+        showSettings();
+        draw();
     }
 
     void setColours() {
@@ -218,35 +219,13 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         if (eparams != null) {
             m_params = eparams;
         }
-        ImageView img = findViewById(R.id.evolve_image);
+        ImageView img = findViewById(R.id.main_image);
         m_params.draw(getResources(), img);
         showSettings();
     }
 
     private void share() {
-        try {
-            File cachePath = new File(this.getCacheDir(), "images");
-            cachePath.mkdirs(); // don't forget to make the directory
-            FileOutputStream stream = new FileOutputStream(cachePath + "/image.png"); // overwrites this image every time
-            m_params.bitmap().compress(Bitmap.CompressFormat.PNG, 100, stream);
-            stream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        File imagePath = new File(this.getCacheDir(), "images");
-        File newFile = new File(imagePath, m_params.makeFileName());
-        Uri contentUri = FileProvider.getUriForFile(this, "com.example.myapp.fileprovider", newFile);
-
-        if (contentUri != null) {
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // temp permission for receiving app to read this file
-            shareIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
-            shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-            startActivity(Intent.createChooser(shareIntent, "Choose an app"));
-        }
+        Misc.share(this, m_params.makeFileName(), m_params.bitmap());
     }
 
     void showSettings() {

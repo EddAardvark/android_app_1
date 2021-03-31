@@ -45,6 +45,16 @@
             app:layout_constraintStart_toStartOf="@+id/button_stars"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <TextView
+            android:id="@+id/label_tiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tiles_label"
+            app:layout_constraintEnd_toEndOf="@+id/button_tiles"
+            app:layout_constraintStart_toEndOf="@+id/button_stars"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <ImageView
             android:id="@+id/button_stars"
             android:layout_width="@dimen/pattern_chooser_size"
@@ -56,6 +66,17 @@
             android:src="@drawable/star2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_stars" />
+
+        <ImageView
+            android:id="@+id/button_tiles"
+            android:layout_width="@dimen/pattern_chooser_size"
+            android:layout_height="@dimen/pattern_chooser_size"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:contentDescription="@string/star_applet_button"
+            android:src="@drawable/tile_pattern"
+            app:layout_constraintStart_toEndOf="@+id/button_stars"
+            app:layout_constraintTop_toTopOf="@+id/button_stars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

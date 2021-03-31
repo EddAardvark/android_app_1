@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.tutorialapp.R;
+import com.activities.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,10 +19,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageView stars = (ImageView) findViewById(R.id.button_stars);
+        ImageView tiles = (ImageView) findViewById(R.id.button_tiles);
 
         stars.setOnClickListener(new ActivityMain());
+        tiles.setOnClickListener(new ActivityMain());
     }
 
+    /**
+     * Launch the tiles activity
+     */
+    private void showTiles() {
+
+        Intent intent = new Intent(this, TilePatternsActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Launch the stars activity
+     */
     private void showStars() {
 
         Intent intent = new Intent(this, StarsPatternActivity.class);
@@ -38,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (id == R.id.button_stars) {
                 showStars();
+            }
+            if (id == R.id.button_tiles) {
+                showTiles();
             }
         }
     }
