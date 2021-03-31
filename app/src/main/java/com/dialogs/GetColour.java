@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.JWPatterns.R;
+import com.activities.R;
 import com.misc.MessageBox;
 
 public class GetColour extends DialogFragment {

@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.activities.StarsPatternActivity;
-import com.example.JWPatterns.R;
+import com.activities.R;
 import com.misc.MessageBox;
 
 import java.util.ArrayList;

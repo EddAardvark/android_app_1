@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.dialogs.GetColour;
-import com.example.JWPatterns.R;
+import com.activities.R;
 import com.misc.Misc;
 import com.patterns.TileParameters;
 

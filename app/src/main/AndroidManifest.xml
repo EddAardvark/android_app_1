@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.JWPatterns">
+    package="com.activities">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE " />
 
@@ -25,7 +25,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.myapp.fileprovider"
+            android:authorities="com.JWPatterns.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

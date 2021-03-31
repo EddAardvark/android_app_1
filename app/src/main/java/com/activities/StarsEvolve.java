@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,8 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.JWPatterns.R;
+import com.activities.R;
 import com.misc.Drawing;
+import com.misc.Misc;
 import com.patterns.StarParameters;
 
 import java.util.Random;
@@ -54,6 +56,11 @@ public class StarsEvolve extends AppCompatActivity {
 
         m_evolve_view.setOnClickListener(m_listener);
         m_evolve_view.setOnTouchListener(m_listener);
+
+
+        findViewById(R.id.evolve_star).setOnClickListener(m_listener);
+        findViewById(R.id.share_pattern).setOnClickListener(m_listener);
+        findViewById(R.id.app_info).setOnClickListener(m_listener);
 
         draw();
     }
@@ -146,11 +153,34 @@ public class StarsEvolve extends AppCompatActivity {
         StarParameters.setEvolutionParameters(m_params[m_centre].clone());
     }
 
+    void showInfoPage() {
+        Intent intent = new Intent(this, InfoPageActivity.class);
+
+        Bundle b = new Bundle();
+        b.putInt("title", R.string.stars_page_label);
+        b.putInt("url", R.string.stars_page_url);
+        intent.putExtras(b);
+
+        startActivity(intent);
+    }
+
+    private void share() {
+        Misc.share(this, "evolution.png", m_bmp);
+    }
+
     public class EventListener extends Activity implements View.OnClickListener, View.OnTouchListener {
 
         @Override
         public void onClick(View view) {
             int id = view.getId();
+
+            if (id == R.id.share_pattern) {
+                share();
+            } else if (id == R.id.evolve_star) {
+                setPattern(m_centre);
+            } else if (id == R.id.app_info) {
+                showInfoPage();
+            }
         }
 
         @Override

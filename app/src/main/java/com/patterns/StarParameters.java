@@ -286,7 +286,7 @@ public class StarParameters {
             }
 
             colour = ColourHelpers.MakeTransparent(colour, 0.5);
-            drawing.draw_text_right("www.eddaardvark.co.uk", h, m, m_height - m);
+            drawing.draw_text("www.eddaardvark.co.uk", h, m, m_height - m);
         }
 
         // Render

@@ -737,6 +737,6 @@ public class TileParameters {
 
     public String makeFileName () {
 
-        return "tile_pattern_" + m_code;
+        return "tile_pattern_" + m_code + ".png";
     }
 }
