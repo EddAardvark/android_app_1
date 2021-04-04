@@ -2,33 +2,29 @@ package com.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.view.View;
-import android.graphics.Bitmap;
 
+import com.dialogs.FragmentSet;
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.dialogs.ManageStarSettings;
-import com.activities.R;
 import com.misc.ColourHelpers;
 import com.misc.Misc;
 import com.patterns.AnimateSet;
 import com.patterns.PatternSet;
 import com.patterns.RandomSet;
+import com.patterns.StarAnimationFragment;
 import com.patterns.StarParameters;
-import com.patterns.StarSettings;
+import com.patterns.StarPatternFragment;
+import com.patterns.StarRandomiserFragment;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Locale;
 
 public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageStarSettings.Result {
@@ -43,8 +39,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     final int CB_LINECOLOUR2 = 8;
     final int CB_SETTINGS = 9;
 
-    StarSettings m_settings = new StarSettings();
-    StarParameters m_params = new StarParameters(m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
+    StarParameters m_params = new StarParameters();
     boolean m_in_animation = false;
 
     EventListener m_listener = new StarsPatternActivity.EventListener();
@@ -72,7 +67,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
         if (savedInstanceState != null) {
             m_params.fromBundle(savedInstanceState);
-            m_settings.fromBundle(savedInstanceState);
         }
 
         setContentView(R.layout.activity_stars_pattern);
@@ -169,13 +163,9 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
         super.onRestoreInstanceState(savedInstanceState);
 
         Bundle params = savedInstanceState.getBundle("params");
-        Bundle settings = savedInstanceState.getBundle("settings");
 
         m_in_animation = savedInstanceState.getBoolean("animate", m_in_animation);
 
-        if (settings != null) {
-            m_settings.fromBundle(settings);
-        }
         if (params != null) {
             m_params.fromBundle(params);
         }
@@ -188,7 +178,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
 
         outState.putBoolean("animate", m_in_animation);
         outState.putBundle("params", m_params.toBundle());
-        outState.putBundle("settings", m_settings.toBundle());
     }
 
     /**
@@ -237,7 +226,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     }
 
     void animate() {
-        if (m_params.animate(m_settings.m_animate)) {
+        if (m_params.animate(m_params.m_animate)) {
             Update();
         }
     }
@@ -289,7 +278,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Change the pattern settings
      */
     void onClickSettings() {
-        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_settings);
+        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_params);
         dialog.show(getSupportFragmentManager(), "Hello");
     }
 
@@ -357,12 +346,10 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     }
 
     @Override
-    public void UpdateStarSettings(PatternSet ps, RandomSet rs, AnimateSet as) {
+    public void UpdateSettings(FragmentSet result) {
 
-        m_settings.m_pattern.fromBundle(ps.toBundle());
-        m_settings.m_random.fromBundle(rs.toBundle());
-        m_settings.m_animate.fromBundle(as.toBundle());
-        m_params.setSize(m_settings.m_pattern.m_bm_size, m_settings.m_pattern.m_bm_size);
+        m_params.Apply (result);
+
         draw();
     }
 
@@ -403,7 +390,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
             } else if (id == R.id.layout_shrink) {
                 onClickShrink();
             } else if (id == R.id.random_picture) {
-                m_params.Randomise(m_settings.m_random);
+                m_params.Randomise(m_params.m_randomise);
                 Update();
             } else if (id == R.id.evolve_star) {
                 showEvolvePage();

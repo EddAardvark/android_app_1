@@ -11,11 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.activities.R;
+import com.dialogs.ManageStarSettings;
+import com.dialogs.TabFragment;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class StarPatternFragment extends Fragment {
+public class StarPatternFragment extends Fragment implements TabFragment {
 
     PatternSet m_result = null;  // Set on accept
     PatternSet m_working_settings = new PatternSet ();
@@ -114,6 +116,7 @@ public class StarPatternFragment extends Fragment {
     /**
      * Called when the parent dialog is accepted
      */
+    @Override
     public boolean onAccept (){
 
         int x = m_size_picker.getValue();

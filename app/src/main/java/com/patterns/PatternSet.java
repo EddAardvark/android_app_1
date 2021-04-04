@@ -13,7 +13,8 @@ public class PatternSet {
     final String KEY_BITMAP_SIZE = "p1";
     final String KEY_COLOURING_MODE = "p2";
 
-    public int m_bm_size = 800;
+    public final static int DEFAULT_BM_SIZE = 800;
+    public int m_bm_size = DEFAULT_BM_SIZE;
     public StarParameters.ColouringMode m_colouring_mode = StarParameters.ColouringMode.INWARDS;
 
     /**

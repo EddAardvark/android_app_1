@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.activities.R;
+import com.dialogs.ManageStarSettings;
+import com.dialogs.TabFragment;
 import com.misc.AnimationSettings;
 
 /**
@@ -21,7 +23,7 @@ import com.misc.AnimationSettings;
  * Use the {@link StarAnimationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StarAnimationFragment extends Fragment{
+public class StarAnimationFragment extends Fragment implements TabFragment {
 
     AnimateSet m_result = null;     // Only set when accepted
     AnimateSet m_working_settings = new AnimateSet();
@@ -305,7 +307,7 @@ public class StarAnimationFragment extends Fragment{
         }
     }
 
-
+    @Override
     public boolean onAccept() {
 
         UpdateSettings ();

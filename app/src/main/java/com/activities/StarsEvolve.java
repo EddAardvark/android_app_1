@@ -85,7 +85,7 @@ public class StarsEvolve extends AppCompatActivity {
             Bundle b2 = b.getBundle(KEY_PARAMS);
 
             if (b2 != null) {
-                m_params[m_centre] = new StarParameters(512, 512);
+                m_params[m_centre] = new StarParameters();
                 m_params[m_centre].fromBundle(b2);
                 evolve();
             }

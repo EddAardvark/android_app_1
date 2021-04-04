@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 
 import com.activities.R;
+import com.dialogs.ManageStarSettings;
+import com.dialogs.TabFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link StarRandomiserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StarRandomiserFragment extends Fragment {
+public class StarRandomiserFragment extends Fragment implements TabFragment {
 
     RandomSet m_result = null;
     RandomSet m_working_settings = new RandomSet ();
@@ -78,6 +80,7 @@ public class StarRandomiserFragment extends Fragment {
         }
     }
 
+    @Override
     public boolean onAccept() {
 
         UpdateSettings();
