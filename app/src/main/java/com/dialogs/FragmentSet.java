@@ -2,7 +2,9 @@ package com.dialogs;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FragmentSet
@@ -12,21 +14,18 @@ public class FragmentSet
         TabFragment m_fragment;
         String m_tab_name;
         int m_caption_id;
-        int m_id;
 
         /**
          * Construct the fragment holder
          *
-         * @param id     The identifier
          * @param mtf    The fragment
          * @param tab    The name that used to select the tab
          * @param cap_id The id of the caption string that appears above the tab
          */
-        FragmentHolder(int id, TabFragment mtf, String tab, int cap_id) {
+        FragmentHolder(TabFragment mtf, String tab, int cap_id) {
             m_fragment = mtf;
             m_tab_name = tab;
             m_caption_id = cap_id;
-            m_id = id;
         }
 
         boolean onAccept() {
@@ -38,20 +37,19 @@ public class FragmentSet
         }
     }
 
-    Map<Integer, FragmentHolder> m_fragments = new HashMap<Integer, FragmentHolder>();
+    List<FragmentHolder> m_fragments = new ArrayList<FragmentHolder>();
 
     /**
      * Construct the fragment holder
      *
-     * @param id     The identifier
      * @param mtf    The fragment
      * @param tab    The name that used to select the tab
      * @param cap_id The id of the caption string that appears above the tab
      */
-    public void AddFragment(int id, TabFragment mtf, String tab, int cap_id) {
-        FragmentHolder fh = new FragmentHolder(id, mtf, tab, cap_id);
+    public void AddFragment(TabFragment mtf, String tab, int cap_id) {
+        FragmentHolder fh = new FragmentHolder(mtf, tab, cap_id);
 
-        m_fragments.put(id, fh);
+        m_fragments.add(fh);
     }
 
     /**
@@ -74,6 +72,17 @@ public class FragmentSet
     }
 
     /**
+     * Creates the labels on the tab bar
+     * @param tabs The TabLayout to add the labels to
+     */
+    public void AddToTabLayout(TabLayout tabs) {
+
+        for (FragmentHolder f : m_fragments) {
+
+            tabs.addTab(tabs.newTab().setText(f.m_tab_name));
+        }
+    }
+    /**
      * Calls onAccept for all the fragments
      * @return true if all the fragments accept the changes, false if any refuse.
      */
@@ -81,7 +90,7 @@ public class FragmentSet
 
         boolean ret = true;
 
-        for (FragmentHolder f : m_fragments.values()) {
+        for (FragmentHolder f : m_fragments) {
             if (! f.onAccept()){
                 ret = false;
             }

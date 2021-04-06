@@ -14,20 +14,14 @@ import android.view.View;
 import com.dialogs.FragmentSet;
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
-import com.dialogs.ManageStarSettings;
+import com.dialogs.ManageSettings;
 import com.misc.ColourHelpers;
 import com.misc.Misc;
-import com.patterns.AnimateSet;
-import com.patterns.PatternSet;
-import com.patterns.RandomSet;
-import com.patterns.StarAnimationFragment;
 import com.patterns.StarParameters;
-import com.patterns.StarPatternFragment;
-import com.patterns.StarRandomiserFragment;
 
 import java.util.Locale;
 
-public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageStarSettings.Result {
+public class StarsPatternActivity extends AppCompatActivity implements GetInteger.Result, GetColour.Result, ManageSettings.Result {
 
     final int CB_N1 = 1;
     final int CB_N2 = 2;
@@ -37,7 +31,6 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
     final int CB_BACKCOLOUR = 6;
     final int CB_LINECOLOUR1 = 7;
     final int CB_LINECOLOUR2 = 8;
-    final int CB_SETTINGS = 9;
 
     StarParameters m_params = new StarParameters();
     boolean m_in_animation = false;
@@ -278,7 +271,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Change the pattern settings
      */
     void onClickSettings() {
-        ManageStarSettings dialog = ManageStarSettings.construct(this, CB_SETTINGS, m_params);
+        ManageSettings dialog = ManageSettings.construct(this, m_params);
         dialog.show(getSupportFragmentManager(), "Hello");
     }
 
@@ -286,7 +279,7 @@ public class StarsPatternActivity extends AppCompatActivity implements GetIntege
      * Allows you to change the background colour.
      */
     void onClickBackColour() {
-        GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.star_background_title), getString(R.string.star_background_description));
+        GetColour dialog = GetColour.construct(this, CB_BACKCOLOUR, m_params.m_background, getString(R.string.background_title), getString(R.string.background_description));
         dialog.show(getSupportFragmentManager(), "Hello");
     }
 

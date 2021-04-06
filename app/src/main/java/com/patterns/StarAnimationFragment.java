@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.dialogs.GetColour;
 import com.dialogs.GetInteger;
 import com.activities.R;
-import com.dialogs.ManageStarSettings;
 import com.dialogs.TabFragment;
 import com.misc.AnimationSettings;
 

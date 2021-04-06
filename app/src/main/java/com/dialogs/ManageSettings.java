@@ -18,21 +18,19 @@ import com.activities.R;
 import com.google.android.material.tabs.TabLayout;
 import com.misc.MessageBox;
 
-import java.util.Map;
-
-public class ManageStarSettings extends DialogFragment {
+public class ManageSettings extends DialogFragment {
 
     public interface Result {
         abstract void UpdateSettings(FragmentSet fragments);
     }
     DialogFragment m_Showing = null;
 
-    ManageStarSettings.EventListener m_listener = new ManageStarSettings.EventListener();
-    ManageStarSettings.Result m_result;
+    ManageSettings.EventListener m_listener = new ManageSettings.EventListener();
+    ManageSettings.Result m_result;
     TextView m_caption;
     PatternParameters m_params;
     FragmentSet m_fragments;
-    int m_id;
+    TabLayout m_Tabs;
 
     /**
      * Seems to be required for rotation handling, without this the app will crash with MethodNotFoundExtension
@@ -40,19 +38,18 @@ public class ManageStarSettings extends DialogFragment {
      * alive by storing the reference statically, but it no longer points to the active instance of the called,
      * which has been recreated during the rotation, so we just need to make the dialog disappear.
      */
-    public ManageStarSettings (){
+    public ManageSettings(){
     }
 
-    ManageStarSettings(ManageStarSettings.Result res, int id) {
+    ManageSettings(ManageSettings.Result res) {
 
         m_Showing = this;
-        m_id = id;
         m_result = res;
     }
 
-    public static ManageStarSettings construct(ManageStarSettings.Result res, int id, PatternParameters settings) {
+    public static ManageSettings construct(ManageSettings.Result res, PatternParameters settings) {
 
-        ManageStarSettings frag = new ManageStarSettings(res, id);
+        ManageSettings frag = new ManageSettings(res);
         Bundle args = new Bundle();
         args.putBundle("current", settings.toBundle());
         frag.setArguments(args);
@@ -89,11 +86,15 @@ public class ManageStarSettings extends DialogFragment {
 
         Dialog dialog = this.getDialog();
 
-        ((TabLayout) dialog.findViewById(R.id.star_settings_tabs)).addOnTabSelectedListener((TabLayout.OnTabSelectedListener) m_listener);
+        m_Tabs = dialog.findViewById(R.id.star_settings_tabs);
+
+        m_fragments.AddToTabLayout(m_Tabs);
+
+        m_Tabs.addOnTabSelectedListener(m_listener);
         dialog.findViewById(R.id.ok_button).setOnClickListener(m_listener);
         dialog.findViewById(R.id.cancel_button).setOnClickListener(m_listener);
 
-        m_caption = (TextView) dialog.findViewById(R.id.star_settings_caption);
+        m_caption = dialog.findViewById(R.id.star_settings_caption);
 
         AddInitialFragment(0);
     }
@@ -139,7 +140,6 @@ public class ManageStarSettings extends DialogFragment {
     }
 
     private void OnShowPattern() {
-        ReplaceFragment (0);
     }
     private void OnShowAnimation() {
         ReplaceFragment (1);
@@ -178,18 +178,8 @@ public class ManageStarSettings extends DialogFragment {
 
             int pos = tab.getPosition();
 
-            switch (pos)
-            {
-                case 0:
-                    OnShowPattern ();
-                    break;
-                case 1:
-                    OnShowRandomisation();
-                    break;
-                case 2:
-                    OnShowAnimation();
-                    break;
-            }
+            ReplaceFragment (pos);
+
         }
 
         @Override

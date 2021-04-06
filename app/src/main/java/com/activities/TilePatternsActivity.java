@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.dialogs.FragmentSet;
 import com.dialogs.GetColour;
 import com.activities.R;
+import com.dialogs.ManageSettings;
 import com.misc.Misc;
 import com.patterns.TileParameters;
 
@@ -17,7 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-public class TilePatternsActivity extends AppCompatActivity implements GetColour.Result {
+public class TilePatternsActivity extends AppCompatActivity implements GetColour.Result, ManageSettings.Result {
 
     boolean m_in_animation = false;
 
@@ -26,7 +28,7 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
     View m_pause_button;
     View m_resume_button;
     TilePatternsActivity.EventListener m_listener = new TilePatternsActivity.EventListener();
-    TileParameters m_params = new TileParameters(1024,1024);
+    TileParameters m_params = new TileParameters();
     ImageView m_template_view;
     ImageView m_colour_view;
     ImageView m_transform_map;
@@ -217,6 +219,8 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
      * Change the pattern settings
      */
     void onClickSettings() {
+        ManageSettings dialog = ManageSettings.construct(this, m_params);
+        dialog.show(getSupportFragmentManager(), "Hello");
     }
 
     void showInfoPage() {
@@ -231,6 +235,14 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
     }
 
     void showEvolvePage() {
+    }
+
+    @Override
+    public void UpdateSettings(FragmentSet result) {
+
+        m_params.Apply (result);
+
+        Update();
     }
 
     @Override

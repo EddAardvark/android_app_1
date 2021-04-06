@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 
 import com.activities.R;
-import com.dialogs.ManageStarSettings;
 import com.dialogs.TabFragment;
 
 /**

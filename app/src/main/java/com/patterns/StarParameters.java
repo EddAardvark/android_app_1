@@ -2,30 +2,23 @@ package com.patterns;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.activities.R;
 import com.dialogs.FragmentSet;
-import com.dialogs.ManageStarSettings;
 import com.dialogs.PatternParameters;
 import com.misc.ColourHelpers;
 import com.misc.Drawing;
 import com.misc.MyMath;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
 public class StarParameters extends PatternParameters {
@@ -73,16 +66,10 @@ public class StarParameters extends PatternParameters {
     final String KEY_RANDOM = "x2";
     final String KEY_ANIMATE = "x3";
 
-    final int FRAGMENT_PATTERN = 0;
-    final int FRAGMENT_RANDOM = 1;
-    final int FRAGMENT_ANIMATE = 2;
-
     public PatternSet m_pattern = new PatternSet();
     public RandomSet m_randomise = new RandomSet();
     public AnimateSet m_animate = new AnimateSet();
 
-    int m_width;
-    int m_height;
     Bitmap m_bmp;
     static Random m_random = new Random();
 
@@ -103,7 +90,7 @@ public class StarParameters extends PatternParameters {
 
     public StarParameters ()
     {
-        setSize (PatternSet.DEFAULT_BM_SIZE, PatternSet.DEFAULT_BM_SIZE);
+        setSize ();
     }
 
     public String getAngleString () { return m_angle_str.get(m_angle_idx);}
@@ -158,12 +145,9 @@ public class StarParameters extends PatternParameters {
      * @param w Width in pixels
      * @param h Height in pixels
      */
-    public void setSize (int w, int h)
+    public void setSize ()
     {
-        m_width = w;
-        m_height = h;
-
-        m_bmp = Bitmap.createBitmap(m_width, m_height, Bitmap.Config.RGB_565);
+        m_bmp = m_pattern.CreateBitmap();
     }
 
     /**
@@ -271,22 +255,24 @@ public class StarParameters extends PatternParameters {
      */
     public void draw(Resources resources, ImageView img) {
 
-        Rect rect = new Rect(0, 0, m_width, m_height);
+        int width = m_pattern.m_bm_size;
+        int height = m_pattern.m_bm_size;
+        Rect rect = new Rect(0, 0, width, height);
         Drawing drawing = new Drawing(m_bmp);
-        double xc = m_width * 0.5;
-        double yc = m_height * 0.5;
-        double r = m_height * 0.48;
+        double xc = width * 0.5;
+        double yc = height * 0.5;
+        double r = height * 0.48;
 
         drawing.fill_rect (rect, m_background);
 
         draw(drawing, xc, yc, r);
 
-        int h = m_height/40;
+        int h = height/40;
 
         if (h >= 8) {
 
             int colour = ColourHelpers.GetContrastColour (m_background);
-            int m = m_height/80;
+            int m = height/80;
 
             String star = "(" + m_n1 + "," + m_n2 + ")";
 
@@ -295,11 +281,11 @@ public class StarParameters extends PatternParameters {
             if (m_n3 > 1) {
 
                 String settings = Integer.toString(m_n3) + " x " + getAngleString() + " x " + getShrinkString();
-                drawing.draw_text_right(settings, h, m_width - m, h + m);
+                drawing.draw_text_right(settings, h, width - m, h + m);
             }
 
             colour = ColourHelpers.MakeTransparent(colour, 0.5);
-            drawing.draw_text("www.eddaardvark.co.uk", h, m, m_height - m);
+            drawing.draw_text("www.eddaardvark.co.uk", h, m, height - m);
         }
 
         // Render
@@ -544,33 +530,37 @@ public class StarParameters extends PatternParameters {
         return ret;
     }
 
-
+    /**
+     * Return a list of fragments, Note the order is important, you must decode them in "Apply" in the same
+     * order as you add them here.
+     * @return
+     */
     @Override
     public FragmentSet GetFragments() {
 
         FragmentSet ret = new FragmentSet();
 
-        ret.AddFragment(FRAGMENT_PATTERN, StarPatternFragment.newInstance(m_pattern), "Pattern", R.string.star_params_caption);
-        ret.AddFragment(FRAGMENT_ANIMATE, StarAnimationFragment.newInstance(m_animate), "Animate", R.string.star_animation_caption);
-        ret.AddFragment(FRAGMENT_RANDOM, StarRandomiserFragment.newInstance(m_randomise), "Randomise", R.string.star_randomiser_caption);
+        ret.AddFragment(StarPatternFragment.newInstance(m_pattern), "Pattern", R.string.star_params_caption);
+        ret.AddFragment(StarAnimationFragment.newInstance(m_animate), "Animate", R.string.star_animation_caption);
+        ret.AddFragment(StarRandomiserFragment.newInstance(m_randomise), "Randomise", R.string.star_randomiser_caption);
 
         return ret;
     }
 
     /**
-     * Used by the manage setting dialog to apply the result
+     * Used by the manage setting dialog to apply the result (see GetFragments)
      * @param result The result
      */
     public void Apply (FragmentSet result) {
 
-        PatternSet ps = ((StarPatternFragment)result.GetFragment(FRAGMENT_PATTERN)).getResult ();
-        RandomSet rs = ((StarRandomiserFragment)result.GetFragment(FRAGMENT_RANDOM)).getResult ();
-        AnimateSet as = ((StarAnimationFragment)result.GetFragment(FRAGMENT_ANIMATE)).getResult ();
+        PatternSet ps = ((StarPatternFragment)result.GetFragment(0)).getResult ();
+        AnimateSet as = ((StarAnimationFragment)result.GetFragment(1)).getResult ();
+        RandomSet rs = ((StarRandomiserFragment)result.GetFragment(2)).getResult ();
 
         m_pattern.fromBundle(ps.toBundle());
         m_randomise.fromBundle(rs.toBundle());
         m_animate.fromBundle(as.toBundle());
-        setSize(m_pattern.m_bm_size, m_pattern.m_bm_size);
+        setSize();
     }
 
 

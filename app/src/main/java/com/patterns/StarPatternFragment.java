@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.activities.R;
-import com.dialogs.ManageStarSettings;
 import com.dialogs.TabFragment;
 
 import java.util.HashMap;
@@ -137,20 +136,16 @@ public class StarPatternFragment extends Fragment implements TabFragment {
 
             int id = view.getId();
 
-            switch (id) {
-                case R.id.button_cm_alternate:
-                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.ALTERNATE;
-                    break;
-                case R.id.button_cm_around:
-                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.AROUND;
-                    break;
-                case R.id.button_cm_both:
-                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.BOTH;
-                    break;
-                case R.id.button_cm_inwards:
-                    m_working_settings.m_colouring_mode = StarParameters.ColouringMode.INWARDS;
-                    break;
+            if (id == R.id.button_cm_alternate) {
+                m_working_settings.m_colouring_mode = StarParameters.ColouringMode.ALTERNATE;
+            } else if (id == R.id.button_cm_around) {
+                m_working_settings.m_colouring_mode = StarParameters.ColouringMode.AROUND;
+            } else if (id == R.id.button_cm_both) {
+                m_working_settings.m_colouring_mode = StarParameters.ColouringMode.BOTH;
+            } else if (id == R.id.button_cm_inwards) {
+                m_working_settings.m_colouring_mode = StarParameters.ColouringMode.INWARDS;
             }
+
             ShowBorder (id);
         }
     }

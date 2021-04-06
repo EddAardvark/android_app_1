@@ -41,21 +41,6 @@
         app:layout_constraintBottom_toTopOf="@+id/ok_button"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_pattern"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pattern" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/randomiser" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/animator" />
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout

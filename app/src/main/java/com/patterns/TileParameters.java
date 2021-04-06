@@ -12,6 +12,9 @@ import android.widget.ImageView;
 
 import androidx.core.util.Pair;
 
+import com.activities.R;
+import com.dialogs.FragmentSet;
+import com.dialogs.PatternParameters;
 import com.misc.ColourHelpers;
 import com.misc.Drawing;
 
@@ -33,7 +36,7 @@ import java.util.Random;
 // by repeating the original pattern suitable transformed
 //==========================================================================================================
 
-public class TileParameters {
+public class TileParameters extends PatternParameters {
 
     final static int SIZE0 = 2;
 
@@ -45,18 +48,17 @@ public class TileParameters {
     final static String KEY_C2 = "c2";
     final static String KEY_C3 = "c3";
     final static String KEY_C4 = "c4";
-    final static String KEY_BG = "bg";
     final static String KEY_CODE = "cd";
 
-    int m_background = Color.WHITE;      ///< Background colour
+    final static String KEY_PATTERN = "ps";
+
     int [] m_colour_map = { Color.BLACK, Color.BLACK, Color.BLACK, Color.RED };
     int [] m_template = { 2, 7, 1, 6 };
     Element[][] m_pattern;
 
     String m_code = "";
 
-    int m_width;
-    int m_height;
+    TilePatternSet m_pattern_set = new TilePatternSet();
     Bitmap m_bmp;
     Bitmap m_bmp_template = Bitmap.createBitmap(256, 256, Bitmap.Config.RGB_565);
     Bitmap m_bmp_colour = Bitmap.createBitmap(256, 256, Bitmap.Config.RGB_565);
@@ -199,12 +201,11 @@ public class TileParameters {
 
     /**
      * Construct
-     * @param w bitmap width
-     * @param h bitmap height
      */
-    public TileParameters (int w, int h)
+    public TileParameters ()
     {
-        setSize (w, h);
+
+        setSize ();
         Initialise();
     }
     /**
@@ -255,7 +256,7 @@ public class TileParameters {
      */
     public void draw (Resources resources, ImageView img){
 
-        Rect rect = new Rect(0, 0, m_width, m_height);
+        Rect rect = new Rect(0, 0, m_pattern_set.m_bm_size, m_pattern_set.m_bm_size);
         Drawing drawing = new Drawing(m_bmp);
 
         Draw(drawing);
@@ -272,7 +273,7 @@ public class TileParameters {
         Rect rect = new Rect(0, 0, 256, 256);
         Drawing drawing = new Drawing(m_bmp_template);
 
-        drawing.fill_rect (rect, Color.WHITE);
+        drawing.fill_rect (rect, m_pattern_set.m_background);
 
         draw_element_at (drawing, m_template[0], m_colour_map[0], 0, 0, 128);
         draw_element_at (drawing, m_template[1], m_colour_map[1], 0, 128, 128);
@@ -330,7 +331,7 @@ public class TileParameters {
     //-----------------------------------------------------------------------------------------------------
     void Draw(Drawing drawing) {
 
-        Rect rect = new Rect(0, 0, m_width, m_height);
+        Rect rect = new Rect(0, 0, m_pattern_set.m_bm_size, m_pattern_set.m_bm_size);
         draw_at (drawing, rect, m_pattern);
     }
     //-----------------------------------------------------------------------------------------------------
@@ -345,7 +346,7 @@ public class TileParameters {
         float x0 = rect.left;
         float y0 = rect.top;
 
-        drawing.fill_rect (rect, m_background);
+        drawing.fill_rect (rect, m_pattern_set.m_background);
 
         for (int x = 0; x < size; ++x) {
             for (int y = 0; y < size; ++y) {
@@ -683,14 +684,36 @@ public class TileParameters {
      * @param w Width in pixels
      * @param h Height in pixels
      */
-    public void setSize ( int w, int h)
+    public void setSize ()
     {
-        m_width = w;
-        m_height = h;
+        m_bmp = m_pattern_set.CreateBitmap();
+    }
+    /**
+     * Return a list of fragments, Note the order is important, you must decode them in "Apply" in the same
+     * order as you add them here.
+     * @return
+     */
+    @Override
+    public FragmentSet GetFragments() {
 
-        m_bmp = Bitmap.createBitmap(m_width, m_height, Bitmap.Config.RGB_565);
+        FragmentSet ret = new FragmentSet();
+
+        ret.AddFragment(TilePatternFragment.newInstance(m_pattern_set), "Size&Colour", R.string.tile_params_caption);
+
+        return ret;
     }
 
+    /**
+     * Used by the manage setting dialog to apply the result (see GetFragments)
+     * @param result The result
+     */
+    public void Apply (FragmentSet result) {
+
+        TilePatternSet ps = ((TilePatternFragment)result.GetFragment(0)).getResult ();
+
+        m_pattern_set.fromBundle(ps.toBundle());
+        setSize();
+    }
     public void fromBundle (Bundle bundle){
 
         m_template[0] = bundle.getInt(KEY_T1, 2);
@@ -703,8 +726,9 @@ public class TileParameters {
         m_colour_map[2] = bundle.getInt(KEY_C3, Color.BLACK);
         m_colour_map[3] = bundle.getInt(KEY_C4, Color.RED);
 
-        m_background = bundle.getInt(KEY_BG, Color.WHITE);
         m_code = bundle.getString(KEY_CODE, "");
+
+        m_pattern_set.fromBundle(bundle.getBundle(KEY_PATTERN));
 
         Initialise();
         ApplyCode ();
@@ -719,6 +743,8 @@ public class TileParameters {
 
         Bundle b = new Bundle();
 
+        b.putInt(PatternParameters.KEY_SETTINGS_TYPE, PatternParameters.SETTINGS_TYPE_TILES);
+
         b.putInt(KEY_T1, m_template[0]);
         b.putInt(KEY_T2, m_template[1]);
         b.putInt(KEY_T3, m_template[2]);
@@ -729,8 +755,9 @@ public class TileParameters {
         b.putInt(KEY_C3, m_colour_map[2]);
         b.putInt(KEY_C4, m_colour_map[3]);
 
-        b.putInt(KEY_BG, m_background);
         b.putString(KEY_CODE, m_code);
+
+        b.putBundle(KEY_PATTERN, m_pattern_set.toBundle());
 
         return b;
     }

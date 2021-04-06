@@ -3,6 +3,7 @@ package com.dialogs;
 import android.os.Bundle;
 
 import com.patterns.StarParameters;
+import com.patterns.TileParameters;
 
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public abstract class PatternParameters {
         }
         if (type == SETTINGS_TYPE_TILES)
         {
-            StarParameters params = new StarParameters();
+            TileParameters params = new TileParameters();
             params.fromBundle(b);
             return params;
         }
