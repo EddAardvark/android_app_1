@@ -1,0 +1,72 @@
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:isScrollContainer="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_medium"
+    android:background="@drawable/selection_border"
+    android:padding="@dimen/spacing_medium">
+
+        <Switch
+            android:id="@+id/randomise_triangles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="Triangles"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/randomise_bars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="Bars"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/randomise_triangles" />
+
+        <Switch
+            android:id="@+id/randomise_blocks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="Blocks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/randomise_bars" />
+
+        <Switch
+            android:id="@+id/randomise_spots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="Spots and holes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/randomise_blocks" />
+
+        <Switch
+            android:id="@+id/randomise_colours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="Colours"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/randomise_spots" />
+
+        <Switch
+            android:id="@+id/randomise_transform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="Transform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/randomise_colours" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</HorizontalScrollView>

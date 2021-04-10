@@ -2,27 +2,27 @@ package com.patterns;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.activities.R;
+import com.dialogs.FragmentSet;
+import com.dialogs.PatternParameters;
 import com.misc.ColourHelpers;
 import com.misc.Drawing;
 import com.misc.MyMath;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class StarParameters {
+public class StarParameters extends PatternParameters {
+
 
     public enum ColouringMode {
         INWARDS, AROUND, BOTH, ALTERNATE
@@ -38,8 +38,6 @@ public class StarParameters {
     public int m_background = Color.WHITE;      ///< Background colour
     public int m_first_line = Color.BLUE;       ///< Foreground ground colour
     public int m_last_line = Color.MAGENTA;     ///< Second foreground ground colour when blending
-
-    public ColouringMode m_colouring_mode = ColouringMode.INWARDS;
 
     final static int IDX_N1 = 0;
     final static int IDX_N2 = 1;
@@ -63,11 +61,15 @@ public class StarParameters {
     final static String KEY_BACKGROUND = "bg";
     final static String KEY_LINE1 = "l1";
     final static String KEY_LINE2 = "l2";
-    final static String KEY_COLOURING_MODE = "cm";
-    final static String KEY_BM_SIZE = "cm";
 
-    int m_width;
-    int m_height;
+    final String KEY_PATTERM = "x1";
+    final String KEY_RANDOM = "x2";
+    final String KEY_ANIMATE = "x3";
+
+    public PatternSet m_pattern = new PatternSet();
+    public RandomSet m_randomise = new RandomSet();
+    public AnimateSet m_animate = new AnimateSet();
+
     Bitmap m_bmp;
     static Random m_random = new Random();
 
@@ -86,9 +88,9 @@ public class StarParameters {
     public final static double [] m_shrink_pc = {
             0, 0.05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 60, 70, 75 };
 
-    public StarParameters (int w, int h)
+    public StarParameters ()
     {
-        setSize (w, h);
+        setSize ();
     }
 
     public String getAngleString () { return m_angle_str.get(m_angle_idx);}
@@ -105,7 +107,7 @@ public class StarParameters {
      */
     @Override
     public StarParameters clone (){
-        StarParameters ret = new StarParameters (m_width, m_height);
+        StarParameters ret = new StarParameters ();
 
         ret.m_n1 = m_n1;
         ret.m_n2 = m_n2;
@@ -115,8 +117,6 @@ public class StarParameters {
         ret.m_background = m_background;
         ret.m_first_line = m_first_line;
         ret.m_last_line = m_last_line;
-        ret.m_colouring_mode = m_colouring_mode;
-
 
         return ret;
     }
@@ -145,12 +145,9 @@ public class StarParameters {
      * @param w Width in pixels
      * @param h Height in pixels
      */
-    public void setSize (int w, int h)
+    public void setSize ()
     {
-        m_width = w;
-        m_height = h;
-
-        m_bmp = Bitmap.createBitmap(m_width, m_height, Bitmap.Config.RGB_565);
+        m_bmp = m_pattern.CreateBitmap();
     }
 
     /**
@@ -190,7 +187,7 @@ public class StarParameters {
                 m_last_line = ColourHelpers.random_solid_colour();
                 break;
             case IDX_CMODE:
-                m_colouring_mode = cmodes[m_random.nextInt(cmodes.length)];
+                m_pattern.m_colouring_mode = cmodes[m_random.nextInt(cmodes.length)];
                 break;
         }
     }
@@ -258,22 +255,24 @@ public class StarParameters {
      */
     public void draw(Resources resources, ImageView img) {
 
-        Rect rect = new Rect(0, 0, m_width, m_height);
+        int width = m_pattern.m_bm_size;
+        int height = m_pattern.m_bm_size;
+        Rect rect = new Rect(0, 0, width, height);
         Drawing drawing = new Drawing(m_bmp);
-        double xc = m_width * 0.5;
-        double yc = m_height * 0.5;
-        double r = m_height * 0.48;
+        double xc = width * 0.5;
+        double yc = height * 0.5;
+        double r = height * 0.48;
 
         drawing.fill_rect (rect, m_background);
 
         draw(drawing, xc, yc, r);
 
-        int h = m_height/40;
+        int h = height/40;
 
         if (h >= 8) {
 
             int colour = ColourHelpers.GetContrastColour (m_background);
-            int m = m_height/80;
+            int m = height/80;
 
             String star = "(" + m_n1 + "," + m_n2 + ")";
 
@@ -282,11 +281,11 @@ public class StarParameters {
             if (m_n3 > 1) {
 
                 String settings = Integer.toString(m_n3) + " x " + getAngleString() + " x " + getShrinkString();
-                drawing.draw_text_right(settings, h, m_width - m, h + m);
+                drawing.draw_text_right(settings, h, width - m, h + m);
             }
 
             colour = ColourHelpers.MakeTransparent(colour, 0.5);
-            drawing.draw_text("www.eddaardvark.co.uk", h, m, m_height - m);
+            drawing.draw_text("www.eddaardvark.co.uk", h, m, height - m);
         }
 
         // Render
@@ -299,7 +298,7 @@ public class StarParameters {
      */
     public void draw(Drawing drawing, double xc, double yc, double r) {
 
-        switch (m_colouring_mode) {
+        switch (m_pattern.m_colouring_mode) {
             case BOTH:
                 DrawBoth(drawing, xc, yc, r);
                 break;
@@ -531,6 +530,43 @@ public class StarParameters {
         return ret;
     }
 
+    /**
+     * Return a list of fragments, Note the order is important, you must decode them in "Apply" in the same
+     * order as you add them here.
+     * @return
+     */
+    @Override
+    public FragmentSet GetFragments() {
+
+        FragmentSet ret = new FragmentSet();
+
+        ret.AddFragment(StarPatternFragment.newInstance(m_pattern), "Pattern", R.string.star_params_caption);
+        ret.AddFragment(StarAnimationFragment.newInstance(m_animate), "Animate", R.string.star_animation_caption);
+        ret.AddFragment(StarRandomiserFragment.newInstance(m_randomise), "Randomise", R.string.star_randomiser_caption);
+
+        return ret;
+    }
+
+    @Override
+    public int GetTitleId() {
+        return R.string.star_settings_title;
+    }
+
+    /**
+     * Used by the manage setting dialog to apply the result (see GetFragments)
+     * @param result The result
+     */
+    public void Apply (FragmentSet result) {
+
+        PatternSet ps = ((StarPatternFragment)result.GetFragment(0)).getResult ();
+        AnimateSet as = ((StarAnimationFragment)result.GetFragment(1)).getResult ();
+        RandomSet rs = ((StarRandomiserFragment)result.GetFragment(2)).getResult ();
+
+        m_pattern.fromBundle(ps.toBundle());
+        m_randomise.fromBundle(rs.toBundle());
+        m_animate.fromBundle(as.toBundle());
+        setSize();
+    }
 
 
     public void fromBundle(Bundle bundle) {
@@ -543,16 +579,18 @@ public class StarParameters {
         m_background = bundle.getInt(KEY_BACKGROUND, m_background);
         m_first_line = bundle.getInt(KEY_LINE1, m_first_line);
         m_last_line = bundle.getInt(KEY_LINE2, m_last_line);
-        Serializable x = bundle.getSerializable(KEY_COLOURING_MODE);
 
-        if (x != null) {
-            m_colouring_mode = (ColouringMode) x;
-        }
+        m_pattern.fromBundle(bundle.getBundle(KEY_PATTERM));
+        m_randomise.fromBundle(bundle.getBundle(KEY_RANDOM));
+        m_animate.fromBundle(bundle.getBundle(KEY_ANIMATE));
     }
 
+    @Override
     public Bundle toBundle() {
 
         Bundle b = new Bundle();
+
+        b.putInt(PatternParameters.KEY_SETTINGS_TYPE, PatternParameters.SETTINGS_TYPE_STARS);
 
         b.putInt(KEY_N1, m_n1);
         b.putInt(KEY_N2, m_n2);
@@ -562,8 +600,11 @@ public class StarParameters {
         b.putInt(KEY_BACKGROUND, m_background);
         b.putInt(KEY_LINE1, m_first_line);
         b.putInt(KEY_LINE2, m_last_line);
-        b.putSerializable(KEY_COLOURING_MODE, m_colouring_mode);
-        
+
+        b.putBundle(KEY_PATTERM, m_pattern.toBundle());
+        b.putBundle(KEY_RANDOM, m_randomise.toBundle());
+        b.putBundle(KEY_ANIMATE, m_animate.toBundle());
+
         return b;
     }
 

@@ -1,0 +1,61 @@
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:isScrollContainer="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_medium"
+    android:background="@drawable/selection_border"
+    android:padding="@dimen/spacing_medium">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginRight="@dimen/spacing_medium"
+        android:text="@string/bitmap_size"
+        app:layout_constraintBottom_toBottomOf="@+id/size_pricker"
+        app:layout_constraintEnd_toStartOf="@+id/size_pricker"
+        app:layout_constraintTop_toTopOf="@+id/size_pricker" />
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/background_colour"
+            app:layout_constraintBottom_toBottomOf="@+id/background_colour"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/background_colour" />
+
+        <NumberPicker
+            android:id="@+id/size_pricker"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            app:layout_constraintStart_toEndOf="@+id/tv3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/background_colour"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/colour_button_h"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:background="@drawable/black_rect_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/size_pricker"
+            app:layout_constraintStart_toStartOf="@+id/size_pricker"
+            app:layout_constraintTop_toBottomOf="@+id/size_pricker" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</HorizontalScrollView>

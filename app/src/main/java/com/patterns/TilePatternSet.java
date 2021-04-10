@@ -1,23 +1,27 @@
 package com.patterns;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import java.io.Serializable;
-import java.util.Random;
 
 /**
  * Pattern specific settings of the star pattern
  */
-public class PatternSet {
+public class TilePatternSet {
 
     final String KEY_BITMAP_SIZE = "p1";
-    final String KEY_COLOURING_MODE = "p2";
+    final String KEY_BACKGROUND = "p2";
 
-    public final static int DEFAULT_BM_SIZE = 800;
+    public final static int DEFAULT_BM_SIZE = 1024;
     public int m_bm_size = DEFAULT_BM_SIZE;
-    public StarParameters.ColouringMode m_colouring_mode = StarParameters.ColouringMode.INWARDS;
+    public int m_background = Color.WHITE;
 
+    /**
+     * Create the bitmap
+     * @return a bitmap
+     */
     public Bitmap CreateBitmap ()
     {
         return Bitmap.createBitmap(m_bm_size, m_bm_size, Bitmap.Config.RGB_565);
@@ -29,7 +33,7 @@ public class PatternSet {
         Bundle b = new Bundle();
 
         b.putInt(KEY_BITMAP_SIZE, m_bm_size);
-        b.putSerializable(KEY_COLOURING_MODE, m_colouring_mode);
+        b.putSerializable(KEY_BACKGROUND, m_background);
 
         return b;
     }
@@ -42,11 +46,7 @@ public class PatternSet {
 
         if (b != null) {
             m_bm_size = b.getInt(KEY_BITMAP_SIZE, m_bm_size);
-            Serializable x = b.getSerializable(KEY_COLOURING_MODE);
-
-            if (x != null) {
-                m_colouring_mode = (StarParameters.ColouringMode) x;
-            }
+            m_background = b.getInt(KEY_BACKGROUND, m_background);
         }
     }
 }
