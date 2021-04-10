@@ -28,6 +28,7 @@ public class ManageSettings extends DialogFragment {
     ManageSettings.EventListener m_listener = new ManageSettings.EventListener();
     ManageSettings.Result m_result;
     TextView m_caption;
+    String m_title;
     PatternParameters m_params;
     FragmentSet m_fragments;
     TabLayout m_Tabs;
@@ -69,6 +70,7 @@ public class ManageSettings extends DialogFragment {
             m_params = PatternParameters.FromBundle(current);
             if (m_params != null) {
                 m_fragments = m_params.GetFragments();
+                m_title = getString(m_params.GetTitleId());
             }
         }
     }
@@ -77,7 +79,7 @@ public class ManageSettings extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.star_settings_dialog, container, false);
+        return inflater.inflate(R.layout.manage_settings_dialog, container, false);
     }
 
     @Override
@@ -95,6 +97,9 @@ public class ManageSettings extends DialogFragment {
         dialog.findViewById(R.id.cancel_button).setOnClickListener(m_listener);
 
         m_caption = dialog.findViewById(R.id.star_settings_caption);
+        TextView title = dialog.findViewById(R.id.manage_title);
+
+        title.setText(m_title);
 
         AddInitialFragment(0);
     }
@@ -109,8 +114,7 @@ public class ManageSettings extends DialogFragment {
 
         if (holder != null) {
 
-            String caption = getString(holder.m_caption_id);
-            m_caption.setText(caption);
+            m_caption.setText(getString(holder.m_caption_id));
 
             FragmentManager manager = getChildFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();

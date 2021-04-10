@@ -48,8 +48,10 @@
     <string name="star_last_colour_description">This is the last colour in the sequence when drawing multiple patterns, intermediate patterns are drawn using a blend of the 2.</string>
     <string name="background_description">This is the colour used to fill in the background upon which the pattern is drawn</string>
     <string name="settings">Settings</string>
-    <string name="star_settings_description">Here you can configure the settings used to manage the star drawing, including bitmap size, randomiser settings and the animator.</string>
-    <string name="star_settings_title">Manage Star Settings</string>
+    <string name="star_settings_description">Here you can configure the settings used to construct the star patterns, including bitmap size, randomiser settings and the animator.</string>
+    <string name="star_settings_title">Star Pattern Settings</string>
+    <string name="tile_settings_description">Here you can configure the settings used to construct the tile patterns, including bitmap size, background colour, and the randomiser settings.</string>
+    <string name="tile_settings_title">Tile Pattern Settings</string>
     <string name="pattern">Pattern</string>
     <string name="randomiser">Randomiser</string>
     <string name="animator">Animator</string>
@@ -117,4 +119,6 @@
     <string name="back_one">Go back one transform</string>
     <string name="tile_params_caption">Set the tile parameters</string>
     <string name="background_colour">Background Colour:</string>
+    <string name="tile_random_caption">Set the randomiser options</string>
+    <string name="reset_pattern">Reset all the parameters</string>
 </resources>

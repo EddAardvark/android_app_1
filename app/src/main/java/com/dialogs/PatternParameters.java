@@ -14,6 +14,7 @@ public abstract class PatternParameters {
     public final static int SETTINGS_TYPE_TILES = 2;
 
     public abstract FragmentSet GetFragments ();
+    public abstract int GetTitleId ();
     public abstract Bundle toBundle();
 
     /**

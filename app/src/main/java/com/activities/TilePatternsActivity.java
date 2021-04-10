@@ -32,13 +32,14 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
     ImageView m_template_view;
     ImageView m_colour_view;
     ImageView m_transform_map;
+    int m_timer_interval = 1000;
 
     Handler m_timer_handler = new Handler();
     Runnable m_timer_runnable = new Runnable() {
         @Override
         public void run() {
             animate();
-            m_timer_handler.postDelayed(this, 100);
+            m_timer_handler.postDelayed(this, m_timer_interval);
         }
     };
 
@@ -60,10 +61,10 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
 
         findViewById(R.id.share_pattern).setOnClickListener(m_listener);
         findViewById(R.id.random_picture).setOnClickListener(m_listener);
-        findViewById(R.id.evolve_star).setOnClickListener(m_listener);
         findViewById(R.id.edit_settings).setOnClickListener(m_listener);
         findViewById(R.id.app_info).setOnClickListener(m_listener);
         findViewById(R.id.back_one).setOnClickListener(m_listener);
+        findViewById(R.id.reset_pattern).setOnClickListener(m_listener);
 
         m_template_view = findViewById(R.id.tile_template);
         m_colour_view = findViewById(R.id.colour_template);
@@ -182,7 +183,14 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         Update ();
     }
 
-
+    /**
+     * Draw a random pattern
+     */
+    void MakeRandom ()
+    {
+        m_params.MakeRandom();
+        Update ();
+    }
     /**
      * Choose a new sjape for one of the template slots
      * @param pos Where the user clicked
@@ -212,6 +220,8 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
     }
 
     void animate() {
+
+        m_params.MakeRandom();
         Update();
     }
 
@@ -232,9 +242,6 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         intent.putExtras(b);
 
         startActivity(intent);
-    }
-
-    void showEvolvePage() {
     }
 
     @Override
@@ -267,8 +274,8 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
 
             if (id == R.id.share_pattern) {
                 share();
-            } else if (id == R.id.evolve_star) {
-                showEvolvePage();
+            } else if (id == R.id.random_picture) {
+                MakeRandom();
             } else if (id == R.id.edit_settings) {
                 onClickSettings();
             } else if (id == R.id.app_info) {
@@ -282,7 +289,12 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
             } else if (id == R.id.back_one) {
                 m_params.back_one();
                 Update();
+            }else if (id == R.id.reset_pattern) {
+                m_params.reset();
+                Update();
             }
+
+
         }
 
         @Override

@@ -6,13 +6,12 @@
     android:layout_width="400dp"
     android:layout_height="400dp">
 
-
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/manage_title"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
-        android:text="@string/star_settings_title"
+        android:text="title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -31,8 +30,7 @@
         android:text="text goes here"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
+        app:layout_constraintTop_toBottomOf="@+id/manage_title" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/star_settings_tabs"

@@ -547,6 +547,11 @@ public class StarParameters extends PatternParameters {
         return ret;
     }
 
+    @Override
+    public int GetTitleId() {
+        return R.string.star_settings_title;
+    }
+
     /**
      * Used by the manage setting dialog to apply the result (see GetFragments)
      * @param result The result

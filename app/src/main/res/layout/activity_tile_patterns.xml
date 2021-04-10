@@ -119,14 +119,14 @@
                     app:srcCompat="@android:drawable/ic_menu_help" />
 
                 <ImageView
-                    android:id="@+id/evolve_star"
+                    android:id="@+id/reset_pattern"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_medium"
                     android:layout_marginRight="@dimen/spacing_medium"
                     android:layout_weight="1"
-                    android:contentDescription="@string/evolve_mode"
-                    app:srcCompat="@drawable/eight_points" />
+                    android:contentDescription="@string/reset_pattern"
+                    app:srcCompat="@android:drawable/ic_menu_revert" />
 
                 <ImageView
                     android:id="@+id/pause_animation"
@@ -177,6 +177,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/back_one"
                     app:srcCompat="@android:drawable/ic_media_previous" />
+
             </LinearLayout>
 
 

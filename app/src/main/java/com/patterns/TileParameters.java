@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 
 import com.activities.R;
@@ -17,11 +19,16 @@ import com.dialogs.FragmentSet;
 import com.dialogs.PatternParameters;
 import com.misc.ColourHelpers;
 import com.misc.Drawing;
+import com.misc.Misc;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -51,14 +58,16 @@ public class TileParameters extends PatternParameters {
     final static String KEY_CODE = "cd";
 
     final static String KEY_PATTERN = "ps";
+    final static String KEY_RANDOM = "rs";
 
-    int [] m_colour_map = { Color.BLACK, Color.BLACK, Color.BLACK, Color.RED };
-    int [] m_template = { 2, 7, 1, 6 };
+    int [] m_colour_map;
+    int [] m_template;
     Element[][] m_pattern;
 
     String m_code = "";
 
     TilePatternSet m_pattern_set = new TilePatternSet();
+    TileRandomSet m_random_set = new TileRandomSet();
     Bitmap m_bmp;
     Bitmap m_bmp_template = Bitmap.createBitmap(256, 256, Bitmap.Config.RGB_565);
     Bitmap m_bmp_colour = Bitmap.createBitmap(256, 256, Bitmap.Config.RGB_565);
@@ -72,20 +81,7 @@ public class TileParameters extends PatternParameters {
             };
     static Random m_random = new Random();
 
-    /**
-     * Ways of combining the shapes into a template
-     */
-    enum PatternModes {
-
-        TRIANGLE,       ///< Random set of triangles
-        RECTANGLE,      ///< Random set of rectangles
-        SPOTS,          ///< Random set of spots
-        T_AND_R,        ///< Random set of triangles + rectangles
-        T_AND_S,        ///< Random set of triangles + spots
-        R_AND_S,        ///< Random set of rectangles + spots
-        ALL,            ///< Random set of everything
-        CUSTOM,         ///< User defined
-    }
+    List<Integer> m_random_shapes;
 
 // transformations
 
@@ -180,16 +176,10 @@ public class TileParameters extends PatternParameters {
                     {{0, 0}, {0, 1}, {1, 1}, {1, 0}, {0, 0}, {0.25f, 0.25f}, {0.75f, 0.25f}, {0.75f, 0.75f}, {0.25f, 0.75f}, {0.25f, 0.25f}}
             };
 
-    final int[][] cell_types =
-            {
-                    {1, 2, 3, 4},                           // Triangles
-                    {5, 6, 7, 8},                           // Rectangles
-                    {0, 9, 10, 11},                         // Spots
-                    {1, 2, 3, 4, 5, 6, 7, 8},               // Triangles + Rectangles
-                    {1, 2, 3, 4, 0, 9, 10, 11},             // Triangles + Spots
-                    {5, 6, 7, 8, 0, 9, 10, 11},             // Rectangles + Spots
-                    {1, 2, 3, 4, 5, 6, 7, 8, 0, 9, 10, 11}, // Everything
-            };
+    final List<Integer> triangles = Arrays.asList ( 1, 2, 3, 4 ) ;
+    final List<Integer> bars      = Arrays.asList ( 5, 6, 7, 8 );
+    final List<Integer> spots     = Arrays.asList ( 10,11 );
+    final List<Integer> blocks    = Arrays.asList ( 0, 9 );
 
 // Layout
 
@@ -204,50 +194,31 @@ public class TileParameters extends PatternParameters {
      */
     public TileParameters ()
     {
-
+        reset();
         setSize ();
+        SetRandomShapes ();
         Initialise();
     }
+
     /**
-     * Make a random pattern
-     * @param type
-     * @param colours
+     * The random shapes is the set of shapes used when randomising.
      */
-    void MakeRandom(int type, int[] colours) {
+    void SetRandomShapes ()
+    {
+        m_random_shapes = new ArrayList<>();
 
-        int size = m_pattern.length;
-        m_pattern = new Element[size][];
-
-        int[] shape_list = cell_types[type];
-
-        for (int x = 0; x < size; ++x) {
-            m_pattern[x] = new Element[size];
-
-            for (int y = 0; y < size; ++y) {
-                int c = (colours != null) ? colours[2 * x + y] : Color.BLACK;
-                int r = m_random.nextInt(shape_list.length);
-                m_pattern[x][y] = new Element(r, c);
-            }
+        if (m_random_set.m_randomise_bars){
+            m_random_shapes.addAll(bars);
         }
-        m_code = "";
-    }
-
-    //-----------------------------------------------------------------------------------------------------
-    void MakeCustom(Element[] elements) {
-
-        m_pattern = new Element[SIZE0][];
-
-        int idx = 0;
-
-        for (int x = 0; x < SIZE0; ++x) {
-            m_pattern[x] = new Element[SIZE0];
-
-            for (int y = 0; y < SIZE0; ++y) {
-                m_pattern[x][y] = elements[idx].Copy();
-                ++idx;
-            }
+        if (m_random_set.m_randomise_blocks){
+            m_random_shapes.addAll(blocks);
         }
-        m_code = "";
+        if (m_random_set.m_randomise_spots){
+            m_random_shapes.addAll(spots);
+        }
+        if (m_random_set.m_randomise_triangles){
+            m_random_shapes.addAll(triangles);
+        }
     }
     /**
      * Draws the pattern using the current parameters, this version manages it's own bitmap and image size.
@@ -371,7 +342,15 @@ public class TileParameters extends PatternParameters {
         }
     }
     /**
-     * Create the initial pattern
+     * Set the parameters back to their default values
+     */
+    public void reset ()
+    {
+        m_colour_map = new int [] { Color.BLACK, Color.BLACK, Color.BLACK, Color.RED };
+        m_template =  new int [] { 2, 7, 1, 6 };
+    }
+    /**
+     * Create the initial pattern from the template
      */
     void Initialise ()
     {
@@ -386,6 +365,38 @@ public class TileParameters extends PatternParameters {
         m_pattern [0][1] = new Element (m_template [1], m_colour_map [1]);
         m_pattern [1][0] = new Element (m_template [2], m_colour_map [2]);
         m_pattern [1][1] = new Element (m_template [3], m_colour_map [3]);
+    }
+    /**
+     * Make a random pattern (controlled by the settings in m_random_set
+     */
+    public void MakeRandom() {
+
+        if (! m_random_shapes.isEmpty()) {
+            for (int i = 0 ; i < SIZE0 * SIZE0 ; ++i){
+
+                int n = m_random.nextInt(m_random_shapes.size());
+                m_template [i] = m_random_shapes.get(n);
+            }
+        }
+        if (m_random_set.m_randomise_colours) {
+            for (int i = 0; i < SIZE0 * SIZE0; ++i) {
+                m_colour_map[i] = ColourHelpers.random_solid_colour();
+            }
+        }
+
+        Initialise();
+
+        if (m_random_set.m_randomise_code) {
+            m_code = "";
+
+            int steps = 1 + m_random.nextInt(6);
+            for (int i = 0; i < steps; ++i) {
+                Expand();
+            }
+        }
+        else {
+            ApplyCode();
+        }
     }
     //-----------------------------------------------------------------------------------------------------
     void ApplyCode () {
@@ -681,8 +692,6 @@ public class TileParameters extends PatternParameters {
     }
     /**
      * Sets the size of the bitmap drawn. This doesn't affect the size no the screen but does change the detail when the image is shared.
-     * @param w Width in pixels
-     * @param h Height in pixels
      */
     public void setSize ()
     {
@@ -698,11 +707,19 @@ public class TileParameters extends PatternParameters {
 
         FragmentSet ret = new FragmentSet();
 
-        ret.AddFragment(TilePatternFragment.newInstance(m_pattern_set), "Size&Colour", R.string.tile_params_caption);
+        ret.AddFragment(TilePatternFragment.newInstance(m_pattern_set), "Basics", R.string.tile_params_caption);
+        ret.AddFragment(TileRandomFragment.newInstance(m_random_set), "Randomiser", R.string.tile_random_caption);
 
         return ret;
     }
-
+    /**
+     * Text that appears at the top of the dialog
+     * @return the string id of the caption
+     */
+    @Override
+    public int GetTitleId() {
+        return R.string.tile_settings_title;
+    }
     /**
      * Used by the manage setting dialog to apply the result (see GetFragments)
      * @param result The result
@@ -710,8 +727,11 @@ public class TileParameters extends PatternParameters {
     public void Apply (FragmentSet result) {
 
         TilePatternSet ps = ((TilePatternFragment)result.GetFragment(0)).getResult ();
+        TileRandomSet rs = ((TileRandomFragment)result.GetFragment(1)).getResult ();
 
         m_pattern_set.fromBundle(ps.toBundle());
+        m_random_set.fromBundle(rs.toBundle());
+        SetRandomShapes ();
         setSize();
     }
     public void fromBundle (Bundle bundle){
@@ -729,6 +749,7 @@ public class TileParameters extends PatternParameters {
         m_code = bundle.getString(KEY_CODE, "");
 
         m_pattern_set.fromBundle(bundle.getBundle(KEY_PATTERN));
+        m_random_set.fromBundle(bundle.getBundle(KEY_RANDOM));
 
         Initialise();
         ApplyCode ();
@@ -758,6 +779,7 @@ public class TileParameters extends PatternParameters {
         b.putString(KEY_CODE, m_code);
 
         b.putBundle(KEY_PATTERN, m_pattern_set.toBundle());
+        b.putBundle(KEY_RANDOM, m_random_set.toBundle());
 
         return b;
     }
