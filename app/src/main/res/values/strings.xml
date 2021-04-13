@@ -102,6 +102,7 @@
     <string name="email_address">mailto:eddaardvark@yahoo.co.uk</string>
     <string name="home_page_url">http://www.eddaardvark.co.uk/</string>
     <string name="stars_page_url">http://www.eddaardvark.co.uk/apps/patterns/stars.html</string>
+    <string name="tiles_page_url">http://www.eddaardvark.co.uk/apps/patterns/tiles.html</string>
     <string name="evolve_mode">Launch the evolution viewer</string>
     <string name="stars_evolve_label">Stars Evolution Page</string>
     <string name="stars_evolve_intro">

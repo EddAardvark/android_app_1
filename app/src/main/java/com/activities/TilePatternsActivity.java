@@ -48,7 +48,8 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            // reload state
+
+            m_params.fromBundle(savedInstanceState);
         }
 
         setContentView(R.layout.activity_tile_patterns);
@@ -237,8 +238,8 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         Intent intent = new Intent(this, InfoPageActivity.class);
 
         Bundle b = new Bundle();
-        b.putInt("title", R.string.stars_page_label);
-        b.putInt("url", R.string.stars_page_url);
+        b.putInt("title", R.string.tiles_page_label);
+        b.putInt("url", R.string.tiles_page_url);
         intent.putExtras(b);
 
         startActivity(intent);
