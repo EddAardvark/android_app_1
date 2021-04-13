@@ -29,11 +29,16 @@ public class TilePatternFragment extends Fragment implements TabFragment {
 
     EventListener m_listener = new EventListener();
 
-    static String[] size_value_strs = {"80px", "160px", "320px", "480px", "640px", "800px", "1024px", "1280px", "1600px"};
+    static String[] size_value_strs;
     static int[] size_values = {320, 480, 640, 800, 1024, 1280, 1600, 1920, 2400};
 
     public TilePatternFragment() {
+        size_value_strs = new String [size_values.length];
 
+        for (int i = 0 ; i < size_values.length ; ++i )
+        {
+            size_value_strs [i] = size_values [i] + "px";
+        }
     }
 
     /**

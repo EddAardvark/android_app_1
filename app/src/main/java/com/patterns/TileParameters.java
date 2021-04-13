@@ -751,6 +751,7 @@ public class TileParameters extends PatternParameters {
         m_pattern_set.fromBundle(bundle.getBundle(KEY_PATTERN));
         m_random_set.fromBundle(bundle.getBundle(KEY_RANDOM));
 
+        SetRandomShapes ();
         Initialise();
         ApplyCode ();
     }
