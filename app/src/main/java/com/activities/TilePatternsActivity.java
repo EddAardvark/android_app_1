@@ -17,7 +17,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class TilePatternsActivity extends AppCompatActivity implements GetColour.Result, ManageSettings.Result {
 
@@ -32,6 +34,7 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
     ImageView m_template_view;
     ImageView m_colour_view;
     ImageView m_transform_map;
+    EditText m_code_input;
     int m_timer_interval = 1000;
 
     Handler m_timer_handler = new Handler();
@@ -66,10 +69,12 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         findViewById(R.id.app_info).setOnClickListener(m_listener);
         findViewById(R.id.back_one).setOnClickListener(m_listener);
         findViewById(R.id.reset_pattern).setOnClickListener(m_listener);
+        findViewById(R.id.apply_code).setOnClickListener(m_listener);
 
         m_template_view = findViewById(R.id.tile_template);
         m_colour_view = findViewById(R.id.colour_template);
         m_transform_map = findViewById(R.id.transform_map);
+        m_code_input = findViewById(R.id.pattern_code);
 
         m_template_view.setOnClickListener(m_listener);
         m_colour_view.setOnClickListener(m_listener);
@@ -78,6 +83,9 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         m_template_view.setOnTouchListener(m_listener);
         m_colour_view.setOnTouchListener(m_listener);
         m_transform_map.setOnTouchListener(m_listener);
+
+        m_code_input.setMaxWidth (192);
+        m_code_input.setMinWidth(192);
 
         setAnimationState(false);
 
@@ -213,6 +221,8 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
         m_params.draw_template_colours(getResources(), m_colour_view);
         m_params.draw_transform_map(getResources(), m_transform_map);
         m_params.draw(getResources(), img_main);
+
+        m_code_input.setText(m_params.get_code(), TextView.BufferType.EDITABLE);
     }
 
     private void share() {
@@ -290,12 +300,13 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
             } else if (id == R.id.back_one) {
                 m_params.back_one();
                 Update();
-            }else if (id == R.id.reset_pattern) {
+            } else if (id == R.id.reset_pattern) {
                 m_params.reset();
                 Update();
+            } else if (id == R.id.apply_code) {
+                m_params.ApplyCode (m_code_input.getText().toString());
+                Update();
             }
-
-
         }
 
         @Override
@@ -306,7 +317,7 @@ public class TilePatternsActivity extends AppCompatActivity implements GetColour
                     float [] pos = get_pos(view, event);
                     int id = view.getId();
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            if (id == R.id.tile_template)
+                    if (id == R.id.tile_template)
                     {
                         select_shape (pos);
                     }
