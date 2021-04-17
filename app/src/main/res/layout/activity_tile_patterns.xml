@@ -32,20 +32,21 @@
             android:layout_marginLeft="@dimen/spacing_medium"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:layout_marginRight="@dimen/spacing_medium"
+            android:contentDescription="@string/tiles_image_text"
             app:layout_constraintBottom_toTopOf="@+id/layout_buttons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text2"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/tiles_image_text" />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:layout_marginBottom="@dimen/spacing_medium"
             android:background="#ddeeff"
+            android:padding="@dimen/spacing_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,9 +57,6 @@
                 android:id="@+id/tile_template"
                 android:layout_width="@dimen/tile_template_height"
                 android:layout_height="@dimen/tile_template_height"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/tile_template"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,9 +69,24 @@
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginLeft="@dimen/spacing_medium"
                 android:layout_weight="1"
+                android:contentDescription="@string/colour_selector"
                 app:layout_constraintStart_toEndOf="@+id/tile_template"
                 app:layout_constraintTop_toTopOf="@+id/tile_template" />
 
+
+            <EditText
+                android:id="@+id/pattern_code"
+                android:layout_width="@dimen/tile_code_text"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginLeft="@dimen/spacing_medium"
+                android:background="@drawable/black_rect_border"
+                android:inputType="textNoSuggestions"
+                android:paddingRight="@dimen/spacing_medium"
+                app:layout_constraintStart_toEndOf="@+id/transform_map"
+                app:layout_constraintTop_toTopOf="@+id/transform_map"
+                android:importantForAutofill="no"
+                android:paddingEnd="@dimen/spacing_medium" />
 
             <ImageView
                 android:id="@+id/transform_map"
@@ -82,13 +95,14 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginLeft="12dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/tile_select_transform"
                 app:layout_constraintStart_toEndOf="@+id/colour_template"
                 app:layout_constraintTop_toTopOf="@+id/colour_template" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_medium"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
@@ -100,8 +114,8 @@
                     android:id="@+id/edit_settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_large"
-                    android:layout_marginLeft="@dimen/spacing_large"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
                     android:layout_marginEnd="@dimen/spacing_medium"
                     android:layout_marginRight="@dimen/spacing_medium"
                     android:layout_weight="1"
@@ -178,13 +192,19 @@
                     android:contentDescription="@string/back_one"
                     app:srcCompat="@android:drawable/ic_media_previous" />
 
+                <ImageView
+                    android:id="@+id/apply_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_view" />
+
             </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

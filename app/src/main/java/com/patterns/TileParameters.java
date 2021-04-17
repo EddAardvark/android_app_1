@@ -400,11 +400,16 @@ public class TileParameters extends PatternParameters {
     }
     //-----------------------------------------------------------------------------------------------------
     void ApplyCode () {
-        String s = m_code;
+
+        ApplyCode(m_code);
+    }
+    //-----------------------------------------------------------------------------------------------------
+    public void ApplyCode (String code) {
+
         m_code = "";
 
-        for (int i = 0; i < s.length(); i++) {
-            ExpandFromCode(s.charAt(i));
+        for (int i = 0; i < code.length(); i++) {
+            ExpandFromCode(code.charAt(i));
         }
     }
     //-----------------------------------------------------------------------------------------------------
@@ -683,6 +688,7 @@ public class TileParameters extends PatternParameters {
     {
         return m_colour_map [idx];
     }
+    public String get_code() { return m_code; }
     //---------------------------------------------------------------------------------------------------------
     public void set_tile_colour (int idx, int colour)
     {
