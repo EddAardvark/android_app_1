@@ -29,16 +29,6 @@
         app:srcCompat="@android:drawable/ic_dialog_email"
         android:contentDescription="@string/email_me_descr" />
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginLeft="@dimen/spacing_large"
-        android:text="@string/email_me"
-        app:layout_constraintStart_toEndOf="@+id/email_me"
-        app:layout_constraintTop_toTopOf="@+id/email_me" />
-
     <ImageView
         android:id="@+id/view_stars"
         android:layout_width="@dimen/square_button_size"
@@ -50,13 +40,23 @@
         android:contentDescription="@string/view_the_stars_page" />
 
     <ImageView
+        android:id="@+id/view_tiles"
+        android:layout_width="@dimen/square_button_size"
+        android:layout_height="@dimen/square_button_size"
+        android:layout_marginTop="@dimen/spacing_medium"
+        app:layout_constraintStart_toStartOf="@+id/view_stars"
+        app:layout_constraintTop_toBottomOf="@+id/view_stars"
+        app:srcCompat="@drawable/tile_pattern"
+        android:contentDescription="@string/view_the_tiles_page" />
+
+    <ImageView
         android:id="@+id/home_page"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
         android:layout_marginTop="@dimen/spacing_medium"
         android:contentDescription="@string/home_page_descr"
-        app:layout_constraintStart_toStartOf="@+id/view_stars"
-        app:layout_constraintTop_toBottomOf="@+id/view_stars"
+        app:layout_constraintStart_toStartOf="@+id/view_tiles"
+        app:layout_constraintTop_toBottomOf="@+id/view_tiles"
         app:srcCompat="@drawable/home" />
 
     <TextView
@@ -69,6 +69,17 @@
         app:layout_constraintStart_toEndOf="@+id/view_stars"
         app:layout_constraintTop_toTopOf="@+id/view_stars" />
 
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:text="@string/tiles_page"
+        app:layout_constraintStart_toEndOf="@+id/view_tiles"
+        app:layout_constraintTop_toTopOf="@+id/view_tiles" />
+
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
@@ -78,5 +89,16 @@
         android:text="@string/home_page"
         app:layout_constraintStart_toEndOf="@+id/home_page"
         app:layout_constraintTop_toTopOf="@+id/home_page" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:text="@string/email_me"
+        app:layout_constraintStart_toEndOf="@+id/email_me"
+        app:layout_constraintTop_toTopOf="@+id/email_me" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

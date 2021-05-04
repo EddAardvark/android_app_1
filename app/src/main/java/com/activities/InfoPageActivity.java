@@ -43,6 +43,7 @@ public class InfoPageActivity extends AppCompatActivity {
 
         findViewById(R.id.email_me).setOnClickListener(m_listener);
         findViewById(R.id.view_stars).setOnClickListener(m_listener);
+        findViewById(R.id.view_tiles).setOnClickListener(m_listener);
         findViewById(R.id.home_page).setOnClickListener(m_listener);
     }
 
@@ -72,6 +73,9 @@ public class InfoPageActivity extends AppCompatActivity {
             }
             else if (id == R.id.view_stars){
                 openURL(R.string.stars_page_url);
+            }
+            else if (id == R.id.view_tiles){
+                openURL(R.string.tiles_page_url);
             }
             else if (id == R.id.home_page){
                 openURL(R.string.home_page_url);

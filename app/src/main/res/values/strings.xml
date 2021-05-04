@@ -124,4 +124,6 @@
     <string name="reset_pattern">Reset all the parameters</string>
     <string name="colour_selector">Used to select colours</string>
     <string name="tile_select_transform">click to select a transform</string>
+    <string name="view_the_tiles_page">Click to show the tiles help page</string>
+    <string name="tiles_page">Tiles pattern web-page</string>
 </resources>

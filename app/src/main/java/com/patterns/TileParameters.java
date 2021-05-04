@@ -186,7 +186,7 @@ public class TileParameters extends PatternParameters {
     final int MARGIN = 4;
     final int num_shapes = shapes.length;
 
-    char[] code_letters = {'A', 'B', 'C', 'D', 'E', 'F'};
+    char[] code_letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
     Map<Character, Runnable> commands = new HashMap<>();
 
     /**
